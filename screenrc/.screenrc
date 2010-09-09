@@ -1,0 +1,57 @@
+# Default is ^a, use this for ^] as the meta escape key.
+#escape ^]] 
+
+altscreen on
+
+#
+# supposedly lets ascii mouse work in vim
+#
+term xterm
+termcapinfo xterm|rxvt ti@:te@
+
+#
+# Window numbering starts at 1, not 0.
+#
+#bind c screen 1
+#bind 0 select 10
+
+startup_message off 
+
+#
+#
+# this is the caption on the bottom of the window
+#
+# Ian's bottom caption
+# caption always "%{+u Wb} %= %{-u}%-w%{+b}%{Wk}%{+b g}<%{-}%n %{+u}%t%{-u}%?(%u)%?%{+b g}>%{-}%{-bu Wb}%+w%{+u} %= %{-u kb}|%{C} %LD %{k}|%{Yb} %0C %2m/%2d/%Y "
+
+# Bottom line from Nick K.
+# Sets the title to shell if nothing is output when the screen is opened. If you
+# want give the title the name of a particular hostname, add this to the
+# machines bashrc: 
+#   if [ -n "$PS1" ]; then
+#       echo -ne "\ek$HOSTNAME\e\\"
+#   fi
+#
+# Effectively echoes the hostname on login, thereby setting the screen title to
+# the hostname.
+shelltitle "$ |bash"
+hardstatus alwayslastline "%{.kW}%H [%-w%{.rW}%n %t%{-}%+w] %=%{..G} %{..Y} %m/%d %C%a [%l] "
+
+#
+# funny messages
+#
+nethack on
+
+
+defscrollback 5000
+
+#
+# default to this, then add acls when needed
+#
+multiuser on
+
+#
+# Unknowns, but possible usage?
+#
+# activity   'activity in window %n'
+# defmonitor on
