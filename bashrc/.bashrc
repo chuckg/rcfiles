@@ -4,9 +4,19 @@
 export PAGER=less
 export EDITOR=vim
 export PATH=:~/.bin/:/bin:/usr/bin:/usr/local/bin:/sbin:/usr/sbin:/usr/local/sbin:/usr/local/gnu/bin:/usr/share/:$PATH:
-
-export HOME=/Users/chuckg
 export MANPATH=:$MANPATH
+
+# If you need to customize this, toss it in .bash_profile.
+if [ -z $HOME ];
+then
+    if [ $OSTYPE == 'darwin10.0' ];
+    then
+        export HOME=/Users/$USER
+    else
+        export HOME=/home/$USER
+    fi;
+fi;
+
 
 # current change list 'c'
 # alias p4c="
@@ -50,16 +60,9 @@ fi;
 
 if [ "$UID" != 0 ]; 
 then
-    if [ $OSTYPE == 'darwin1.4' ]; 
-    then
-        export PS1="\$(date +%H:%M)\[\e[34m\]g3\[\e[37;40;1m\]\w\[\e[0m\]» "
-    else
-#         export TEMP="%H"/12
-#         echo
-#       export PS1="\@\[\e[34m\]\h\[\e[37;40m\]\w\[\e[0m\]» "
-        export PS1="\[\e[37;1m\]\$(date +%H:%M)\[\e[32;1m\]\H \[\e[31;1m\w\e[0m\]> "
+    # export PS1="\@\[\e[34m\]\h\[\e[37;40m\]\w\[\e[0m\]» "
+    export PS1="\[\e[37;1m\]\$(date +%H:%M)\[\e[32;1m\]\H \[\e[31;1m\w\e[0m\]> "
 
-    fi;
 fi;
 
 #
@@ -106,7 +109,6 @@ fi;
 
 alias vi=vim
 alias make='time make'
-alias fs='/usr/athena/bin/fs lq'
 alias lr='ls -Rha'
 alias ..="cd .."
 alias ...="cd ../.."
@@ -115,23 +117,15 @@ alias e='emacs'
 alias rmt='rm *~'
 alias rmh='"#"*"#"'
 
-# login to 'filer'
-# login to beast 
-alias twatabyte='ssh admin@twatabyte'
-
-alias t='perl Build test --test_files'
-alias tv='perl Build test --verbose 1 --test_files'
 alias g='egrep'
-alias xg='xterm -bg black -fg green -fn fixed -sb -sl 8000 &'
-alias xb='xterm -si -sk -bg black -fg gray -fn fixed -sb -sl 10000 &'
-alias xG='xterm -bg gray -fn fixed -sb -sl 20000 &'
-alias xB='xterm -bg blue -fg white -fn fixed -sb -sl 8000 &'
 alias fif='find . -name "*" | xargs grep'
 alias f='find . -type f | grep'
 # alias hg='history|g'
 
-alias db='~maximk/gdb64 Build/dbg/Install/NFP_TXRX/Images/txrx'
-alias to='grep tracing_on Build/dbg/Install/NFP_TXRX/Images/txrx.nm|perl -pe "s{.*:(\S.*) D.*}{\nmm \1 0\nmm \1 1\n\ngcov_dump /usr/local/agile/Images/nfx-tree\n}"'
+alias xg='xterm -bg black -fg green -fn fixed -sb -sl 8000 &'
+alias xb='xterm -si -sk -bg black -fg gray -fn fixed -sb -sl 10000 &'
+alias xG='xterm -bg gray -fn fixed -sb -sl 20000 &'
+alias xB='xterm -bg blue -fg white -fn fixed -sb -sl 8000 &'
 
 
 alias s='source ~/.bash_profile'
@@ -154,7 +148,10 @@ esac
 function stoppedjobs { jobs -s | wc -l | awk '{print $1}'; }
 function Is { gunzip $1 | tar xvf -; }
 
-
-hgdiff() {
+function hgdiff() {
     vimdiff -c 'map q :qa!<CR>' <(hg cat "$1") "$1";
+}
+
+function gitdiff() {
+  git diff --no-ext-diff -w "$@" | vim -R -
 }
