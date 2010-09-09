@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 if [ $OSTYPE == 'darwin10.0' ];
 then
@@ -7,7 +7,7 @@ then
         gnufind=/opt/local/bin/gfind
     fi;
 else 
-    if [ -n `find --version | head -n 1 | grep GNU` ];
+    if [ -n "`find --version | head -n 1 | grep GNU`" ];
     then
         gnufind=find
     fi;
@@ -16,6 +16,7 @@ fi;
 if [ -z $gnufind ];
 then
     echo 'Silly rabbit, must have GNU find installed.'
+    exit 0
 fi;
 
 for f in `$gnufind . -type d -name "*rc" -printf "%f\n"` 
