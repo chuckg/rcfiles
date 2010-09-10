@@ -2,6 +2,7 @@ version 6.1
 
 filetype on
 syntax on
+colors elflord_chuckg
 
 " Only do this part when compiled with support for autocommands.
 if has("autocmd")
