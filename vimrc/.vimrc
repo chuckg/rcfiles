@@ -2,7 +2,7 @@ version 6.1
 
 filetype on
 syntax on
-colors elflord_chuckg
+colors elflord
 
 " Only do this part when compiled with support for autocommands.
 if has("autocmd")
@@ -29,6 +29,8 @@ if has("autocmd")
   autocmd FileType cgi       call PoundComment()
   autocmd FileType csh       call PoundComment()
   autocmd FileType sh        call PoundComment()
+  autocmd FileType ruby      call PoundComment()
+  autocmd FileType ruby      call SmallAssShiftWidt()
   autocmd FileType html      call HtmlPrepare()
   autocmd FileType php       call HtmlPrepare()
   autocmd FileType php       call PHPPrepare()
@@ -123,6 +125,11 @@ function! PoundComment()
    map - mx:s/^/# /<CR>/<C-p><C-p><CR>'x
    map _ mx:s/^\s*# \=//<CR>/<C-p><C-p><CR>'x
    set comments=:#
+endfunction
+
+function! SmallAssShiftWidt()
+  set shiftwidth=2
+  set tabstop=2
 endfunction
 
 function! HtmlPrepare()

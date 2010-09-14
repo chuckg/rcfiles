@@ -39,14 +39,15 @@ fi;
 #
 # Prompt
 #
+function prompt {
+    local GREEN="\033[32m"
+    local RED="\033[31m"
+    local END_COLOR="\033[m"
 
-# ROOT prompt:
-# export PS1="\[\e[33;41;1m\]\u\[\e[31;40;1m\]:\[\e[37;1m\]\w\[\e[0m\]> "
-
-#export PS1="\[\e]2;\u@\H \w\a\e[32;1m\]>\[\e[0m\] "
-#export PS1="\[\e[36;1m\]\u@\[\e[32;1m\]\H> \[\e[0m\]"
-# export PS1="[\h\[\e[34m\]:\[\e[0m\]\W] \u# "
-#PS1="${TITLEBAR}(\[\033[1;30m\]\$(date +%H:%M) \h:\w\[\033[0m\]) "
+    PS1="\$(date +%H:%M)\[$GREEN\]\H \[$RED\]\w\[$END_COLOR\]> "
+    PS2='continue-> '
+    PS4='$0.$LINENO+ '
+}
 
 if [ "$UID" = 0 ]; 
 then 
@@ -60,15 +61,13 @@ fi;
 
 if [ "$UID" != 0 ]; 
 then
-    # export PS1="\@\[\e[34m\]\h\[\e[37;40m\]\w\[\e[0m\]» "
-    export PS1="\[\e[37;1m\]\$(date +%H:%M)\[\e[32;1m\]\H \[\e[31;1m\w\e[0m\]> "
-
+    prompt
 fi;
+
 
 #
 # Input mode
 #
-set -o vi
 source ~/.bash_bindings
 
 #
