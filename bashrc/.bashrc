@@ -44,7 +44,7 @@ function prompt {
     local RED="\033[31m"
     local END_COLOR="\033[m"
 
-    PS1="\$(date +%H:%M)\[$GREEN\]\H \[$RED\]\w\[$END_COLOR\]> "
+    PS1="\$(date +%H:%M)\[$GREEN\]\H \[$RED\]\W\[$END_COLOR\]> "
     PS2='continue-> '
     PS4='$0.$LINENO+ '
 }
