@@ -7,10 +7,8 @@ export PATH=:~/.bin/:/bin:/usr/bin:/usr/local/bin:/sbin:/usr/sbin:/usr/local/sbi
 export MANPATH=:$MANPATH
 
 # If you need to customize this, toss it in .bash_profile.
-if [ -z $HOME ];
-then
-    if [ $OSTYPE == 'darwin10.0' ];
-    then
+if [ -z $HOME ]; then
+    if [ $OSTYPE == 'darwin10.0' ]; then
         export HOME=/Users/$USER
     else
         export HOME=/home/$USER
@@ -49,18 +47,15 @@ function prompt {
     PS4='$0.$LINENO+ '
 }
 
-if [ "$UID" = 0 ]; 
-then 
-    if [ $OSTYPE == 'darwin1.4' ]; 
-    then
+if [ "$UID" = 0 ]; then
+    if [ $OSTYPE == 'darwin1.4' ]; then
         export PS1="\[\e[33;41;1m\]ROOT\[\e[0m\e[31;40m\]g3\[\e[37;1m\]\w\[\e[0m\]> "
     else
         export PS1="\[\e[33;41;1m\]\u\[\e[0m\e[31;40m\]\h\[\e[37m\]\w\[\e[0m\]> "
     fi;
 fi;
 
-if [ "$UID" != 0 ]; 
-then
+if [ "$UID" != 0 ]; then
     prompt
 fi;
 
@@ -75,6 +70,8 @@ source ~/.bash_bindings
 #
 if [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
+elif [ -f /opt/local/etc/bash_completion ]; then
+    . /opt/local/etc/bash_completion
 fi
 
 #
@@ -86,8 +83,7 @@ if [ -f "$HOME/.aliases" ]; then
 	. $HOME/.aliases
 fi 
 
-if [ $OSTYPE == 'darwin10.0' ];
-then
+if [ $OSTYPE == 'darwin10.0' ]; then
     alias ls='ls -FG'
     alias l='ls -lhG'
     alias ll='ls -lahG'
@@ -100,8 +96,7 @@ else
     function ll(){ ls -alh --color=always $*| egrep "^d"; ls -lah --color=always $* 2>&-| egrep -v "^d|total "; }
 fi;
 
-if [ "$VIMSH" ];
-then
+if [ "$VIMSH" ]; then
     unalias ls
     export PS1="\@ \h \w# "
 fi;

@@ -30,11 +30,12 @@ if has("autocmd")
   autocmd FileType csh       call PoundComment()
   autocmd FileType sh        call PoundComment()
   autocmd FileType ruby      call PoundComment()
-  autocmd FileType ruby      call SmallAssShiftWidt()
+  autocmd FileType ruby      call SmallAssShiftWidth()
   autocmd FileType html      call HtmlPrepare()
   autocmd FileType php       call HtmlPrepare()
   autocmd FileType php       call PHPPrepare()
   autocmd FileType make      call MakePrepare()
+  autocmd FileType sql       call DashComment()
   autocmd BufRead,BufNewFile *.t set ft=perl
 endif
 
@@ -90,7 +91,7 @@ match todo /@@@/
 "  START OF LINE
 "inoremap 		<Home>
 
-set  tags=./tags,../tags,../../tags,../../../tags
+set tags=./tags,../tags,../../tags,../../../tags
 
 set wrap
 set linebreak
@@ -127,7 +128,13 @@ function! PoundComment()
    set comments=:#
 endfunction
 
-function! SmallAssShiftWidt()
+function! DashComment()
+   map - mx:s/^/-- /<CR>/<C-p><C-p><CR>'x
+   map _ mx:s/^\s*-- \=//<CR>/<C-p><C-p><CR>'x
+   set comments=:--
+endfunction
+
+function! SmallAssShiftWidth()
   set shiftwidth=2
   set tabstop=2
 endfunction
