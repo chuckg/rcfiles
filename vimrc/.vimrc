@@ -556,3 +556,8 @@ func! Paste_on_off()
     endif
     return
 endfunc
+
+" Environment specific settings.
+if strlen(findfile("vimrc_env", $HOME . "/.vim"))
+    source $HOME/.vim/vimrc_env
+endif
