@@ -22,6 +22,8 @@ if has("autocmd")
     \   exe "normal g`\"" |
     \ endif
 
+  autocmd FocusLost * :wa
+
   autocmd FileType procmail  call PoundComment()
   autocmd FileType muttrc    call PoundComment()
   autocmd FileType python    call PoundComment()
@@ -38,6 +40,8 @@ if has("autocmd")
   autocmd FileType sql       call DashComment()
   autocmd BufRead,BufNewFile *.t set ft=perl
 endif
+
+let mapleader = ","
 
 let loaded_matchparen = 1
 set confirm
@@ -68,10 +72,10 @@ set showmatch  "matching brackets.
 set showcmd
 set showfulltag
 set scrolloff=2				" cursors stays 2 lines below/above top/bottom
-"set updatecount=50 updatetime=3600000		" saves power on notebooks
+
+set foldmethod=manual
 
 set updatetime=400  "this makes Tlist update which function you are in much faster.
-nmap \tl :Tlist<CR>
 
 " open a quick fix window whenever there is something to put in it.
 :cwindow
@@ -79,19 +83,6 @@ nmap \tl :Tlist<CR>
 "set csqf=s-,c-,d-,i-,t-,e-
 
 match todo /@@@/
-
-" EMACS LIKE MAPPINGS FOR THE INSERT MODE
-"
-"  scroll up
-"inoremap 		
-"  scroll down
-"inoremap 		
-"  END OF LINE
-"inoremap 		<End>
-"  START OF LINE
-"inoremap 		<Home>
-
-set tags=./tags,../tags,../../tags,../../../tags
 
 set wrap
 set linebreak
@@ -105,23 +96,115 @@ set listchars=tab:»·,trail:·
 "set listchars=tab:>-,trail:+
 set whichwrap=<,>,h,l,[,]
 
-"nmap :W :w
-"nmap :Q :q
-"nmap :Wq :wq
-
-set pastetoggle=<F12>
 set number
 set stl=%t%y%r%m%=line\ %l\ of\ %L,\ col\ %c,\ %p%%
 set comments=b:#,:%,://,fb:-,n:>,n:),s1:/*,mb:*,ex:*/
 
 " ----------------------------------------------------
-" Plugin specific settings.
+" search
+"   - gdefault applies substitutions globally on lines by default
+"   - incsearch/showmatch/hlsearch setup search highlighting as you type 
+set gdefault
+set incsearch   
+set showmatch
+set hlsearch
+" clear current search
+nnoremap <leader><space> :noh<cr>
+" use tab keys to match bracket pairs
+nnoremap <tab> %
+vnoremap <tab> %
 
-" folder specific vim settings filename (local_vimrc)
-let g:local_vimrc = '_vimrc_local.vim' 
 
 " ----------------------------------------------------
-" Define functions
+" pasting
+let paste_mode = 0 " 0 = normal, 1 = paste
+set pastetoggle=<F12>
+nmap <C-P> :set paste!<bar>set paste?<CR>
+" The new and improved toggle paste; gives pastetoggle a target 
+nmap <F12> :call Paste_on_off()<CR>
+" Ian had this in here, I assume it toggles pasting vai middlemouse clicks.
+inoremap <MiddleMouse> <C-O>:set paste<cr><MiddleMouse><C-O>:set nopaste<CR>
+
+
+" ----------------------------------------------------
+" window management
+set winminheight=0      " allows windows not visible to have 0 height
+map  <C-J> <C-W>j<C-W>_ 
+map  <C-K> <C-W>k<C-W>_
+
+
+" ----------------------------------------------------
+" mappings (orphaned)
+
+" Y to yank from the cursor to the end of the line.
+map Y y$
+
+" Cycle through the buffers
+map  <F7>  :bp<CR>
+map  <F8>  :bn<CR>
+
+" Turn off F1 help; always hit this shit when I'm going for the escape key.
+inoremap <F1> <ESC>
+nnoremap <F1> <ESC>
+vnoremap <F1> <ESC>
+
+" TODO: Add automatic folding for different languages.
+" fold function bodies in c
+" nmap <F4> ]]V][zf
+
+" sessions - Control-Q to save a session, Control-S to reload it.
+" set sessionoptions=blank,buffers,curdir,folds,help,resize,tabpages,winsize
+" map <C-Q> :mks! ~/.vim/.session <CR>
+" map <C-S> :source ~/.vim/.session <CR>
+
+" make <c-g> more verbose
+" proposed by Rajesh Kallingal <RajeshKallingal@email.com>
+nnoremap <c-g> 2<c-g>
+
+nmap <C-H> :set wrap!<bar>set wrap?<CR>
+nmap <C-N> :set number!<bar>set number?<CR>
+
+"make tag goto open in a different window when clicking on it with the mouse
+map <C-LeftMouse> <LeftMouse><C-Space>g
+map g<LeftMouse> <LeftMouse><C-Space>g
+
+" Hitting '#' in visual mode does a search on the current selection. Will not
+" work with multi-line selection.
+vnoremap # <esc>:let save_reg=@"<cr>gvy:let @/=@"<cr>:let @"=save_reg<cr>?<cr>
+
+" Unclear, this was in Ian's original config, but I like the way my paste works
+" currently so I'm not going to fuck with it.
+vmap p            d"0P
+
+" Align on the respective symbols
+vmap <C-L>  :Align "="<CR>
+vmap <C-;>  :Align ":"<CR>
+
+" Because I fuck up all the time.
+cmap Wq wq 
+cmap WQ wq
+
+
+" ----------------------------------------------------
+" Abbreviations
+iab Ydate <C-R>=strftime("%m/%d/%y")<CR>
+  " Example: 8/16/00
+iab Ytime <C-R>=strftime("%H:%M")<CR>
+  " Example: 14:28
+iab Ydt   <C-R>=strftime("%m/%d/%y %T")<CR>
+  " Example: 971027 12:00:00
+iab Ystamp <C-R>=strftime("%a %b %d %T %Z %Y")<CR>
+  " Example: Tue Dec 16 12:07:00 CET 1997
+  "
+iab teh the
+iab tehy they
+iab durring during
+iab untill until
+iab allways always
+
+
+" ----------------------------------------------------
+" Functions
 function! PoundComment()
    map - mx:s/^/# /<CR>/<C-p><C-p><CR>'x
    map _ mx:s/^\s*# \=//<CR>/<C-p><C-p><CR>'x
@@ -161,18 +244,16 @@ function! MakePrepare()
    set  softtabstop=8
 endfunction
 
-"NOTE TO SELF: read :help repeat
-"NOTE TO SELF: read :help user-defined
-
-" fold function bodies in c
-nmap <F4> ]]V][zf
-
-" Y to yank from the cursor to the end of the line.
-map Y y$
-
-" cycle thru buffers ...
-"nnoremap <c-n> :bn<cr>
-"nnoremap <c-p> :bp<cr>
+func! Paste_on_off()
+    if g:paste_mode == 0
+        set paste
+        let g:paste_mode = 1
+    else
+        set nopaste
+        let g:paste_mode = 0
+    endif
+    return
+endfunc
 
 " Things for vimsh
 " <F5> is used for vimsh
@@ -188,74 +269,6 @@ let spell_auto_type = "tex,mail,text,txt,html,sgml,otl,cvs"
 let spell_auto_jump = 1
 let spell_no_readonly = 1
 
-map  <F5>  :TlistToggle<CR>
-map  <F7>  :bp<CR>
-map  <F8>  :bn<CR>
-map  <F9>  :set noscrollbind<bar>set foldcolumn=0<bar>set nodiff<bar>set foldmethod=manual<CR>
-map  <F10> :set hls!<bar>set hls?<CR>
-imap <F11> /*++<CR><ESC>0Do<ESC>iRoutine Description:<CR><CR>    <CR><CR>Arguments:<CR><CR>    <CR><CR>Return Value:<CR><CR>    <CR><CR>--*/<CR><ESC>0D11kA
-nmap <S-F11> /\t<CR>gR <ESC>
-" Ian's old method of enabling/disabling paste. 
-" nmap <F12> :set mouse=a<bar>set nopaste<bar>set mouse?<CR>
-" nmap <S-F12> :set mouse=<bar>set paste<bar>set mouse?<CR>
-" The new and improved toggle paste.
-nmap <F12> :call Paste_on_off()<CR>
-
-inoremap <MiddleMouse> <C-O>:set paste<cr><MiddleMouse><C-O>:set nopaste<CR>
-
-" sessions - Control-Q to save a session, Control-S to reload it.
-" set sessionoptions=blank,buffers,curdir,folds,help,resize,tabpages,winsize
-" map <C-Q> :mks! ~/.vim/.session <CR>
-" map <C-S> :source ~/.vim/.session <CR>
-
-" make <c-g> more verbose
-" proposed by Rajesh Kallingal <RajeshKallingal@email.com>
-nnoremap <c-g> 2<c-g>
-
-" So, hitting '*' while in visual mode does a search on everything that
-" matches the currently selected area. Of course, this does not work
-" with multi-line selections.
-vnoremap * <esc>:let save_reg=@"<cr>gvy:let @/=@"<cr>:let @"=save_reg<cr>/<cr>
-vnoremap # <esc>:let save_reg=@"<cr>gvy:let @/=@"<cr>:let @"=save_reg<cr>?<cr>
-
-
-" These commands deal with changing and minimizing windows up and down.
-set winminheight=0
-map  <C-J> <C-W>j<C-W>_
-map  <C-K> <C-W>k<C-W>_
-
-vmap <C-L>  :Align "="<CR>
-vmap <C-\>  :FixMacro<CR>
-vmap <BS>   :RemoveMacroSlashes<CR>
-vmap <C-;>  :Align ":"<CR>
-nmap <C-H> :set wrap!<bar>set wrap?<CR>
-nmap <C-P> :set paste!<bar>set paste?<CR>
-nmap <C-N> :set number!<bar>set number?<CR>
-
-"make tag goto open in a different window when clicking on it with the mouse
-map <C-LeftMouse> <LeftMouse><C-Space>g
-map g<LeftMouse> <LeftMouse><C-Space>g
-
-vmap p            d"0P
-
-cmap Wq wq
-cmap WQ wq
-
-iab Ydate <C-R>=strftime("%m/%d/%y")<CR>
-  " Example: 8/16/00
-iab Ytime <C-R>=strftime("%H:%M")<CR>
-  " Example: 14:28
-iab Ydt   <C-R>=strftime("%m/%d/%y %T")<CR>
-  " Example: 971027 12:00:00
-iab Ystamp <C-R>=strftime("%a %b %d %T %Z %Y")<CR>
-  " Example: Tue Dec 16 12:07:00 CET 1997
-  "
-iab teh the
-iab tehy they
-iab durring during
-iab untill until
-iab allways always
-
  " remember folds
 "au BufWinLeave *.c mkview
 "au BufWinEnter *.c silent loadview
@@ -263,13 +276,10 @@ iab allways always
 "au BufWinEnter *.h silent loadview
 
 
-" Enable file type detection
+" ----------------------------------------------------
+" Color Settings
+set background=dark
 
-"nmap :W :w
-"nmap :Q :q
-"nmap :Wq :wq
-
-" Terminal Color Settings
 highlight Comment       ctermfg=DarkCyan
 "highlight Constant      ctermfg=DarkMagenta
 "highlight Character     ctermfg=DarkRed
@@ -287,10 +297,23 @@ highlight LineNr        ctermfg=DarkRed
 "highlight WarningMsg    term=NONE           ctermfg=Black   ctermbg=NONE
 "highlight ErrorMsg      term=NONE           ctermfg=DarkRed ctermbg=NONE
 
+""Try doing some color
+"  "Try using 88 colors
+if has("terminfo")
+    set t_Co=16
+    set t_AB=[%?%p1%{8}%<%t%p1%{40}%+%e%p1%{92}%+%;%dm
+    set t_AF=[%?%p1%{8}%<%t%p1%{30}%+%e%p1%{82}%+%;%dm
+else
+    set t_Co=16
+    set t_Sf=[3%dm
+    set t_Sb=[4%dm
+endif
+
+" ----------------------------------------------------
 " Macros
 com! -range Align <line1>,<line2>call AlignOnRE(<q-args>)
 fun! AlignOnRE(re) range
-    let last = 0
+ ii   let last = 0
     let i = a:firstline
     while i <= a:lastline
         exec "let col" . i . "= match(getline(i)," . a:re . ")"
@@ -316,69 +339,6 @@ fun! AlignOnRE(re) range
         let i = i + 1
     endwhile
 endfun
-
-" This is a function which will allign any '\''s at the end of lines with in
-" the given range at the &textwidth.  This functions intended use was to
-" allign back-slashes in a macro (in C).
-command! -range FixMacro <line1>,<line2>call AlignFinalBSlash()
-function! AlignFinalBSlash() range
-    let i = a:firstline
-    while i <= a:lastline
-
-        "Remove trailing white-space
-        exec i . 's/\s\+$//e'
-        "Remove trailing '\'
-        exec i . 's/\\$//e'
-        "Remove trailing white-space
-        exec i . 's/\s\+$//e'
-
-        let line_len = strlen(getline(i))
-        if line_len < &textwidth
-            let N = &textwidth - line_len
-            let s = ""
-            let j = 1
-            while j < N
-                let s = s . " "
-                let j = j + 1
-            endwhile
-            call setline(i, getline(i) . s . '\')
-        else
-            call setline(i, getline(i) . ' \')
-        endif
-
-        let i = i + 1
-    endwhile
-endfunction
-
-" This is a function which will remove any '\''s at the end of lines with in
-" the given range.
-command! -range RemoveMacroSlashes <line1>,<line2>call RemoveFinalBSlash()
-function! RemoveFinalBSlash() range
-    let i = a:firstline
-    while i <= a:lastline
-        "Remove trailing white-space
-        exec i . 's/\s\+$//e'
-        "Remove trailing '\'
-        exec i . 's/\\$//e'
-        "Remove trailing white-space
-        exec i . 's/\s\+$//e'
-        let i = i + 1
-    endwhile
-endfunction
-
-" This is quick hack of a command that will diff the current file from
-" perforce by opening the perforce version in a vertically split window and
-" set both to be diffed.
-" command! PFD call P4diff()
-"function! P4diff()
-"    let f  = expand("%")
-"    let ft = expand("%:t")
-"    exec 'diffthis'
-"    exec 'vs +e\ ' . ft
-"    exec 'r !p4 print ' . f
-"    exec 'diffthis'
-"endfunction
-
 " Add this to your .vimrc file and it'll automatically fold perl functions
 " (and possibly other languages that define a subroutine with "sub ...")
 " Once you open a perl file, you'll see all functions are folded. You can then
@@ -398,7 +358,6 @@ endfunction
 "endfunction
 "setlocal foldexpr=GetPerlFold()
 "setlocal foldmethod=expr 
-set foldmethod=manual
 
 " This was some scroll wheel stuff...
 "
@@ -411,20 +370,6 @@ set foldmethod=manual
 ":map <M-Esc>[65~ <S-MouseUp>
 ":map! <M-Esc>[65~ <S-MouseUp>
 
-""Try doing some color
-"  "Try using 88 colors
-  if has("terminfo")
-     set t_Co=16
-     set t_AB=[%?%p1%{8}%<%t%p1%{40}%+%e%p1%{92}%+%;%dm
-     set t_AF=[%?%p1%{8}%<%t%p1%{30}%+%e%p1%{82}%+%;%dm
-   else
-     set t_Co=16
-      set t_Sf=[3%dm
-     set t_Sb=[4%dm
-   endif
-
-set background=dark
-
 
 
 " the following lines will enable
@@ -434,13 +379,12 @@ set com& " reset to default
 set com^=sr:*\ -,mb:*\ \ ,el:*/ com^=sr://\ -,mb://\ \ ,el:///
 
 
-"
+" ----------------------------------------------------
 "   (vim)diff options...
-"
 set diffopt=iwhite,filler
 
 set diffexpr=MyDiff()
-function MyDiff()
+function! MyDiff()
    let opt = ""
    if &diffopt =~ "icase"
 "     let opt = opt . "-i "
@@ -454,7 +398,6 @@ function MyDiff()
 endfunction
 
 
-
 "
 "       Menus in console vim
 "
@@ -464,7 +407,6 @@ if ! has("gui_running")
 	set wildmenu wildcharm=<C-Z>
 	nmap <F3> :runtime menu.vim<CR>:emenu <C-Z>
 endif
-
 
 
 "      Font menu
@@ -532,10 +474,6 @@ set path=.,~/include,/usr/local/include,/usr/include,/usr/include/g++-3,/usr/X11
 " else
 "     set path+=/usr/lib/mpich/include,/usr/lib/mpich/build/LINUX/ch_p4/include/,/usr/lib/mpich/build/LINUX/ch_p4/include/c++
 " endif
-if isdirectory(expand("/usr/include/CC/"))
-    set path+=/usr/include/CC
-endif
-
 " set path+=..,../../
 
 " set     tags=tags,zwei,drei,vier
@@ -544,18 +482,6 @@ set wildignore=*.o,*.r,*.so,*.tar,*.tgz
 set wildmode=list:longest,list:full
 "set wildmode=longest:full,full
 " set wildmenu
-
-let paste_mode = 0 " 0 = normal, 1 = paste
-func! Paste_on_off()
-    if g:paste_mode == 0
-        set paste
-        let g:paste_mode = 1
-    else
-        set nopaste
-        let g:paste_mode = 0
-    endif
-    return
-endfunc
 
 " Environment specific settings.
 if strlen(findfile("vimrc_env", $HOME . "/.vim"))
