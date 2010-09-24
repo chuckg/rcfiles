@@ -41,8 +41,6 @@ if has("autocmd")
   autocmd BufRead,BufNewFile *.t set ft=perl
 endif
 
-let mapleader = ","
-
 let loaded_matchparen = 1
 set confirm
 set autoindent
@@ -99,6 +97,15 @@ set whichwrap=<,>,h,l,[,]
 set number
 set stl=%t%y%r%m%=line\ %l\ of\ %L,\ col\ %c,\ %p%%
 set comments=b:#,:%,://,fb:-,n:>,n:),s1:/*,mb:*,ex:*/
+
+
+" ----------------------------------------------------
+" leaders (of men) 
+let mapleader = ","
+
+" strip all trailing whitespace 
+nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
+
 
 " ----------------------------------------------------
 " search
@@ -313,7 +320,7 @@ endif
 " Macros
 com! -range Align <line1>,<line2>call AlignOnRE(<q-args>)
 fun! AlignOnRE(re) range
- ii   let last = 0
+    let last = 0
     let i = a:firstline
     while i <= a:lastline
         exec "let col" . i . "= match(getline(i)," . a:re . ")"
@@ -446,11 +453,6 @@ set	cindent
 "set	cinkeys=0{,0},:,!,o,O,e
 "set cinoptions=>s,e0,n0,f0,{0,}0,^0,:s,=s,ps,t0,+s,(0,u0,)20,*30,g0
 set cinoptions=>s,e0,n0,f0,{0,}0,^0,:s,=s,ps,t0,+s,(s,us,)20,*30,g0
-
-" GNU coding style due to Tomas Ogren <stric@ing.umu.se>
-" set cinoptions={.5s,:.5s,+.5s,t0,g0,^-2,e-2,n-2,p2s,(0,=.5s
-" formatoptions=croql cindent sw=4 ts=8
-
 
 set	switchbuf=useopen
 set	smartcase
