@@ -110,11 +110,6 @@ nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
 
 
 " ----------------------------------------------------
-" leaders
-let mapleader = ","
-
-
-" ----------------------------------------------------
 " search
 "   - gdefault applies substitutions globally on lines by default
 "   - incsearch/showmatch/hlsearch setup search highlighting as you type 
