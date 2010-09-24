@@ -31,11 +31,13 @@ if has("autocmd")
   autocmd FileType cgi       call PoundComment()
   autocmd FileType csh       call PoundComment()
   autocmd FileType sh        call PoundComment()
-  autocmd FileType ruby      call PoundComment()
-  autocmd FileType ruby      call SmallAssShiftWidth()
+  autocmd FileType ruby
+    \ call PoundComment() |
+    \ call SmallAssShiftWidth()
   autocmd FileType html      call HtmlPrepare()
-  autocmd FileType php       call HtmlPrepare()
-  autocmd FileType php       call PHPPrepare()
+  autocmd FileType php       
+    \ call HtmlPrepare() |
+    \ call PHPPrepare()
   autocmd FileType make      call MakePrepare()
   autocmd FileType sql       call DashComment()
   autocmd BufRead,BufNewFile *.t set ft=perl
@@ -62,7 +64,7 @@ set smarttab
 
 set smartcase
 set infercase
-set textwidth=80
+set textwidth=79
 set laststatus=2  "always put a status line at the bottem of the window.
 set visualbell
 set ruler
@@ -105,6 +107,11 @@ let mapleader = ","
 
 " strip all trailing whitespace 
 nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
+
+
+" ----------------------------------------------------
+" leaders
+let mapleader = ","
 
 
 " ----------------------------------------------------
@@ -261,20 +268,6 @@ func! Paste_on_off()
     endif
     return
 endfunc
-
-" Things for vimsh
-" <F5> is used for vimsh
-nmap \sh :source ~/.vim/vimsh/vimsh.vim<CR>
-let g:vimsh_pty_prompt_override = 0
-let g:vimsh_sh                  = '/bin/bash'
-let $VIMSH                      = 1
-
-" Things for vimspell (see :help vimspell)
-let loaded_vimspell = 1
-nmap \s/ <Plug>SpellProposeAlternatives 
-let spell_auto_type = "tex,mail,text,txt,html,sgml,otl,cvs"
-let spell_auto_jump = 1
-let spell_no_readonly = 1
 
  " remember folds
 "au BufWinLeave *.c mkview
