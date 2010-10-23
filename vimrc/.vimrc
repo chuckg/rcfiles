@@ -102,12 +102,11 @@ set comments=b:#,:%,://,fb:-,n:>,n:),s1:/*,mb:*,ex:*/
 
 
 " ----------------------------------------------------
-" leaders (of men) 
+" leader (of men) 
 let mapleader = ","
 
 " strip all trailing whitespace 
 nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
-
 
 " ----------------------------------------------------
 " search
@@ -232,15 +231,15 @@ function! SmallAssShiftWidth()
 endfunction
 
 function! HtmlPrepare()
-   source $VIM/vimcurrent/syntax/html.vim
-   source $VIM/vimcurrent/indent/html.vim
+"   source $VIM/vimcurrent/syntax/html.vim
+"   source $VIM/vimcurrent/indent/html.vim
    set matchpairs+=<:>
    set comments=:<li>
 endfunction
 
 function! PHPPrepare()
-   source $VIM/vimcurrent/syntax/php.vim
-   source $VIM/vimcurrent/indent/php.vim
+"   source $VIM/vimcurrent/syntax/php.vim
+"   source $VIM/vimcurrent/indent/php.vim
    map - mx:s/^/# /<CR>/<C-p><C-p><CR>'x
    map _ mx:s/^\s*# \=//<CR>/<C-p><C-p><CR>'x
 endfunction
