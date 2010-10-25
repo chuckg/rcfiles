@@ -15,48 +15,34 @@ if [ -z $HOME ]; then
     fi;
 fi;
 
-
-# current change list 'c'
-# alias p4c="
-#     echo \"P4CLIENT: \$P4CLIENT\";
-#     p4 changes -m1 |
-#         awk '{print \"Latest: \" \$2, \$3, \$4}';
-#     p4 changes -m1 @\$P4CLIENT;
-#     "
-# 
-# # Get the list of my clients
-# alias p4cl="p4 clients | grep $USER"
-# 
-# # Get a list of files that are not on the client.
-# alias p4f="
-#     find . -type f | 
-#         egrep -v \"sw.|bp\/|sp\/\" |
-#         xargs -IXXX p4 have 'XXX' > /dev/null
-#     "
-
 #
 # Prompt
 #
 function prompt {
+    local show_user=$1
     local GREEN="\033[32m"
     local RED="\033[31m"
+    local YELLOW="\033[33m"
     local END_COLOR="\033[m"
 
-    PS1="\$(date +%H:%M)\[$GREEN\]\H \[$RED\]\W\[$END_COLOR\]> "
+    if [ $show_user = true ]; then
+        PS1="\$(date +%H:%M)\[$YELLOW\]\u \[$GREEN\]\H \[$RED\]\W\[$END_COLOR\]> "
+    else
+        PS1="\$(date +%H:%M)\[$GREEN\]\H \[$RED\]\W\[$END_COLOR\]> "
+    fi;
     PS2='continue-> '
     PS4='$0.$LINENO+ '
 }
 
-if [ "$UID" = 0 ]; then
-    if [ $OSTYPE == 'darwin1.4' ]; then
-        export PS1="\[\e[33;41;1m\]ROOT\[\e[0m\e[31;40m\]g3\[\e[37;1m\]\w\[\e[0m\]> "
-    else
-        export PS1="\[\e[33;41;1m\]\u\[\e[0m\e[31;40m\]\h\[\e[37m\]\w\[\e[0m\]> "
-    fi;
-fi;
 
-if [ "$UID" != 0 ]; then
-    prompt
+# Set PROMPT_SHOWUID in .bash_profile, it forces the prompt to include the
+# username. Especially useful for those "oh fuck I'm on production" scenarios.
+if [ "$PROMPT_SHOWUID" = true ]; then
+    prompt true
+elif [ "$UID" = 0 ]; then
+    prompt true
+else 
+    prompt false 
 fi;
 
 
