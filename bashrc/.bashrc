@@ -26,9 +26,17 @@ function prompt {
     local END_COLOR="\033[m"
 
     if [ $show_user = true ]; then
-        PS1="\$(date +%H:%M)\[$YELLOW\]\u \[$GREEN\]\H \[$RED\]\W\[$END_COLOR\]> "
+        local p="\$(date +%H:%M)\[$YELLOW\]\u \[$GREEN\]\H \[$RED\]\W\[$END_COLOR\]> "
     else
-        PS1="\$(date +%H:%M)\[$GREEN\]\H \[$RED\]\W\[$END_COLOR\]> "
+        local p="\$(date +%H:%M)\[$GREEN\]\H \[$RED\]\W\[$END_COLOR\]> "
+    fi;
+
+    # If you want to set the term title, set the PROMPT_TITLE variable in your
+    # .bash_profile.
+    if [ -n "$PROMPT_TITLE" ]; then
+        PS1="\[\033]0;$PROMPT_TITLE\a\]$p"
+    else
+        PS1="$p"
     fi;
     PS2='continue-> '
     PS4='$0.$LINENO+ '
@@ -113,16 +121,6 @@ alias b='vim ~/.bashrc'
 alias v='vim ~/.vimrc' 
 
 alias j='jobs'
-
-case $TERM in
-    xterm*)
-    TITLEBAR='\[\033]0;\u@\h:\w\007\]'
-    ;;
-    *)
-    TITLEBAR=''
-    ;;
-esac
-
 
 # Functions
 function stoppedjobs { jobs -s | wc -l | awk '{print $1}'; }
