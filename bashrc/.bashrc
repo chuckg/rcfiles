@@ -40,6 +40,8 @@ function prompt {
     fi;
     PS2='continue-> '
     PS4='$0.$LINENO+ '
+
+    MYSQL_PS1="\u@\h [\d]: "
 }
 
 
