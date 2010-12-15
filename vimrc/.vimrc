@@ -186,7 +186,6 @@ vmap p            d"0P
 
 " Align on the respective symbols
 vmap <C-L>  :Align "="<CR>
-vmap <C-;>  :Align ":"<CR>
 
 " Because I fuck up all the time.
 cmap Wq wq 
@@ -195,8 +194,10 @@ cmap WQ wq
 
 " ----------------------------------------------------
 " Abbreviations
-iab Ydate <C-R>=strftime("%m/%d/%y")<CR>
-  " Example: 8/16/00
+iab Ydatekey <C-R>=strftime("%Y%m%d")<CR>
+  " Example: 20100101 
+iab Ydate <C-R>=strftime("%Y-%m-%d")<CR>
+  " Example: 2010-01-01 
 iab Ytime <C-R>=strftime("%H:%M")<CR>
   " Example: 14:28
 iab Ydt   <C-R>=strftime("%m/%d/%y %T")<CR>
