@@ -46,6 +46,17 @@ if has("autocmd")
   autocmd BufRead,BufNewFile *.t set ft=perl
 endif
 
+
+" ----------------------------------------------------
+" Load plugins
+
+" l9 is required by fuzzy finder
+set runtimepath+=$HOME/.vim/plugins/l9
+set runtimepath+=$HOME/.vim/plugins/fuzzyfinder
+
+
+" ----------------------------------------------------
+" Basics
 let loaded_matchparen = 1
 set confirm
 set autoindent
@@ -110,6 +121,9 @@ let mapleader = ","
 
 " strip all trailing whitespace 
 nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
+
+" fuzzy finder
+nnoremap <leader>t :FufFile **/<CR>
 
 " ----------------------------------------------------
 " search
