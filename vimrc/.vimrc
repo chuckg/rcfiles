@@ -22,7 +22,10 @@ if has("autocmd")
     \   exe "normal g`\"" |
     \ endif
 
-  autocmd FocusLost * :wa
+  " Autosave changes when focus is lost. Commented out because this really
+  " wreaks havoc if you're doing any kind of branching with git and leave the
+  " file buffers open.
+  " autocmd FocusLost * :wa
 
   autocmd FileType procmail  call PoundComment()
   autocmd FileType muttrc    call PoundComment()
