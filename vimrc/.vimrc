@@ -43,7 +43,9 @@ if has("autocmd")
     \ call PHPPrepare()
   autocmd FileType make      call MakePrepare()
   autocmd FileType sql       call DashComment()
+  
   autocmd BufRead,BufNewFile *.t set ft=perl
+  autocmd BufRead,BufNewFile *.thor set ft=ruby
 endif
 
 
