@@ -50,9 +50,13 @@ endif
 " ----------------------------------------------------
 " Load plugins
 
+" fuzzyfinder
 " l9 is required by fuzzy finder
 set runtimepath+=$HOME/.vim/plugins/l9
 set runtimepath+=$HOME/.vim/plugins/fuzzyfinder
+
+" ack
+set runtimepath+=$HOME/.vim/plugins/ack
 
 
 " ----------------------------------------------------
@@ -124,6 +128,10 @@ nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
 
 " fuzzy finder
 nnoremap <leader>t :FufFile **/<CR>
+
+" ack 
+" Use ACK_OPTIONS to place options by default or check the manpage to use .ackrc
+nnoremap <leader>a :Ack 
 
 " ----------------------------------------------------
 " search
