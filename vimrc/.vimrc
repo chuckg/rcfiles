@@ -128,8 +128,11 @@ let mapleader = ","
 " strip all trailing whitespace 
 nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
 
-" fuzzy finder
+" fuzzyfinder
+" - search
 nnoremap <leader>t :FufFile **/<CR>
+" - clear cache
+nnoremap <leader>T :FufRenewCache<CR>
 
 " ack 
 " Use ACK_OPTIONS to place options by default or check the manpage to use .ackrc
