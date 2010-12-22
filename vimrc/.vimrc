@@ -60,6 +60,9 @@ set runtimepath+=$HOME/.vim/plugins/fuzzyfinder
 " ack
 set runtimepath+=$HOME/.vim/plugins/ack
 
+" scratch
+set runtimepath+=$HOME/.vim/plugins/scratch
+
 
 " ----------------------------------------------------
 " Basics
@@ -137,6 +140,10 @@ nnoremap <leader>T :FufRenewCache<CR>
 " ack 
 " Use ACK_OPTIONS to place options by default or check the manpage to use .ackrc
 nnoremap <leader>a :Ack 
+
+" scratch
+nnoremap <leader>s :Sscratch<CR>
+nnoremap <leader>S :Scratch<CR>
 
 " ----------------------------------------------------
 " search
