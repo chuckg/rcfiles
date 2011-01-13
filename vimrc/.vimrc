@@ -52,16 +52,21 @@ endif
 " ----------------------------------------------------
 " Load plugins
 
+" ack
+set runtimepath+=$HOME/.vim/plugins/ack
+
 " fuzzyfinder
 " l9 is required by fuzzy finder
 set runtimepath+=$HOME/.vim/plugins/l9
 set runtimepath+=$HOME/.vim/plugins/fuzzyfinder
 
-" ack
-set runtimepath+=$HOME/.vim/plugins/ack
+" matchit
+set runtimepath+=$HOME/.vim/plugins/matchit
 
 " scratch
 set runtimepath+=$HOME/.vim/plugins/scratch
+
+
 
 
 " ----------------------------------------------------
@@ -155,10 +160,10 @@ set showmatch
 set hlsearch
 " clear current search
 nnoremap <leader><space> :noh<cr>
-" use tab keys to match bracket pairs
-nnoremap <tab> %
-vnoremap <tab> %
 
+" use tab keys to match bracket pairs
+nmap <tab> %
+vmap <tab> %
 
 " ----------------------------------------------------
 " pasting
