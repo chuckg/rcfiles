@@ -67,6 +67,15 @@ set runtimepath+=$HOME/.vim/plugins/matchit
 " scratch
 set runtimepath+=$HOME/.vim/plugins/scratch
 
+" textobj-rubyblock
+" http://vimcasts.org/blog/2010/12/a-text-object-for-ruby-blocks/
+"   var - visual all ruby block
+"   vir - visual inner ruby block
+"   ar  - all ruby block
+"   ir  - inner ruby block
+" textobj-user is required by rubyblock
+set runtimepath+=$HOME/.vim/plugins/textobj-user
+set runtimepath+=$HOME/.vim/plugins/textobj-rubyblock
 
 
 
