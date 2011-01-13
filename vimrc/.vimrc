@@ -60,7 +60,8 @@ set runtimepath+=$HOME/.vim/plugins/ack
 set runtimepath+=$HOME/.vim/plugins/l9
 set runtimepath+=$HOME/.vim/plugins/fuzzyfinder
 
-" matchit
+" matchit 
+" add it via plugins to ensure we have it in every environment
 set runtimepath+=$HOME/.vim/plugins/matchit
 
 " scratch
