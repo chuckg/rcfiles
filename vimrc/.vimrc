@@ -52,6 +52,9 @@ endif
 " ----------------------------------------------------
 " Load plugins
 
+" man
+runtime ftplugin/man.vim
+
 " ack
 set runtimepath+=$HOME/.vim/plugins/ack
 
@@ -91,6 +94,7 @@ set nocompatible
 set esckeys
 set backspace=indent,eol,start
 set nobackup
+set noswapfile
 set noerrorbells
 set magic
 

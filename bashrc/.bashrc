@@ -88,8 +88,10 @@ if [ $OSTYPE == 'darwin10.0' ]; then
     # function ll(){ ls -alh -G $*| egrep "^d"; ls -lah -G $* 2>&-| egrep -v "^d|total "; }
 else
     alias ls='ls -F --color=auto'
-    function l(){ ls -lh --color=always $*| egrep "^d"; ls -lh --color=always $* 2>&-| egrep -v "^d|total "; }
-    function ll(){ ls -alh --color=always $*| egrep "^d"; ls -lah --color=always $* 2>&-| egrep -v "^d|total "; }
+    alias l='ls -lhG'
+    alias ll='ls -lahG'
+    # function l(){ ls -lh --color=always $*| egrep "^d"; ls -lh --color=always $* 2>&-| egrep -v "^d|total "; }
+    # function ll(){ ls -alh --color=always $*| egrep "^d"; ls -lah --color=always $* 2>&-| egrep -v "^d|total "; }
 fi;
 
 if [ "$VIMSH" ]; then
