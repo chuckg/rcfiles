@@ -63,6 +63,11 @@ set runtimepath+=$HOME/.vim/plugins/ack
 set runtimepath+=$HOME/.vim/plugins/l9
 set runtimepath+=$HOME/.vim/plugins/fuzzyfinder
 
+" Added exclude for vendor directory
+let g:fuf_file_exclude         = '\v\~$|\.(o|exe|dll|bak|orig|sw[po])$|(^|[/\\])\.?(hg|git|bzr|vendor)($|[/\\])'
+let g:fuf_coveragefile_exclude = '\v\~$|\.(o|exe|dll|bak|orig|sw[po])$|(^|[/\\])\.?(hg|git|bzr|vendor)($|[/\\])'
+let g:fuf_dir_exclude          = '\v(^|[/\\])\.?(hg|git|bzr|vendor)($|[/\\])'
+
 " matchit 
 " add it via plugins to ensure we have it in every environment
 set runtimepath+=$HOME/.vim/plugins/matchit
