@@ -58,6 +58,9 @@ runtime ftplugin/man.vim
 " ack
 set runtimepath+=$HOME/.vim/plugins/ack
 
+" fugitive: sexy git wrapper
+set runtimepath+=$HOME/.vim/plugins/fugitive
+
 " fuzzyfinder
 " l9 is required by fuzzy finder
 set runtimepath+=$HOME/.vim/plugins/l9
@@ -152,8 +155,15 @@ set comments=b:#,:%,://,fb:-,n:>,n:),s1:/*,mb:*,ex:*/
 " leader (of men) 
 let mapleader = ","
 
-" strip all trailing whitespace 
-nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
+" ack 
+" Use ACK_OPTIONS to place options by default or check the manpage to use .ackrc
+nnoremap <leader>a :Ack 
+
+" fugitive 
+nnoremap <leader>gb :Gblame<CR>
+nnoremap <leader>gg :Ggrep 
+nnoremap <leader>gs :Gstatus<CR>
+nnoremap <leader>gm :Gmove 
 
 " fuzzyfinder
 " - search
@@ -161,13 +171,13 @@ nnoremap <leader>t :FufFile **/<CR>
 " - clear cache
 nnoremap <leader>T :FufRenewCache<CR>
 
-" ack 
-" Use ACK_OPTIONS to place options by default or check the manpage to use .ackrc
-nnoremap <leader>a :Ack 
-
 " scratch
 nnoremap <leader>s :Sscratch<CR>
 nnoremap <leader>S :Scratch<CR>
+
+" strip all trailing whitespace 
+nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
+
 
 " ----------------------------------------------------
 " search
