@@ -75,6 +75,9 @@ let g:fuf_dir_exclude          = '\v(^|[/\\])\.?(hg|git|bzr|vendor)($|[/\\])'
 " add it via plugins to ensure we have it in every environment
 set runtimepath+=$HOME/.vim/plugins/matchit
 
+" ruby_focused_unit_test
+set runtimepath+=$HOME/.vim/plugins/ruby_focused_unit_test
+
 " scratch
 set runtimepath+=$HOME/.vim/plugins/scratch
 
@@ -171,6 +174,12 @@ nnoremap <leader>t :FufFile **/<CR>
 " - clear cache
 nnoremap <leader>T :FufRenewCache<CR>
 
+" ruby_focused_unit_test
+nnoremap <Leader>ra :wa<CR> :RunAllRubyTests<CR>
+nnoremap <Leader>rc :wa<CR> :RunRubyFocusedContext<CR>
+nnoremap <Leader>rf :wa<CR> :RunRubyFocusedUnitTest<CR>
+nnoremap <Leader>rl :wa<CR> :RunLastRubyTest<CR>
+
 " scratch
 nnoremap <leader>s :Sscratch<CR>
 nnoremap <leader>S :Scratch<CR>
@@ -262,6 +271,14 @@ vmap <C-L>  :Align "="<CR>
 cmap Wq wq 
 cmap WQ wq
 
+" buffer resizing mappings (shift + arrow key)
+nnoremap <C-S-Up>    <C-W>+
+nnoremap <C-S-Down>  <C-W>-
+nnoremap <C-S-Left>  <C-W><
+nnoremap <C-S-Right> <C-W>>
+
+" select the lines which were just pasted
+noremap vv `[V`]
 
 " ----------------------------------------------------
 " Abbreviations
