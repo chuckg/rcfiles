@@ -86,8 +86,8 @@ set runtimepath+=$HOME/.vim/plugins/scratch
 "   ar  - all ruby block
 "   ir  - inner ruby block
 " textobj-user is required by rubyblock
-set runtimepath+=$HOME/.vim/plugins/textobj-user
-set runtimepath+=$HOME/.vim/plugins/textobj-rubyblock
+set runtimepath+=$HOME/.vim/plugins/vim-textobj-user
+set runtimepath+=$HOME/.vim/plugins/vim-textobj-rubyblock
 
 
 
