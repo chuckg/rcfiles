@@ -8,7 +8,7 @@ export MANPATH=:$MANPATH
 
 # If you need to customize this, toss it in .bash_profile.
 if [ -z $HOME ]; then
-    if [ $OSTYPE == 'darwin10.0' ]; then
+    if [[ $OSTYPE == *darwin* ]]; then
         export HOME=/Users/$USER
     else
         export HOME=/home/$USER
@@ -79,7 +79,7 @@ if [ -f "$HOME/.aliases" ]; then
 	. $HOME/.aliases
 fi 
 
-if [ $OSTYPE == 'darwin10.0' ]; then
+if [[ $OSTYPE == *darwin* ]]; then
     alias ls='ls -FG'
     alias l='ls -lhG'
     alias ll='ls -lahG'

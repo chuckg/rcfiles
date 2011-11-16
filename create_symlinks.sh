@@ -1,10 +1,14 @@
 #!/bin/bash
 
-if [ $OSTYPE == 'darwin10.0' ];
+if [[ $OSTYPE == *darwin* ]];
 then
+    # Macports
     if [ -f /opt/local/bin/gfind ];
     then
         gnufind=/opt/local/bin/gfind
+    elif [ -f /usr/local/bin/gfind ]; 
+    then 
+   	gnufind=/usr/local/bin/gfind 
     fi;
 else 
     if [ -n "`find --version | head -n 1 | grep GNU`" ];

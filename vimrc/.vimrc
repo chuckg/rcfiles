@@ -137,7 +137,7 @@ set updatetime=400  "this makes Tlist update which function you are in much fast
 
 match todo /@@@/
 
-set wrap
+set nowrap
 set linebreak
 
 set history=50
@@ -187,6 +187,9 @@ nnoremap <leader>S :Scratch<CR>
 " strip all trailing whitespace 
 nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
 
+" shortcut to save all
+nmap <Leader>ss :wa<cr>
+
 
 " ----------------------------------------------------
 " search
@@ -219,6 +222,12 @@ inoremap <MiddleMouse> <C-O>:set paste<cr><MiddleMouse><C-O>:set nopaste<CR>
 set winminheight=0      " allows windows not visible to have 0 height
 map  <C-J> <C-W>j<C-W>_ 
 map  <C-K> <C-W>k<C-W>_
+
+" buffer resizing mappings (shift + arrow key)
+nnoremap <S-Up> <c-w>+
+nnoremap <S-Down> <c-w>-
+nnoremap <S-Left> <c-w><
+nnoremap <S-Right> <c-w>>
 
 
 " ----------------------------------------------------
@@ -271,14 +280,12 @@ vmap <C-L>  :Align "="<CR>
 cmap Wq wq 
 cmap WQ wq
 
-" buffer resizing mappings (shift + arrow key)
-nnoremap <C-S-Up>    <C-W>+
-nnoremap <C-S-Down>  <C-W>-
-nnoremap <C-S-Left>  <C-W><
-nnoremap <C-S-Right> <C-W>>
-
 " select the lines which were just pasted
 noremap vv `[V`]
+
+" insert blank lines without going into insert mode
+nmap go o<esc>
+nmap gO O<esc>
 
 " ----------------------------------------------------
 " Abbreviations
