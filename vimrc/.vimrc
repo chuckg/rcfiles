@@ -1,5 +1,3 @@
-version 6.1 
-
 filetype on
 syntax on
 colors elflord
@@ -38,12 +36,12 @@ if has("autocmd")
     \ call PoundComment() |
     \ call SmallAssShiftWidth()
   autocmd FileType html      call HtmlPrepare()
-  autocmd FileType php       
+  autocmd FileType php
     \ call HtmlPrepare() |
     \ call PHPPrepare()
   autocmd FileType make      call MakePrepare()
   autocmd FileType sql       call DashComment()
-  
+
   autocmd BufRead,BufNewFile *.t set ft=perl
   autocmd BufRead,BufNewFile *.thor set ft=ruby
 endif
@@ -71,7 +69,7 @@ let g:fuf_file_exclude         = '\v\~$|\.(o|exe|dll|bak|orig|sw[po])$|(^|[/\\])
 let g:fuf_coveragefile_exclude = '\v\~$|\.(o|exe|dll|bak|orig|sw[po])$|(^|[/\\])\.?(hg|git|bzr|vendor)($|[/\\])'
 let g:fuf_dir_exclude          = '\v(^|[/\\])\.?(hg|git|bzr|vendor)($|[/\\])'
 
-" matchit 
+" matchit
 " add it via plugins to ensure we have it in every environment
 set runtimepath+=$HOME/.vim/plugins/matchit
 
@@ -128,6 +126,10 @@ set scrolloff=2				" cursors stays 2 lines below/above top/bottom
 
 set foldmethod=manual
 
+" tab completion
+set wildignore=*.o,*.r,*.so,*.tar,*.tgz
+set wildmode=list:longest,full
+
 set updatetime=400  "this makes Tlist update which function you are in much faster.
 
 " open a quick fix window whenever there is something to put in it.
@@ -155,18 +157,18 @@ set comments=b:#,:%,://,fb:-,n:>,n:),s1:/*,mb:*,ex:*/
 
 
 " ----------------------------------------------------
-" leader (of men) 
+" leader (of men)
 let mapleader = ","
 
-" ack 
+" ack
 " Use ACK_OPTIONS to place options by default or check the manpage to use .ackrc
-nnoremap <leader>a :Ack 
+nnoremap <leader>a :Ack
 
-" fugitive 
+" fugitive
 nnoremap <leader>gb :Gblame<CR>
-nnoremap <leader>gg :Ggrep 
+nnoremap <leader>gg :Ggrep
 nnoremap <leader>gs :Gstatus<CR>
-nnoremap <leader>gm :Gmove 
+nnoremap <leader>gm :Gmove
 
 " fuzzyfinder
 " - search
@@ -184,19 +186,22 @@ nnoremap <Leader>rl :wa<CR> :RunLastRubyTest<CR>
 nnoremap <leader>s :Sscratch<CR>
 nnoremap <leader>S :Scratch<CR>
 
-" strip all trailing whitespace 
+" strip all trailing whitespace
 nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
 
 " shortcut to save all
 nmap <Leader>ss :wa<cr>
 
+" open an edit command with the path of the currently edited file filled in
+map <Leader>e :e <C-R>=expand("%:p:h") . "/" <CR>
+
 
 " ----------------------------------------------------
 " search
 "   - gdefault applies substitutions globally on lines by default
-"   - incsearch/showmatch/hlsearch setup search highlighting as you type 
+"   - incsearch/showmatch/hlsearch setup search highlighting as you type
 set gdefault
-set incsearch   
+set incsearch
 set showmatch
 set hlsearch
 " clear current search
@@ -211,7 +216,7 @@ vmap <tab> %
 let paste_mode = 0 " 0 = normal, 1 = paste
 set pastetoggle=<F12>
 nmap <C-P> :set paste!<bar>set paste?<CR>
-" The new and improved toggle paste; gives pastetoggle a target 
+" The new and improved toggle paste; gives pastetoggle a target
 nmap <F12> :call Paste_on_off()<CR>
 " Ian had this in here, I assume it toggles pasting vai middlemouse clicks.
 inoremap <MiddleMouse> <C-O>:set paste<cr><MiddleMouse><C-O>:set nopaste<CR>
@@ -219,8 +224,14 @@ inoremap <MiddleMouse> <C-O>:set paste<cr><MiddleMouse><C-O>:set nopaste<CR>
 
 " ----------------------------------------------------
 " window management
-set winminheight=0      " allows windows not visible to have 0 height
-map  <C-J> <C-W>j<C-W>_ 
+
+" jump to an existing buffer for files that are already open
+set	switchbuf=useopen
+
+" allows windows not visible to have 0 height
+set winminheight=0
+
+map  <C-J> <C-W>j<C-W>_
 map  <C-K> <C-W>k<C-W>_
 
 " buffer resizing mappings (shift + arrow key)
@@ -245,15 +256,6 @@ inoremap <F1> <ESC>
 nnoremap <F1> <ESC>
 vnoremap <F1> <ESC>
 
-" TODO: Add automatic folding for different languages.
-" fold function bodies in c
-" nmap <F4> ]]V][zf
-
-" sessions - Control-Q to save a session, Control-S to reload it.
-" set sessionoptions=blank,buffers,curdir,folds,help,resize,tabpages,winsize
-" map <C-Q> :mks! ~/.vim/.session <CR>
-" map <C-S> :source ~/.vim/.session <CR>
-
 " make <c-g> more verbose
 " proposed by Rajesh Kallingal <RajeshKallingal@email.com>
 nnoremap <c-g> 2<c-g>
@@ -277,7 +279,7 @@ vmap p            d"0P
 vmap <C-L>  :Align "="<CR>
 
 " Because I fuck up all the time.
-cmap Wq wq 
+cmap Wq wq
 cmap WQ wq
 
 " select the lines which were just pasted
@@ -287,12 +289,16 @@ noremap vv `[V`]
 nmap go o<esc>
 nmap gO O<esc>
 
+" Inserts the path of the currently edited file into a command
+" " Command mode: Ctrl+P
+cmap <C-P> <C-R>=expand("%:p:h") . "/" <CR>
+
 " ----------------------------------------------------
 " Abbreviations
 iab Ydatekey <C-R>=strftime("%Y%m%d")<CR>
-  " Example: 20100101 
+  " Example: 20100101
 iab Ydate <C-R>=strftime("%Y-%m-%d")<CR>
-  " Example: 2010-01-01 
+  " Example: 2010-01-01
 iab Ytime <C-R>=strftime("%H:%M")<CR>
   " Example: 14:28
 iab Ydt   <C-R>=strftime("%m/%d/%y %T")<CR>
@@ -429,38 +435,6 @@ fun! AlignOnRE(re) range
         let i = i + 1
     endwhile
 endfun
-" Add this to your .vimrc file and it'll automatically fold perl functions
-" (and possibly other languages that define a subroutine with "sub ...")
-" Once you open a perl file, you'll see all functions are folded. You can then
-" move to a function and (space) or "zo" to open it, "zc" to close it, "zR" to
-" open all folds (normal file) and "zM" to re-fold all folds.  It makes
-" skimming over a file a breeze. See ":help folding" for more info on folding
-" in general.
-"
-"function GetPerlFold()
-"   if getline(v:lnum) =~ '^\s*sub'
-"      return ">1"
-"   elseif getline(v:lnum + 2) =~ '^\s*sub' && getline(v:lnum + 1) =~ '^\s*$'
-"      return "<1"
-"   else
-"      return "="
-"   endif
-"endfunction
-"setlocal foldexpr=GetPerlFold()
-"setlocal foldmethod=expr 
-
-" This was some scroll wheel stuff...
-"
-":map <M-Esc>[62~ <MouseDown>
-":map! <M-Esc>[62~ <MouseDown>
-":map <M-Esc>[63~ <MouseUp>
-":map! <M-Esc>[63~ <MouseUp>
-":map <M-Esc>[64~ <S-MouseDown>
-":map! <M-Esc>[64~ <S-MouseDown>
-":map <M-Esc>[65~ <S-MouseUp>
-":map! <M-Esc>[65~ <S-MouseUp>
-
-
 
 " the following lines will enable
 " item comments.  I'm not sure how though...
@@ -537,36 +511,9 @@ set	cindent
 "set cinoptions=>s,e0,n0,f0,{0,}0,^0,:s,=s,ps,t0,+s,(0,u0,)20,*30,g0
 set cinoptions=>s,e0,n0,f0,{0,}0,^0,:s,=s,ps,t0,+s,(s,us,)20,*30,g0
 
-set	switchbuf=useopen
-set	smartcase
-set	infercase
-if version < 600
-    set	shortmess=astI
-endif
-set	incsearch
 set	complete=.,w,b,u,t,i
 
-" [-- PATH SETUP --]
-" if v:version >= 600
-"     set path=.,~/include/**,~/src/**2,~/.vim/**2,~/lib/**2,/usr/include/**,/usr/X11R6/include/,/usr/local/include,/usr/lib/gcc-lib/i386-linux/2.95.2/include
-"     set path=.,~/include/**,/usr/include/**,/usr/X11R6/include/,/usr/local/include,/usr/lib/gcc-lib/i386-linux/2.95.2/include
-" endif
-
-set path=.,~/include,/usr/local/include,/usr/include,/usr/include/g++-3,/usr/X11R6/include/,/usr/lib/gcc-lib/i386-linux/2.95.2/include
-
-" if isdirectory(expand("~/pub/mpich/include/"))
-"     set path+=~/pub/mpich/include,~/pub/mpich/build/LINUX/ch_p4/include/,~/pub/mpich/build/LINUX/ch_p4/include/c++/
-" else
-"     set path+=/usr/lib/mpich/include,/usr/lib/mpich/build/LINUX/ch_p4/include/,/usr/lib/mpich/build/LINUX/ch_p4/include/c++
-" endif
-" set path+=..,../../
-
 " set     tags=tags,zwei,drei,vier
-set wildignore=*.o,*.r,*.so,*.tar,*.tgz
-"set wildmode=longest:list,full
-set wildmode=list:longest,list:full
-"set wildmode=longest:full,full
-" set wildmenu
 
 " Environment specific settings.
 if strlen(findfile("vimrc_env", $HOME . "/.vim"))
