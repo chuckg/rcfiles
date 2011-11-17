@@ -35,8 +35,7 @@ set laststatus=2     " Always put a status line at the bottem of the window.
 " Status line includes git branch
 set statusline=[%n]\ %<%.99f\ %h%w%y%r%m\ %{ETry('fugitive#statusline')}%#ErrorMsg#%*%=%-16(line\ %l\ of\ %L,\ col\ %c,\ %)%P
 
-" set nolist
-set list 
+set nolist
 set listchars=tab:»·,trail:·
 
 let loaded_matchparen = 1     " Don't load the match paren plugin.
