@@ -64,6 +64,9 @@ let g:fuf_dir_exclude          = '\v(^|[/\\])\.?(hg|git|bzr|vendor)($|[/\\])'
 " matchit
 set runtimepath+=$HOME/.vim/plugins/matchit
 
+" NERDcommenter: easy comments
+set runtimepath+=$HOME/.vim/plugins/nerdcommenter
+
 " ruby_focused_unit_test
 set runtimepath+=$HOME/.vim/plugins/ruby_focused_unit_test
 
@@ -138,7 +141,7 @@ set laststatus=2
 set scrolloff=2				
 
 " Status line includes git branch
-set statusline=[%n]\ %<%.99f\ %h%w%y%r%m%{ETry('fugitive#statusline')}%#ErrorMsg#%*%=%-16(line\ %l\ of\ %L,\ col\ %c,\ %)%P
+set statusline=[%n]\ %<%.99f\ %h%w%y%r%m\ %{ETry('fugitive#statusline')}%#ErrorMsg#%*%=%-16(line\ %l\ of\ %L,\ col\ %c,\ %)%P
 
 " jump to an existing buffer for files that are already open
 set	switchbuf=useopen
@@ -240,6 +243,13 @@ nnoremap <S-Right> <c-w>>
 
 " ----------------------------------------------------
 " Mappings: text manipulation/navigation
+
+" comment/uncomment: mappings to nerdcommenter
+nmap - :call NERDComment(0, 'alignLeft')<CR>
+vmap - :call NERDComment(1, 'alignLeft')<CR>
+
+nmap _ :call NERDComment(0, 'uncomment')<CR>
+vmap _ :call NERDComment(0, 'uncomment')<CR>
 
 " use tab keys to match bracket pairs
 nmap <tab> %
