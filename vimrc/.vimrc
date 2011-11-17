@@ -5,45 +5,37 @@ colors elflord
 " Only do this part when compiled with support for autocommands.
 if has("autocmd")
 
-  " Enable file type detection.
-  " Use the default filetype settings, so that mail gets 'tw' set to 72,
-  " 'cindent' is on in C files, etc.
-  " Also load indent files, to automatically do language-dependent indenting.
-  filetype plugin indent on
+    " Enable file type detection.
+    " Use the default filetype settings, so that mail gets 'tw' set to 72,
+    " 'cindent' is on in C files, etc.
+    " Also load indent files, to automatically do language-dependent indenting.
+    filetype plugin indent on
 
-  " For all text files set 'textwidth' to 78 characters.
-  au FileType text setlocal tw=78
+    " For all text files set 'textwidth' to 78 characters.
+    au FileType text setlocal tw=78
 
-  " When editing a file, always jump to the last known cursor position.
-  autocmd BufReadPost *
-    \ if line("'\"") > 0 && line("'\"") <= line("$") |
-    \   exe "normal g`\"" |
-    \ endif
+    " When editing a file, always jump to the last known cursor position.
+    autocmd BufReadPost *
+        \ if line("'\"") > 0 && line("'\"") <= line("$") |
+        \   exe "normal g`\"" |
+        \ endif
 
-  " Autosave changes when focus is lost. Commented out because this really
-  " wreaks havoc if you're doing any kind of branching with git and leave the
-  " file buffers open.
-  " autocmd FocusLost * :wa
+    " Autosave changes when focus is lost. Commented out because this really
+    " wreaks havoc if you're doing any kind of branching with git and leave the
+    " file buffers open.
+    " autocmd FocusLost * :wa
 
-  autocmd FileType procmail  call PoundComment()
-  autocmd FileType muttrc    call PoundComment()
-  autocmd FileType python    call PoundComment()
-  autocmd FileType perl      call PoundComment()
-  autocmd FileType cgi       call PoundComment()
-  autocmd FileType csh       call PoundComment()
-  autocmd FileType sh        call PoundComment()
-  autocmd FileType ruby
-    \ call PoundComment() |
-    \ call SmallAssShiftWidth()
-  autocmd FileType html      call HtmlPrepare()
-  autocmd FileType php
-    \ call HtmlPrepare() |
-    \ call PHPPrepare()
-  autocmd FileType make      call MakePrepare()
-  autocmd FileType sql       call DashComment()
+    " Perl Test::More file format.
+    autocmd BufRead,BufNewFile *.t set ft=perl
 
-  autocmd BufRead,BufNewFile *.t set ft=perl
-  autocmd BufRead,BufNewFile *.thor set ft=ruby
+    " Thorfile, Rakefile, Vagrantfile, and Gemfile are Ruby
+    autocmd BufRead,BufNewFile {Gemfile,Rakefile,Vagrantfile,Thorfile,config.ru} set ft=ruby
+    
+    " JSON is JS
+    autocmd BufNewFile,BufRead *.json set ai filetype=javascript
+
+    " md, markdown, and mk are markdown and define buffer-local preview
+    autocmd BufRead,BufNewFile *.{md,markdown,mdown,mkd,mkdn} set ft=markdown
 endif
 
 
@@ -90,7 +82,6 @@ set runtimepath+=$HOME/.vim/plugins/vim-textobj-user
 set runtimepath+=$HOME/.vim/plugins/vim-textobj-rubyblock
 
 
-
 " ----------------------------------------------------
 " Basics
 let loaded_matchparen = 1
@@ -116,10 +107,8 @@ set smarttab
 set smartcase
 set infercase
 set textwidth=79
-set laststatus=2  "always put a status line at the bottem of the window.
 set visualbell
 set ruler
-set showmatch  "matching brackets.
 set showcmd
 set showfulltag
 set scrolloff=2				" cursors stays 2 lines below/above top/bottom
@@ -132,23 +121,13 @@ set wildmode=list:longest,full
 
 set updatetime=400  "this makes Tlist update which function you are in much faster.
 
-" open a quick fix window whenever there is something to put in it.
-:cwindow
-" put cscope results in a quick fix window.
-"set csqf=s-,c-,d-,i-,t-,e-
-
-match todo /@@@/
-
 set nowrap
 set linebreak
 
 set history=50
 set formatoptions=cqrt
-set hlsearch
-set incsearch
 set nolist
 set listchars=tab:»·,trail:·
-"set listchars=tab:>-,trail:+
 set whichwrap=<,>,h,l,[,]
 
 set number
@@ -223,7 +202,13 @@ inoremap <MiddleMouse> <C-O>:set paste<cr><MiddleMouse><C-O>:set nopaste<CR>
 
 
 " ----------------------------------------------------
-" window management
+" window settings/management
+
+" always put a status line at the bottem of the window.
+set laststatus=2  
+
+" Status line includes git branch
+set statusline=[%n]\ %<%.99f\ %h%w%y%r%m%{ETry('fugitive#statusline')}%#ErrorMsg#%*%=%-16(\ %l,%c-%v\ %)%P
 
 " jump to an existing buffer for files that are already open
 set	switchbuf=useopen
@@ -293,8 +278,10 @@ nmap gO O<esc>
 " " Command mode: Ctrl+P
 cmap <C-P> <C-R>=expand("%:p:h") . "/" <CR>
 
+
 " ----------------------------------------------------
-" Abbreviations
+" Abbreviations and highlights
+
 iab Ydatekey <C-R>=strftime("%Y%m%d")<CR>
   " Example: 20100101
 iab Ydate <C-R>=strftime("%Y-%m-%d")<CR>
@@ -312,48 +299,10 @@ iab durring during
 iab untill until
 iab allways always
 
+match todo /@@@/
 
 " ----------------------------------------------------
 " Functions
-function! PoundComment()
-   map - mx:s/^/# /<CR>/<C-p><C-p><CR>'x
-   map _ mx:s/^\s*# \=//<CR>/<C-p><C-p><CR>'x
-   set comments=:#
-endfunction
-
-function! DashComment()
-   map - mx:s/^/-- /<CR>/<C-p><C-p><CR>'x
-   map _ mx:s/^\s*-- \=//<CR>/<C-p><C-p><CR>'x
-   set comments=:--
-endfunction
-
-function! SmallAssShiftWidth()
-  set shiftwidth=2
-  set tabstop=2
-endfunction
-
-function! HtmlPrepare()
-"   source $VIM/vimcurrent/syntax/html.vim
-"   source $VIM/vimcurrent/indent/html.vim
-   set matchpairs+=<:>
-   set comments=:<li>
-endfunction
-
-function! PHPPrepare()
-"   source $VIM/vimcurrent/syntax/php.vim
-"   source $VIM/vimcurrent/indent/php.vim
-   map - mx:s/^/# /<CR>/<C-p><C-p><CR>'x
-   map _ mx:s/^\s*# \=//<CR>/<C-p><C-p><CR>'x
-endfunction
-
-function! MakePrepare()
-   call PoundComment()
-   set  noexpandtab
-   set  shiftwidth=8
-   set  tabstop=8
-   set  softtabstop=8
-endfunction
-
 func! Paste_on_off()
     if g:paste_mode == 0
         set paste
@@ -365,12 +314,14 @@ func! Paste_on_off()
     return
 endfunc
 
- " remember folds
-"au BufWinLeave *.c mkview
-"au BufWinEnter *.c silent loadview
-"au BufWinLeave *.h mkview
-"au BufWinEnter *.h silent loadview
-
+" augment status line
+function! ETry(function, ...)
+    if exists('*'.a:function)
+        return call(a:function, a:000)
+    else
+        return ''
+    endif
+endfunction
 
 " ----------------------------------------------------
 " Color Settings
@@ -500,11 +451,8 @@ amenu Misc.Spell\ Check\ Menu						:runtime my/spellcheck.vim<CR>
 amenu Misc.All\ Chars\ Menu							:runtime my/char_menu.vim<CR>
 
 
-"
-"
-" EXPERIMENTAL:
-"
-"
+" ----------------------------------------------------
+" the "wtf are these" section
 
 set	cindent
 "set	cinkeys=0{,0},:,!,o,O,e
@@ -513,9 +461,16 @@ set cinoptions=>s,e0,n0,f0,{0,}0,^0,:s,=s,ps,t0,+s,(s,us,)20,*30,g0
 
 set	complete=.,w,b,u,t,i
 
-" set     tags=tags,zwei,drei,vier
+" open a quick fix window whenever there is something to put in it.
+:cwindow
 
-" Environment specific settings.
-if strlen(findfile("vimrc_env", $HOME . "/.vim"))
-    source $HOME/.vim/vimrc_env
+
+" ----------------------------------------------------
+" Load local configuration options
+if filereadable("$HOME/.vimrc_local")
+    source $HOME/.vimrc_local
+endif
+
+if filereadable("$HOME/.gvimrc_local")
+    source $HOME/.gvimrc_local
 endif
