@@ -62,7 +62,6 @@ let g:fuf_coveragefile_exclude = '\v\~$|\.(o|exe|dll|bak|orig|sw[po])$|(^|[/\\])
 let g:fuf_dir_exclude          = '\v(^|[/\\])\.?(hg|git|bzr|vendor)($|[/\\])'
 
 " matchit
-" add it via plugins to ensure we have it in every environment
 set runtimepath+=$HOME/.vim/plugins/matchit
 
 " ruby_focused_unit_test
@@ -111,7 +110,6 @@ set visualbell
 set ruler
 set showcmd
 set showfulltag
-set scrolloff=2				" cursors stays 2 lines below/above top/bottom
 
 set foldmethod=manual
 
@@ -131,8 +129,22 @@ set listchars=tab:»·,trail:·
 set whichwrap=<,>,h,l,[,]
 
 set number
-set stl=%t%y%r%m%=line\ %l\ of\ %L,\ col\ %c,\ %p%%
 set comments=b:#,:%,://,fb:-,n:>,n:),s1:/*,mb:*,ex:*/
+
+" always put a status line at the bottem of the window.
+set laststatus=2  
+
+" cursors stays 2 lines below/above top/bottom
+set scrolloff=2				
+
+" Status line includes git branch
+set statusline=[%n]\ %<%.99f\ %h%w%y%r%m%{ETry('fugitive#statusline')}%#ErrorMsg#%*%=%-16(line\ %l\ of\ %L,\ col\ %c,\ %)%P
+
+" jump to an existing buffer for files that are already open
+set	switchbuf=useopen
+
+" allows windows not visible to have 0 height
+set winminheight=0
 
 
 " ----------------------------------------------------
@@ -186,9 +198,10 @@ set hlsearch
 " clear current search
 nnoremap <leader><space> :noh<cr>
 
-" use tab keys to match bracket pairs
-nmap <tab> %
-vmap <tab> %
+" Hitting '#' in visual mode does a search on the current selection. Will not
+" work with multi-line selection.
+vnoremap # <esc>:let save_reg=@"<cr>gvy:let @/=@"<cr>:let @"=save_reg<cr>?<cr>
+
 
 " ----------------------------------------------------
 " pasting
@@ -202,24 +215,23 @@ inoremap <MiddleMouse> <C-O>:set paste<cr><MiddleMouse><C-O>:set nopaste<CR>
 
 
 " ----------------------------------------------------
-" window settings/management
+" Mappings: window/buffer manipulation
 
-" always put a status line at the bottem of the window.
-set laststatus=2  
+" Toggle wrapping
+nmap <C-H> :set wrap!<bar>set wrap?<CR>
 
-" Status line includes git branch
-set statusline=[%n]\ %<%.99f\ %h%w%y%r%m%{ETry('fugitive#statusline')}%#ErrorMsg#%*%=%-16(\ %l,%c-%v\ %)%P
+" Toggle line numbers
+nmap <C-N> :set number!<bar>set number?<CR>
 
-" jump to an existing buffer for files that are already open
-set	switchbuf=useopen
+" Cycle through the buffers
+map  <F7>  :bp<CR>
+map  <F8>  :bn<CR>
 
-" allows windows not visible to have 0 height
-set winminheight=0
-
+" Move and maximize horizontal buffers.
 map  <C-J> <C-W>j<C-W>_
 map  <C-K> <C-W>k<C-W>_
 
-" buffer resizing mappings (shift + arrow key)
+" Buffer resizing mappings (shift + arrow key)
 nnoremap <S-Up> <c-w>+
 nnoremap <S-Down> <c-w>-
 nnoremap <S-Left> <c-w><
@@ -227,14 +239,32 @@ nnoremap <S-Right> <c-w>>
 
 
 " ----------------------------------------------------
-" mappings (orphaned)
+" Mappings: text manipulation/navigation
+
+" use tab keys to match bracket pairs
+nmap <tab> %
+vmap <tab> %
 
 " Y to yank from the cursor to the end of the line.
 map Y y$
 
-" Cycle through the buffers
-map  <F7>  :bp<CR>
-map  <F8>  :bn<CR>
+" insert blank lines without going into insert mode
+nmap go o<esc>
+nmap gO O<esc>
+
+" select the lines which were just pasted
+noremap vv `[V`]
+
+" Align on the respective symbols
+vmap <C-L>  :Align "="<CR>
+
+" Unclear, this was in Ian's original config, but I like the way my paste works
+" currently so I'm not going to fuck with it.
+vmap p            d"0P
+
+
+" ----------------------------------------------------
+" Mappings: misc
 
 " Turn off F1 help; always hit this shit when I'm going for the escape key.
 inoremap <F1> <ESC>
@@ -245,34 +275,9 @@ vnoremap <F1> <ESC>
 " proposed by Rajesh Kallingal <RajeshKallingal@email.com>
 nnoremap <c-g> 2<c-g>
 
-nmap <C-H> :set wrap!<bar>set wrap?<CR>
-nmap <C-N> :set number!<bar>set number?<CR>
-
-"make tag goto open in a different window when clicking on it with the mouse
-map <C-LeftMouse> <LeftMouse><C-Space>g
-map g<LeftMouse> <LeftMouse><C-Space>g
-
-" Hitting '#' in visual mode does a search on the current selection. Will not
-" work with multi-line selection.
-vnoremap # <esc>:let save_reg=@"<cr>gvy:let @/=@"<cr>:let @"=save_reg<cr>?<cr>
-
-" Unclear, this was in Ian's original config, but I like the way my paste works
-" currently so I'm not going to fuck with it.
-vmap p            d"0P
-
-" Align on the respective symbols
-vmap <C-L>  :Align "="<CR>
-
 " Because I fuck up all the time.
 cmap Wq wq
 cmap WQ wq
-
-" select the lines which were just pasted
-noremap vv `[V`]
-
-" insert blank lines without going into insert mode
-nmap go o<esc>
-nmap gO O<esc>
 
 " Inserts the path of the currently edited file into a command
 " " Command mode: Ctrl+P
