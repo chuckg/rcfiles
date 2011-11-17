@@ -1,6 +1,4 @@
 filetype on
-syntax on
-colors elflord
 
 " Only do this part when compiled with support for autocommands.
 if has("autocmd")
@@ -38,9 +36,19 @@ if has("autocmd")
     autocmd BufRead,BufNewFile *.{md,markdown,mdown,mkd,mkdn} set ft=markdown
 endif
 
+" -----------------------------------------------------------------------------
+" Appearance
+" -----------------------------------------------------------------------------
 
-" ----------------------------------------------------
+colors elflord
+
+syntax on
+
+:cwindow        " open a quick fix window whenever there is something to put in it.
+
+" -----------------------------------------------------------------------------
 " Load plugins
+" -----------------------------------------------------------------------------
 
 " man
 runtime ftplugin/man.vim
@@ -84,8 +92,9 @@ set runtimepath+=$HOME/.vim/plugins/vim-textobj-user
 set runtimepath+=$HOME/.vim/plugins/vim-textobj-rubyblock
 
 
-" ----------------------------------------------------
+" -----------------------------------------------------------------------------
 " Basics
+" -----------------------------------------------------------------------------
 let loaded_matchparen = 1
 set confirm
 set autoindent
@@ -150,8 +159,9 @@ set	switchbuf=useopen
 set winminheight=0
 
 
-" ----------------------------------------------------
+" -----------------------------------------------------------------------------
 " leader (of men)
+" -----------------------------------------------------------------------------
 let mapleader = ","
 
 " ack
@@ -190,10 +200,11 @@ nmap <Leader>ss :wa<cr>
 map <Leader>e :e <C-R>=expand("%:p:h") . "/" <CR>
 
 
-" ----------------------------------------------------
+" -----------------------------------------------------------------------------
 " search
 "   - gdefault applies substitutions globally on lines by default
 "   - incsearch/showmatch/hlsearch setup search highlighting as you type
+" -----------------------------------------------------------------------------
 set gdefault
 set incsearch
 set showmatch
@@ -206,8 +217,9 @@ nnoremap <leader><space> :noh<cr>
 vnoremap # <esc>:let save_reg=@"<cr>gvy:let @/=@"<cr>:let @"=save_reg<cr>?<cr>
 
 
-" ----------------------------------------------------
+" -----------------------------------------------------------------------------
 " pasting
+" -----------------------------------------------------------------------------
 let paste_mode = 0 " 0 = normal, 1 = paste
 set pastetoggle=<F12>
 nmap <C-P> :set paste!<bar>set paste?<CR>
@@ -217,8 +229,9 @@ nmap <F12> :call Paste_on_off()<CR>
 inoremap <MiddleMouse> <C-O>:set paste<cr><MiddleMouse><C-O>:set nopaste<CR>
 
 
-" ----------------------------------------------------
+" -----------------------------------------------------------------------------
 " Mappings: window/buffer manipulation
+" -----------------------------------------------------------------------------
 
 " Toggle wrapping
 nmap <C-H> :set wrap!<bar>set wrap?<CR>
@@ -241,8 +254,9 @@ nnoremap <S-Left> <c-w><
 nnoremap <S-Right> <c-w>>
 
 
-" ----------------------------------------------------
+" -----------------------------------------------------------------------------
 " Mappings: text manipulation/navigation
+" -----------------------------------------------------------------------------
 
 " comment/uncomment: mappings to nerdcommenter
 nmap - :call NERDComment(0, 'alignLeft')<CR>
@@ -268,13 +282,14 @@ noremap vv `[V`]
 " Align on the respective symbols
 vmap <C-L>  :Align "="<CR>
 
-" Unclear, this was in Ian's original config, but I like the way my paste works
-" currently so I'm not going to fuck with it.
-vmap p            d"0P
+" Enable paste in visual mode.
+vmap p d"0P
 
 
-" ----------------------------------------------------
+" -----------------------------------------------------------------------------
 " Mappings: misc
+" -----------------------------------------------------------------------------
+
 
 " Turn off F1 help; always hit this shit when I'm going for the escape key.
 inoremap <F1> <ESC>
@@ -294,8 +309,9 @@ cmap WQ wq
 cmap <C-P> <C-R>=expand("%:p:h") . "/" <CR>
 
 
-" ----------------------------------------------------
+" -----------------------------------------------------------------------------
 " Abbreviations and highlights
+" -----------------------------------------------------------------------------
 
 iab Ydatekey <C-R>=strftime("%Y%m%d")<CR>
   " Example: 20100101
@@ -316,8 +332,9 @@ iab allways always
 
 match todo /@@@/
 
-" ----------------------------------------------------
+" -----------------------------------------------------------------------------
 " Functions
+" -----------------------------------------------------------------------------
 func! Paste_on_off()
     if g:paste_mode == 0
         set paste
@@ -338,8 +355,9 @@ function! ETry(function, ...)
     endif
 endfunction
 
-" ----------------------------------------------------
+" -----------------------------------------------------------------------------
 " Color Settings
+" -----------------------------------------------------------------------------
 set background=dark
 
 highlight Comment       ctermfg=DarkCyan
@@ -371,8 +389,9 @@ else
     set t_Sb=[4%dm
 endif
 
-" ----------------------------------------------------
+" -----------------------------------------------------------------------------
 " Macros
+" -----------------------------------------------------------------------------
 com! -range Align <line1>,<line2>call AlignOnRE(<q-args>)
 fun! AlignOnRE(re) range
     let last = 0
@@ -409,8 +428,9 @@ set com& " reset to default
 set com^=sr:*\ -,mb:*\ \ ,el:*/ com^=sr://\ -,mb://\ \ ,el:///
 
 
-" ----------------------------------------------------
+" -----------------------------------------------------------------------------
 "   (vim)diff options...
+" -----------------------------------------------------------------------------
 set diffopt=iwhite,filler
 
 set diffexpr=MyDiff()
@@ -466,8 +486,9 @@ amenu Misc.Spell\ Check\ Menu						:runtime my/spellcheck.vim<CR>
 amenu Misc.All\ Chars\ Menu							:runtime my/char_menu.vim<CR>
 
 
-" ----------------------------------------------------
+" -----------------------------------------------------------------------------
 " the "wtf are these" section
+" -----------------------------------------------------------------------------
 
 set	cindent
 "set	cinkeys=0{,0},:,!,o,O,e
@@ -476,12 +497,11 @@ set cinoptions=>s,e0,n0,f0,{0,}0,^0,:s,=s,ps,t0,+s,(s,us,)20,*30,g0
 
 set	complete=.,w,b,u,t,i
 
-" open a quick fix window whenever there is something to put in it.
-:cwindow
 
 
-" ----------------------------------------------------
+" -----------------------------------------------------------------------------
 " Load local configuration options
+" -----------------------------------------------------------------------------
 if filereadable("$HOME/.vimrc_local")
     source $HOME/.vimrc_local
 endif
