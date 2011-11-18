@@ -142,8 +142,8 @@ set showfulltag               " Show full command when doing insert completion (
                               " see c function args)
 
 set	complete=.,w,b,u,t,i
-
-inoremap <c-l> <c-x><c-l>     " Line completion
+" Line completion
+inoremap <c-l> <c-x><c-l>     
 
 
 " -----------------------------------------------------------------------------
@@ -213,8 +213,11 @@ cmap WQ wq
 " Mappings: text manipulation/navigation
 " -----------------------------------------------------------------------------
 
-" strip all trailing whitespace
-nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
+" Treat wrapped lines like real lines.
+nmap <Up> gk
+nmap <Down> gj
+nmap k gk
+nmap j gj
 
 " use tab keys to match bracket pairs
 nmap <tab> %
@@ -226,6 +229,9 @@ nmap gO O<esc>
 
 " select the lines which were just pasted
 noremap vv `[V`]
+
+" strip all trailing whitespace
+nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
 
 
 " -----------------------------------------------------------------------------
