@@ -1,4 +1,4 @@
-"  required for several plugins
+" required for several plugins
 set nocompatible
 
 " -----------------------------------------------------------------------------
@@ -330,8 +330,8 @@ set runtimepath+=$HOME/.vim/plugins/fuzzyfinder
 let g:fuf_file_exclude         = '\v\~$|\.(o|exe|dll|bak|orig|sw[po])$|(^|[/\\])\.?(hg|git|bzr|vendor)($|[/\\])'
 let g:fuf_coveragefile_exclude = '\v\~$|\.(o|exe|dll|bak|orig|sw[po])$|(^|[/\\])\.?(hg|git|bzr|vendor)($|[/\\])'
 let g:fuf_dir_exclude          = '\v(^|[/\\])\.?(hg|git|bzr|vendor)($|[/\\])'
-nnoremap <leader>t :FufFile **/<CR>       " Glob search
-nnoremap <leader>T :FufRenewCache<CR>     " Clear cache
+nnoremap <leader>t :FufFile **/<CR>       
+nnoremap <leader>T :FufRenewCache<CR>
 
 " matchit
 set runtimepath+=$HOME/.vim/plugins/matchit
