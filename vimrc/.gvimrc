@@ -1,3 +1,6 @@
+" Turn off the blasted blinking cursor.
+set guicursor=a:blinkon0
+
 " Set the font, 12pt Monaco.
 set gfn=Monaco:h12
 

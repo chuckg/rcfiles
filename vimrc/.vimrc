@@ -98,9 +98,9 @@ nnoremap <leader><space> :noh<cr>
 vnoremap # <esc>:let save_reg=@"<cr>gvy:let @/=@"<cr>:let @"=save_reg<cr>?<cr>
 
 
-"-----------------------------------------------------------------------------
+" -----------------------------------------------------------------------------
 " formatting
-"-----------------------------------------------------------------------------
+" -----------------------------------------------------------------------------
 
 set autoindent             " New lines with indentation of previous line.
 set expandtab              " Insert spaces when <tab> is pressed
@@ -123,17 +123,19 @@ set	cindent
 set cinoptions=>s,e0,n0,f0,{0,}0,^0,:s,=s,ps,t0,+s,(s,us,)20,*30,g0
 
 
-"-----------------------------------------------------------------------------
-" saving
-"-----------------------------------------------------------------------------
+" -----------------------------------------------------------------------------
+" saving/loading files
+" -----------------------------------------------------------------------------
 
 set nobackup
 set noswapfile
+set autoread     " Auto reload files that have been changed outside of VIM when
+                 " it has not been changed inside.
 
 
-"-----------------------------------------------------------------------------
+" -----------------------------------------------------------------------------
 " insert completion
-"-----------------------------------------------------------------------------
+" -----------------------------------------------------------------------------
 
 set infercase                 " For insert completion
 set showfulltag               " Show full command when doing insert completion (so you can
@@ -150,9 +152,9 @@ inoremap <c-l> <c-x><c-l>     " Line completion
 let mapleader = ","
 
 
-"-----------------------------------------------------------------------------
+" -----------------------------------------------------------------------------
 " Mappings: copy and pasting
-"-----------------------------------------------------------------------------
+" -----------------------------------------------------------------------------
 
 " Y to yank from the cursor to the end of the line.
 map Y y$
@@ -283,9 +285,9 @@ function! MyDiff()
     \  " > " . v:fname_out
 endfunction
 
-"-----------------------------------------------------------------------------
+" -----------------------------------------------------------------------------
 "  Menus in console vim
-"-----------------------------------------------------------------------------
+" -----------------------------------------------------------------------------
 
 "  press F3 to bring up menus in console-vim
 if ! has("gui_running")
@@ -356,16 +358,19 @@ nnoremap <leader>S :Scratch<CR>
 
 " Tabular
 set runtimepath+=$HOME/.vim/plugins/tabular
-if exists('g:tabular_loaded')
-    AddTabularPattern! assignment      / = /l0
-    AddTabularPattern! chunks          / \S\+/l0
-    AddTabularPattern! colon           /:\zs /l0
-    AddTabularPattern! comma           /^[^,]*,/l1
-    AddTabularPattern! hash            /^[^>]*\zs=>/
-    AddTabularPattern! options_hashes  /:\w\+ =>/
-    AddTabularPattern! symbols         / :/l0
-    AddTabularPattern! doublequote     /"/l5c1
-endif
+function! CustomTabularPatterns()
+    if exists('g:tabular_loaded')
+        AddTabularPattern! assignment      / = /l0
+        AddTabularPattern! chunks          / \S\+/l0
+        AddTabularPattern! colon           /:\zs /l0
+        AddTabularPattern! comma           /^[^,]*,/l1
+        AddTabularPattern! hash            /^[^>]*\zs=>/
+        AddTabularPattern! options_hashes  /:\w\+ =>/
+        AddTabularPattern! symbols         / :/l0
+        AddTabularPattern! doublequote     /"/l5c1
+    endif
+endfunction
+autocmd VimEnter * call CustomTabularPatterns()
 map <leader>e= :Tabularize assignment<CR>
 map <leader>e: :Tabularize colon<CR>
 map <leader>e, :Tabularize comma<CR>
