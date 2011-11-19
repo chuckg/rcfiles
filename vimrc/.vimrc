@@ -109,7 +109,7 @@ set shiftwidth=4           " Indentation amount for < and > commands (& cindent)
 set smartindent
 set smarttab               " Make <Tab> and <BS> deal with indentation properly.
 
-set textwidth=80           " Where to auto-wrap long lines.
+set textwidth=78           " Where to auto-wrap long lines.
 
 set formatoptions=cqrt     " Auto-format options for formatting comments.
 " set formatlistpat="^\s*\(\d\+[\]:.)}\t -]|\*\|-)\s*"
@@ -249,6 +249,10 @@ map <Leader>e :e <C-R>=expand("%:p:h") . "/" <CR>
 " Inserts the path of the currently edited file into a command
 cmap <C-P> <C-R>=expand("%:p:h") . "/" <CR>
 
+" cd/lcd to the directory for the current file in buffer and tell the user
+nnoremap <leader>cd :cd %:p:h<CR>:pwd<CR>
+nnoremap <leader>lcd :lcd %:p:h<CR>:pwd<CR>
+
 
 " -----------------------------------------------------------------------------
 " Abbreviations and highlights
@@ -314,8 +318,12 @@ amenu Misc.All\ Chars\ Menu                         :runtime my/char_menu.vim<cr
 " Plugins 
 " -----------------------------------------------------------------------------
 
-" man
-runtime ftplugin/man.vim
+" filetype must be off to load vundle properly; it's re-enabled further down.
+filetype off 
+
+" set runtimepath+=$HOME/.vim/bundle/vundle/
+" call vundle#rc()
+
 
 " ack
 set runtimepath+=$HOME/.vim/plugins/ack
