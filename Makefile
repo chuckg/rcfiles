@@ -64,7 +64,7 @@ vim:
 	git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
 	@echo 
 	@echo 'Bundling vim plugins.'
-	vim -c 'BundleInstall' -c 'qa'
+	@vim -c 'BundleInstall' -c 'qa'
 
 	
 # ----------------------
@@ -74,4 +74,5 @@ uninstall:
 	@$(call delink,.screenrc)
 	@$(foreach file,$(VIM_FILES),$(call delink,$(file)))
 	@$(foreach file,$(BASH_FILES),$(call delink,$(file)))
+	@echo
 	@echo 'Done uninstalling rcfiles ...'
