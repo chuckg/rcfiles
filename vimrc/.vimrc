@@ -321,26 +321,25 @@ amenu Misc.All\ Chars\ Menu                         :runtime my/char_menu.vim<cr
 " filetype must be off to load vundle properly; it's re-enabled further down.
 filetype off 
 
-" set runtimepath+=$HOME/.vim/bundle/vundle/
-" call vundle#rc()
-
+" Load Vundle. Self sexify.
+set runtimepath+=$HOME/.vim/bundle/vundle/
+call vundle#rc()
+Bundle 'gmarik/vundle'
 
 " ack
-set runtimepath+=$HOME/.vim/plugins/ack
+Bundle 'ack.vim'
 nnoremap <leader>a :Ack<space>
 
 " fugitive: sexy git wrapper
-set runtimepath+=$HOME/.vim/plugins/fugitive
+Bundle 'fugitive.vim'
 nnoremap <leader>gb :Gblame<CR>
 nnoremap <leader>gg :Ggrep
 nnoremap <leader>gs :Gstatus<CR>
 nnoremap <leader>gm :Gmove
 
 " fuzzyfinder
-" l9 is required by fuzzy finder
-set runtimepath+=$HOME/.vim/plugins/l9
-set runtimepath+=$HOME/.vim/plugins/fuzzyfinder
-" Added 'vendor' directory to the list of excludes.
+Bundle 'L9'
+Bundle 'FuzzyFinder'
 let g:fuf_file_exclude         = '\v\~$|\.(o|exe|dll|bak|orig|sw[po])$|(^|[/\\])\.?(hg|git|bzr|vendor)($|[/\\])'
 let g:fuf_coveragefile_exclude = '\v\~$|\.(o|exe|dll|bak|orig|sw[po])$|(^|[/\\])\.?(hg|git|bzr|vendor)($|[/\\])'
 let g:fuf_dir_exclude          = '\v(^|[/\\])\.?(hg|git|bzr|vendor)($|[/\\])'
@@ -348,10 +347,9 @@ nnoremap <leader>t :FufFile **/<CR>
 nnoremap <leader>T :FufRenewCache<CR>
 
 " matchit
-set runtimepath+=$HOME/.vim/plugins/matchit
+Bundle 'edsono/vim-matchit'
 
-" NERDcommenter: easy comments
-set runtimepath+=$HOME/.vim/plugins/nerdcommenter
+Bundle 'scrooloose/nerdcommenter'
 " comment/uncomment: mappings to nerdcommenter
 nmap - :call NERDComment(0, 'alignLeft')<CR>
 nmap _ :call NERDComment(0, 'uncomment')<CR>
@@ -359,19 +357,19 @@ vmap - :call NERDComment(1, 'alignLeft')<CR>
 vmap _ :call NERDComment(0, 'uncomment')<CR>
 
 " ruby_focused_unit_test
-set runtimepath+=$HOME/.vim/plugins/ruby_focused_unit_test
+Bundle 'drewolson/ruby_focused_unit_test_vim'
 nnoremap <Leader>ra :wa<CR> :RunAllRubyTests<CR>
 nnoremap <Leader>rc :wa<CR> :RunRubyFocusedContext<CR>
 nnoremap <Leader>rf :wa<CR> :RunRubyFocusedUnitTest<CR>
 nnoremap <Leader>rl :wa<CR> :RunLastRubyTest<CR>
 
 " scratch
-set runtimepath+=$HOME/.vim/plugins/scratch
+Bundle 'scratch.vim'
 nnoremap <leader>s :Sscratch<CR>
 nnoremap <leader>S :Scratch<CR>
 
 " Tabular
-set runtimepath+=$HOME/.vim/plugins/tabular
+Bundle 'godlygeek/tabular'
 function! CustomTabularPatterns()
     if exists('g:tabular_loaded')
         AddTabularPattern! assignment      / = /l0
@@ -398,9 +396,8 @@ map <leader>e" :Tabularize doublequote<CR>
 "   ar  - all ruby block
 "   ir  - inner ruby block
 " textobj-user is required by rubyblock
-set runtimepath+=$HOME/.vim/plugins/vim-textobj-user
-set runtimepath+=$HOME/.vim/plugins/vim-textobj-rubyblock
-    
+Bundle 'textobj-user' 
+Bundle 'textobj-rubyblock'
 
 " -----------------------------------------------------------------------------
 " Filetype  (special things for special file types)

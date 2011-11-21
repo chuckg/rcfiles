@@ -1,3 +1,5 @@
+SHELL := /bin/bash
+
 BASH_FILES   = .bashrc .bash_bindings
 VIM_FILES    = .vimrc .vim .gvimrc
 
@@ -43,25 +45,33 @@ install: ack bash screen vim
 
 ack:
 	@$(call symlink,.ackrc,'ackrc')
+	@echo 
 
-bash: $(BASH_FILES)
-
-$(BASH_FILES):
-	@$(call symlink,$@,"bashrc")
+bash:
+	@$(foreach file,$(BASH_FILES),$(call symlink,$(file),'bashrc'))
+	@echo 
 
 screen:
 	@$(call symlink,.screenrc,'screenrc')
+	@echo 
 
-vim: $(VIM_FILES) 
+vim: 
+	@$(foreach file,$(VIM_FILES),$(call symlink,$(file),'vimrc'))
+	@if [ -d ~/.vim/bundle ]; then rm -rf ~/.vim/bundle; fi;
+	@mkdir ~/.vim/bundle
+	@echo 
+	@echo 'Installing vundle for vim.'
+	git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
+	@echo 
+	@echo 'Bundling vim plugins.'
+	vim -c 'BundleInstall' -c 'qa'
 
-$(VIM_FILES): 
-	@$(call symlink,$@,'vimrc')
-
+	
 # ----------------------
 # Uninstallers
 uninstall: 	
-	@echo 'Uninstalling'
-	$(call delink,.ackrc)
-	$(call delink,.screenrc)
-	$(foreach file,$(VIM_FILES),$(call delink,$(file)))
-	$(foreach file,$(BASH_FILES),$(call delink,$(file)))
+	@$(call delink,.ackrc)
+	@$(call delink,.screenrc)
+	@$(foreach file,$(VIM_FILES),$(call delink,$(file)))
+	@$(foreach file,$(BASH_FILES),$(call delink,$(file)))
+	@echo 'Done uninstalling rcfiles ...'
