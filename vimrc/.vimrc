@@ -61,13 +61,18 @@ match todo /@@@/
 set confirm                        " Ask user before aborting action
 set history=500                    " Remember this many commands / searches
 set noautowrite                    " Do not write automatically
+set esckeys                        " Function keys that start with an <Esc>
+                                   " are recognized in insert mode.
+
 set mouse=a                        " Turn mouse support on
-set esckeys                        " Function keys that start with an <Esc> are recognized
-                                   " in insert mode.
+set ttymouse=xterm2                " Enable window-split drag-to-resize. (esp. in
+                                   " screen which defaults to 'xterm')
+set ttyfast                        " performance boost for vim's display
 
 set backspace=indent,eol,start     " Allows <BS> and ilk to wrap across lines.
 set whichwrap=<,>,h,l,[,]          " Allow these movement keys to move to netx line.
-set	switchbuf=useopen              " Jump to an existing buffer for files that are already open.
+set	switchbuf=useopen              " Jump to an existing buffer for files that are 
+                                   " already open.
 
 " When editing a file, always jump to the last known cursor position.
 autocmd BufReadPost *
@@ -138,8 +143,8 @@ set autoread     " Auto reload files that have been changed outside of VIM when
 " -----------------------------------------------------------------------------
 
 set infercase                 " For insert completion
-set showfulltag               " Show full command when doing insert completion (so you can
-                              " see c function args)
+set showfulltag               " Show full command when doing insert completion 
+                              " (so you can see c function args)
 
 set	complete=.,w,b,u,t,i
 " Line completion
@@ -207,6 +212,23 @@ nmap <Leader>W :wa<cr>
 " Because, when I don't use the mappings above, I fuck up all the time.
 cmap Wq wq
 cmap WQ wq
+
+" For when you want to make sure you're not over 80 columns of text.
+" toggle colored right border at textwidth +1
+nnoremap <Leader>s8 :call <SID>ToggleColorColumn()<cr>
+autocmd BufRead * let b:color_column_old='+1'
+function! s:ToggleColorColumn()
+    echo ':set colorcolumn='b:color_column_old
+    if b:color_column_old == ''
+        let b:color_column_old = &colorcolumn
+        let &colorcolumn=''
+    else
+        let &colorcolumn=b:color_column_old
+        let b:color_column_old=''
+    endif
+endfunction
+" highlight ColorColumn ctermbg=darkgrey guibg=darkgrey
+highlight ColorColumn ctermbg=52 guibg=DarkRed
 
 
 " -----------------------------------------------------------------------------
