@@ -1,4 +1,5 @@
-== Basics ==
+Basics
+------
 
 Collection of configuration files for:
 
@@ -7,12 +8,14 @@ Collection of configuration files for:
 * screen
 * vim 7.2+
 
-== Pre-requisites ==
+Pre-requisites
+--------------
 
 * make
 * git
 
-== Install ==
+Install
+-------
 
 Clone:
     
@@ -28,7 +31,7 @@ If you just want to install one configuration type, you can run:
     make vim        # installs vim only
     make ack        # installs ack only
 
-    This will write symlinks from the 'rclinks' clone path to your home directory.
+This will write symlinks from the 'rclinks' clone path to your home directory.
 It will overwrite other symlinks, but will skip over any real files you have
 living there.  Additionally, it'll pull down and install all the vim plugins.
 Checkout the documentation on vundle for more information on keeping the
