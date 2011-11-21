@@ -368,6 +368,12 @@ let g:fuf_dir_exclude          = '\v(^|[/\\])\.?(hg|git|bzr|vendor)($|[/\\])'
 nnoremap <leader>t :FufFile **/<CR>       
 nnoremap <leader>T :FufRenewCache<CR>
 
+" indent-guides
+Bundle 'nathanaelkane/vim-indent-guides'
+let g:indent_guides_start_level = 2
+let g:indent_guides_guide_size  = 1
+nnoremap <leader>ig :IndentGuidesToggle<CR>
+
 " matchit
 Bundle 'edsono/vim-matchit'
 
