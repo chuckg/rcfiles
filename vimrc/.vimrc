@@ -111,6 +111,7 @@ set autoindent             " New lines with indentation of previous line.
 set expandtab              " Insert spaces when <tab> is pressed
 set tabstop=4              " Render <tab> visually using this many spaces
 set shiftwidth=4           " Indentation amount for < and > commands (& cindent)
+set softtabstop=4          " Indentation amount while in insert mode.
 set smartindent
 set smarttab               " Make <Tab> and <BS> deal with indentation properly.
 
@@ -451,6 +452,16 @@ autocmd BufNewFile,BufRead *.json set ai filetype=javascript
 
 " md, markdown, and mk are markdown and define buffer-local preview
 autocmd BufRead,BufNewFile *.{md,markdown,mdown,mkd,mkdn} set ft=markdown
+
+" Setup proper tabs per file type.
+autocmd FileType ruby       call RubyPrepare()
+
+function! RubyPrepare()
+    set shiftwidth=2
+    set tabstop=2
+    set softtabstop=2
+endfunction
+
 
 " -----------------------------------------------------------------------------
 " Functions
