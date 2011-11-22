@@ -1,4 +1,4 @@
-## Basics
+# Basics
 
 Collection of configuration files for:
 
@@ -7,12 +7,12 @@ Collection of configuration files for:
 * screen
 * vim 7.2+
 
-## Pre-requisites
+# Pre-requisites
 
 * make
 * git
 
-## Install
+# Install
 
 Clone:
     
