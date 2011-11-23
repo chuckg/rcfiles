@@ -1,4 +1,4 @@
-## Basics
+### Basics
 
 Collection of configuration files for:
 
@@ -7,12 +7,17 @@ Collection of configuration files for:
 * screen
 * vim 7.2+
 
-## Pre-requisites
+--
+
+### Pre-requisites
 
 * make
 * git
+* vim compiled with ruby support
 
-## Install
+--
+
+### Install
 
 Clone:
     
@@ -20,7 +25,6 @@ Clone:
 
 Install:  
 
-    cd rcfiles
     make install
 
 If you just want to install one configuration type, you can run:
@@ -28,11 +32,13 @@ If you just want to install one configuration type, you can run:
     make vim        # installs vim only
     make ack        # installs ack only
 
-This will write symlinks from the 'rclinks' clone path to your home directory.
-It will overwrite other symlinks, but will skip over any real files you have
-living there.  Additionally, it'll pull down and install all the vim plugins.
-Checkout the documentation on vundle for more information on keeping the
-plugins up to date: ':help Vundle'
+This will write symlinks to your home directory pointing to the respective
+configurations.  It will squash existing symlinks with the same name, but will
+skip over any "regular" configuration files you have living there.
+
+Additionally, it'll pull down and install all the vim plugins.  Checkout the
+documentation on vundle for more information on keeping the plugins up to date:
+':help Vundle'
 
 Uninstalling de-symlinks everything the install did:
 
@@ -41,3 +47,4 @@ Uninstalling de-symlinks everything the install did:
 For a list of full options:
     
     make help       # displays help
+
