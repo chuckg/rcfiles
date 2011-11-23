@@ -9,7 +9,7 @@ VIM_FILES    = .vimrc .vim .gvimrc
 define symlink
 	if [ ! -e "~/$(1)" ]  || [ -h "~/$(1)" ];  then \
 		echo "Installed ~/$(1)";                    \
-		ln -fs $(PWD)/$(2)/$(1) ~/$(1);             \
+		ln -nfs $(PWD)/$(2)/$(1) ~/$(1);            \
 	else                                            \
 		echo "~/$(1) exists, skipping.";            \
 	fi;
