@@ -385,12 +385,8 @@ nmap _ :call NERDComment(0, 'uncomment')<CR>
 vmap - :call NERDComment(1, 'alignLeft')<CR>
 vmap _ :call NERDComment(0, 'uncomment')<CR>
 
-" ruby_focused_unit_test
-Bundle 'drewolson/ruby_focused_unit_test_vim'
-nnoremap <Leader>ra :wa<CR> :RunAllRubyTests<CR>
-nnoremap <Leader>rc :wa<CR> :RunRubyFocusedContext<CR>
-nnoremap <Leader>rf :wa<CR> :RunRubyFocusedUnitTest<CR>
-nnoremap <Leader>rl :wa<CR> :RunLastRubyTest<CR>
+" rails
+Bundle 'tpope/vim-rails'
 
 " scratch
 Bundle 'scratch.vim'
@@ -462,6 +458,11 @@ function! RubyPrepare()
     set softtabstop=2
 endfunction
 
+" -----------------------------------------------------------------------------
+" Syntax 
+" -----------------------------------------------------------------------------
+
+Bundle "tpope/vim-markdown"
 
 " -----------------------------------------------------------------------------
 " Functions
