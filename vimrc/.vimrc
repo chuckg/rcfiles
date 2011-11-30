@@ -165,7 +165,7 @@ inoremap <silent> <s-tab> <c-x><c-o><c-p>
 
 
 " -----------------------------------------------------------------------------
-" Mappings: copy and pasting
+" mappings: copy and pasting
 " -----------------------------------------------------------------------------
 
 " Y to yank from the cursor to the end of the line.
@@ -186,7 +186,7 @@ inoremap <MiddleMouse> <C-O>:set paste<cr><MiddleMouse><C-O>:set nopaste<CR>
 
 
 " -----------------------------------------------------------------------------
-" Mappings: window/buffer
+" mappings: window/buffer
 " -----------------------------------------------------------------------------
 
 " Toggle wrapping
@@ -239,7 +239,7 @@ highlight ColorColumn ctermbg=52 guibg=DarkRed
 
 
 " -----------------------------------------------------------------------------
-" Mappings: text manipulation/navigation
+" mappings: text manipulation/navigation
 " -----------------------------------------------------------------------------
 
 " Treat wrapped lines like real lines.
@@ -264,7 +264,7 @@ nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
 
 
 " -----------------------------------------------------------------------------
-" Mappings: misc
+" mappings: misc
 " -----------------------------------------------------------------------------
 
 " Turn off F1 help; always hit this shit when I'm going for the escape key.
@@ -284,7 +284,7 @@ nnoremap <leader>lcd :lcd %:p:h<CR>:pwd<CR>
 
 
 " -----------------------------------------------------------------------------
-" Abbreviations and highlights
+" abbreviations
 " -----------------------------------------------------------------------------
 
 iab Ydatekey <C-R>=strftime("%Y%m%d")<CR>
@@ -306,7 +306,7 @@ iab allways always
 
 
 " -----------------------------------------------------------------------------
-"   (vim)diff options...
+" (vim)diff options...
 " -----------------------------------------------------------------------------
 set diffopt=iwhite,filler
 
@@ -325,7 +325,7 @@ function! MyDiff()
 endfunction
 
 " -----------------------------------------------------------------------------
-"  Menus in console vim
+" menus in console vim
 " -----------------------------------------------------------------------------
 
 "  press F3 to bring up menus in console-vim
@@ -344,7 +344,7 @@ amenu Misc.All\ Chars\ Menu                         :runtime my/char_menu.vim<cr
 
 
 " -----------------------------------------------------------------------------
-" Plugins 
+" plugins 
 " -----------------------------------------------------------------------------
 
 " filetype must be off to load vundle properly; it's re-enabled further down.
@@ -434,7 +434,13 @@ Bundle 'textobj-user'
 Bundle 'textobj-rubyblock'
 
 " -----------------------------------------------------------------------------
-" Filetype  (special things for special file types)
+" colors
+" -----------------------------------------------------------------------------
+
+Bundle 'tpope/vim-vividchalk'
+
+" -----------------------------------------------------------------------------
+" filetype  (special things for special file types)
 " -----------------------------------------------------------------------------
 
 " Enable file type detection.
@@ -468,13 +474,13 @@ function! RubyPrepare()
 endfunction
 
 " -----------------------------------------------------------------------------
-" Syntax 
+" syntax 
 " -----------------------------------------------------------------------------
 
 Bundle "tpope/vim-markdown"
 
 " -----------------------------------------------------------------------------
-" Functions
+" functions
 " -----------------------------------------------------------------------------
 
 " Attempts to call a function and return the result, otherwise it does nothing.
@@ -490,10 +496,7 @@ endfunction
 " -----------------------------------------------------------------------------
 " Load local configuration options
 " -----------------------------------------------------------------------------
-if filereadable("$HOME/.vimrc_local")
-    source $HOME/.vimrc_local
-endif
 
-if filereadable("$HOME/.gvimrc_local")
-    source $HOME/.gvimrc_local
+if filereadable(expand("~/.vimrc_local"))
+    source ~/.vimrc_local
 endif
