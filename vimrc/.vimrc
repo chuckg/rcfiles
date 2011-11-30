@@ -154,8 +154,14 @@ set showfulltag               " Show full command when doing insert completion
                               " (so you can see c function args)
 
 set	complete=.,w,b,u,t,i
+" <c-x><c-u> -- user defined completions:w
+" User defined completions. (rails.vim, etc.)
+inoremap <c-u> <c-x><c-u>      
 " Line completion
 inoremap <c-l> <c-x><c-l>     
+" Omni complete (or intellisense for IDE nerds), but start with no completion
+" selected instead of the first match.
+inoremap <silent> <s-tab> <c-x><c-o><c-p>
 
 
 " -----------------------------------------------------------------------------
@@ -387,6 +393,9 @@ vmap _ :call NERDComment(0, 'uncomment')<CR>
 
 " rails
 Bundle 'tpope/vim-rails'
+nmap <leader>ra :Rake<CR>      " Run all tests for the current file.
+nmap <leader>rf :.Rake<CR>     " Run focused test from cursor.
+
 
 " scratch
 Bundle 'scratch.vim'
