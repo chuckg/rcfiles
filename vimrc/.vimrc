@@ -391,9 +391,11 @@ vmap _ :call NERDComment(0, 'uncomment')<CR>
 
 " rails
 Bundle 'tpope/vim-rails'
-nmap <leader>ra :Rake<CR>      " Run all tests for the current file.
-nmap <leader>rf :.Rake<CR>     " Run focused test from cursor.
 
+" Rubytest.vim
+Bundle 'janx/vim-rubytest'
+nmap <leader>ra <Plug>RubyFileRun     " Run all tests for the current file.
+nmap <leader>rf <Plug>RubyTestRun     " Run focused test from cursor.
 
 " scratch
 Bundle 'scratch.vim'
