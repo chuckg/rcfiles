@@ -258,7 +258,7 @@ nmap gO O<esc>
 noremap vv `[V`]
 
 " strip all trailing whitespace
-nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
+nnoremap <leader>sW :%s/\s\+$//<cr>:let @/=''<CR>
 
 
 " -----------------------------------------------------------------------------
