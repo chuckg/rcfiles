@@ -394,8 +394,9 @@ Bundle 'tpope/vim-rails'
 
 " Rubytest.vim
 Bundle 'janx/vim-rubytest'
-nmap <leader>ra <Plug>RubyFileRun     " Run all tests for the current file.
-nmap <leader>rf <Plug>RubyTestRun     " Run focused test from cursor.
+nmap <leader>ra <Plug>RubyFileRun         " Run all tests for the current file.
+nmap <leader>rf <Plug>RubyTestRun         " Run focused test from cursor.
+nmap <leader>rl <Plug>RubyTestRunLast     " Run the last test from any buffer.
 
 " scratch
 Bundle 'scratch.vim'
