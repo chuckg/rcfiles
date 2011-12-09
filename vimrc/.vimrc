@@ -413,6 +413,7 @@ function! CustomTabularPatterns()
         AddTabularPattern! comma           /^[^,]*,/l1
         AddTabularPattern! hash            /^[^>]*\zs=>/
         AddTabularPattern! options_hashes  /:\w\+ =>/
+        AddTabularPattern! symbol          /^[^:]*\zs:/l1r0
         AddTabularPattern! symbols         / :/l0
         AddTabularPattern! doublequote     /"/l5c1
     endif
