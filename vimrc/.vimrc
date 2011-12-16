@@ -403,6 +403,9 @@ Bundle 'scratch.vim'
 nnoremap <leader>s :Sscratch<CR>
 nnoremap <leader>S :Scratch<CR>
 
+" surround 
+Bundle 'tpope/vim-surround'
+
 " Tabular
 Bundle 'godlygeek/tabular'
 function! CustomTabularPatterns()
