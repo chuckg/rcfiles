@@ -273,6 +273,9 @@ vnoremap <F1> <ESC>
 " Open an edit command with the path of the currently edited file filled in.
 map <Leader>e :e <C-R>=expand("%:p:h") . "/" <CR>
 
+" Open the current file in a new tab.
+map <Leader>et :tabe <C-R>=expand("%:p")<CR><CR>
+
 " Inserts the path of the currently edited file into a command
 cmap <C-P> <C-R>=expand("%:p:h") . "/" <CR>
 
