@@ -1,4 +1,4 @@
-" Turn off the blasted blinking cursor.
+" Turn off the annoying ass blinking cursor.
 set guicursor=a:blinkon0
 
 " Set the font, 12pt Monaco.
@@ -13,6 +13,10 @@ set guioptions-=T
 " Kill the scrollbars
 set guioptions-=r
 set guioptions-=L
+
+" Add some menu's for quick font changing.
+amenu Fonts.Monaco\ 12pt   :set gfn=Monaco:h12<cr>
+amenu Fonts.Monaco\ 14pt   :set gfn=Monaco:h14<cr>
 
 " Go full screen like you mean it
 if has('win32')

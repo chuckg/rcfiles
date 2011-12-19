@@ -335,14 +335,11 @@ if ! has("gui_running")
     nmap <F3> :runtime menu.vim<cr>:emenu <C-Z>
 endif
 
-"      Misc menu
+" Misc menu
 amenu Misc.Toggle\ case\ for\ searching<Tab>F4      :set ignorecase!<cr>:set ignorecase?<cr>
-amenu Misc.Remove\ &trailing\ white-space<Tab>F10   :%s/\s\+$//<cr>``
+amenu Misc.Remove\ &trailing\ white-space<Tab>F10   :%s/\s\+$//<cr>:let @/=''<cr>``
 amenu Misc.Toggle\ highlight\ search\ results       :set hlsearch!<cr>:set hlsearch?<cr>
 amenu Misc.&Save\ Viminfo                           :set viminfo='7,n./viminfo<cr>:wv<cr>:set viminfo=<cr>
-amenu Misc.Spell\ Check\ Menu                       :runtime my/spellcheck.vim<cr>
-amenu Misc.All\ Chars\ Menu                         :runtime my/char_menu.vim<cr>
-
 
 " -----------------------------------------------------------------------------
 " plugins 
