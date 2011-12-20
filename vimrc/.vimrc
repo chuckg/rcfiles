@@ -77,7 +77,7 @@ set ttyfast                        " performance boost for vim's display
 
 set backspace=indent,eol,start     " Allows <BS> and ilk to wrap across lines.
 set whichwrap=<,>,h,l,[,]          " Allow these movement keys to move to netx line.
-set	switchbuf=useopen              " Jump to an existing buffer for files that are 
+set	switchbuf=useopen              " Jump to an existing buffer for files that are
                                    " already open.
 
 " When editing a file, always jump to the last known cursor position.
@@ -150,17 +150,19 @@ set autoread     " Auto reload files that have been changed outside of VIM when
 " -----------------------------------------------------------------------------
 
 set infercase                 " For insert completion
-set showfulltag               " Show full command when doing insert completion 
+set showfulltag               " Show full command when doing insert completion
                               " (so you can see c function args)
 
 set	complete=.,w,b,u,t,i
 " <c-x><c-u> -- user defined completions
+" Tag completion
+inoremap <c-]> <c-x><c-]>
 " Line completion
-inoremap <c-l> <c-x><c-l>     
+inoremap <c-l> <c-x><c-l>
+
 " Omni complete (or intellisense for IDE nerds), but start with no completion
 " selected instead of the first match.
 inoremap <silent> <s-tab> <c-x><c-o><c-p>
-
 
 " -----------------------------------------------------------------------------
 " mappings: copy and pasting
@@ -342,11 +344,11 @@ amenu Misc.Toggle\ highlight\ search\ results       :set hlsearch!<cr>:set hlsea
 amenu Misc.&Save\ Viminfo                           :set viminfo='7,n./viminfo<cr>:wv<cr>:set viminfo=<cr>
 
 " -----------------------------------------------------------------------------
-" plugins 
+" plugins
 " -----------------------------------------------------------------------------
 
 " filetype must be off to load vundle properly; it's re-enabled further down.
-filetype off 
+filetype off
 
 " Load Vundle. Self sexify.
 set runtimepath+=$HOME/.vim/bundle/vundle/
@@ -370,7 +372,7 @@ Bundle 'FuzzyFinder'
 let g:fuf_file_exclude         = '\v\~$|\.(o|exe|dll|bak|orig|sw[po])$|(^|[/\\])\.?(hg|git|bzr|vendor)($|[/\\])'
 let g:fuf_coveragefile_exclude = '\v\~$|\.(o|exe|dll|bak|orig|sw[po])$|(^|[/\\])\.?(hg|git|bzr|vendor)($|[/\\])'
 let g:fuf_dir_exclude          = '\v(^|[/\\])\.?(hg|git|bzr|vendor)($|[/\\])'
-nnoremap <leader>t :FufFile **/<CR>       
+nnoremap <leader>t :FufFile **/<CR>
 nnoremap <leader>T :FufRenewCache<CR>
 
 " indent-guides
@@ -400,10 +402,10 @@ nmap <leader>rl <Plug>RubyTestRunLast     " Run the last test from any buffer.
 
 " scratch
 Bundle 'scratch.vim'
-nnoremap <leader>s :Sscratch<CR>
-nnoremap <leader>S :Scratch<CR>
+"nnoremap <leader>s :Sscratch<CR>
+"nnoremap <leader>S :Scratch<CR>
 
-" surround 
+" surround
 Bundle 'tpope/vim-surround'
 
 " Tabular
@@ -435,7 +437,7 @@ map <leader>e" :Tabularize doublequote<CR>
 "   ar  - all ruby block
 "   ir  - inner ruby block
 " textobj-user is required by rubyblock
-Bundle 'textobj-user' 
+Bundle 'textobj-user'
 Bundle 'textobj-rubyblock'
 
 " -----------------------------------------------------------------------------
@@ -479,7 +481,7 @@ function! RubyPrepare()
 endfunction
 
 " -----------------------------------------------------------------------------
-" syntax 
+" syntax
 " -----------------------------------------------------------------------------
 
 Bundle "tpope/vim-markdown"

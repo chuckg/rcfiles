@@ -15,8 +15,12 @@ set guioptions-=r
 set guioptions-=L
 
 " Add some menu's for quick font changing.
-amenu Fonts.Monaco\ 12pt   :set gfn=Monaco:h12<cr>
-amenu Fonts.Monaco\ 14pt   :set gfn=Monaco:h14<cr>
+amenu Fonts.Monaco\ 11pt         :set gfn=Monaco:h11<cr>
+amenu Fonts.Monaco\ 12pt         :set gfn=Monaco:h12<cr>
+amenu Fonts.Monaco\ 14pt         :set gfn=Monaco:h14<cr>
+amenu Fonts.Menlo\ Regular\ 11pt :set gfn=Menlo\ Regular:h11<cr>
+amenu Fonts.Menlo\ Regular\ 12pt :set gfn=Menlo\ Regular:h12<cr>
+amenu Fonts.Menlo\ Regular\ 14pt :set gfn=Menlo\ Regular:h14<cr>
 
 " Go full screen like you mean it
 if has('win32')

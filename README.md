@@ -13,17 +13,21 @@ Collection of configuration files for:
 
 * make
 * git
-* vim compiled with ruby support
+* vim (compiled with ruby support)
+
+### Optional
+
+* ctags (exuberant!)
 
 --
 
 ### Install
 
 Clone:
-    
+
     git clone https://github.com/chuckg/rcfiles.git
 
-Install:  
+Install:
 
     make install
 
@@ -45,6 +49,6 @@ Uninstalling de-symlinks everything the install did:
     make uninstall
 
 For a list of full options:
-    
+
     make help       # displays help
 
