@@ -20,15 +20,18 @@ fi;
 #
 function prompt {
     local show_user=$1
+    local GIT_INFO='$(__git_ps1 " (%s)")'
+    
     local GREEN="\033[32m"
     local RED="\033[31m"
     local YELLOW="\033[33m"
+    local CYAN="\033[36m"
     local END_COLOR="\033[m"
 
     if [ $show_user = true ]; then
-        local p="\$(date +%H:%M)\[$YELLOW\]\u \[$GREEN\]\H \[$RED\]\W\[$END_COLOR\]> "
+        local p="\$(date +%H:%M)\[$CYAN\]\u \[$GREEN\]\H \[$RED\]\W\[$YELLOW\]$GIT_INFO\[$END_COLOR\]> "
     else
-        local p="\$(date +%H:%M)\[$GREEN\]\H \[$RED\]\W\[$END_COLOR\]> "
+        local p="\$(date +%H:%M)\[$GREEN\]\H \[$RED\]\W\[$YELLOW\]$GIT_INFO\[$END_COLOR\]> "
     fi;
 
     # If you want to set the term title, set the PROMPT_TITLE variable in your
