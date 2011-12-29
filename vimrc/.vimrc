@@ -359,6 +359,11 @@ Bundle 'gmarik/vundle'
 Bundle 'ack.vim'
 nnoremap <leader>a :Ack<space>
 
+" file:line
+" Allows opening a file directly to a line in the following way: 
+" :e file/path.txt:12
+Bundle 'bogado/file-line'
+
 " fugitive: sexy git wrapper
 Bundle 'fugitive.vim'
 nnoremap <leader>gb :Gblame<CR>
