@@ -389,7 +389,8 @@ nnoremap <leader>ig :IndentGuidesToggle<CR>
 " matchit
 Bundle 'edsono/vim-matchit'
 
-Bundle 'scrooloose/nerdcommenter'
+"Bundle 'scrooloose/nerdcommenter'
+Bundle 'The-NERD-Commenter'
 " comment/uncomment: mappings to nerdcommenter
 nmap - :call NERDComment(0, 'alignLeft')<CR>
 nmap _ :call NERDComment(0, 'uncomment')<CR>
