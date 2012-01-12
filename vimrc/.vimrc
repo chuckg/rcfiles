@@ -399,6 +399,10 @@ vmap _ :call NERDComment(0, 'uncomment')<CR>
 
 " rails
 Bundle 'tpope/vim-rails'
+let g:rails_ctags_arguments = "--languages=-javascript"
+let g:rails_ctags_arguments .= " --extra=+f"
+let g:rails_ctags_arguments .= " --exclude=.git --exclude=log"
+let g:rails_ctags_arguments .= " `bundle show rails`/../*"
 
 " Rubytest.vim
 Bundle 'janx/vim-rubytest'
