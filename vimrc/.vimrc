@@ -276,7 +276,7 @@ vnoremap <F1> <ESC>
 map <Leader>e :e <C-R>=expand("%:p:h") . "/" <CR>
 
 " Open the current file in a new tab.
-map <Leader>et :tabe <C-R>=expand("%:p")<CR><CR>
+map <Leader>et :tab split<CR>
 
 " Inserts the path of the currently edited file into a command
 cmap <C-P> <C-R>=expand("%:p:h") . "/" <CR>
@@ -489,6 +489,13 @@ function! RubyPrepare()
     set tabstop=2
     set softtabstop=2
 endfunction
+
+" -----------------------------------------------------------------------------
+" tags
+" -----------------------------------------------------------------------------
+
+" vim-rails creates tags in `tmp/tags` when you generate using :Rtags
+set tags=./tags,tags,tmp/tags
 
 " -----------------------------------------------------------------------------
 " syntax
