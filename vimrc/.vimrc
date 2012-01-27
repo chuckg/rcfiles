@@ -402,7 +402,8 @@ Bundle 'tpope/vim-rails'
 let g:rails_ctags_arguments = "--languages=-javascript"
 let g:rails_ctags_arguments .= " --extra=+f"
 let g:rails_ctags_arguments .= " --exclude=.git --exclude=log"
-let g:rails_ctags_arguments .= " `bundle show rails`/../*"
+"let g:rails_ctags_arguments .= " `bundle show rails`/../*"
+let g:rails_ctags_arguments .= " `ruby -rrubygems -e 'p Gem.path.collect {|p| [\"gems\", File.join(\"bundler\", \"gems\")].collect {|d| File.join(p, d)} }.join(\" \")' | sed 's/\"//g'`"
 
 " Rubytest.vim
 Bundle 'janx/vim-rubytest'
