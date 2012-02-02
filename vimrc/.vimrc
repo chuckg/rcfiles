@@ -392,9 +392,9 @@ Bundle 'edsono/vim-matchit'
 "Bundle 'scrooloose/nerdcommenter'
 Bundle 'The-NERD-Commenter'
 " comment/uncomment: mappings to nerdcommenter
-nmap - :call NERDComment(0, 'alignLeft')<CR>
+nmap - :call NERDComment(0, 'nested')<CR>
 nmap _ :call NERDComment(0, 'uncomment')<CR>
-vmap - :call NERDComment(1, 'alignLeft')<CR>
+vmap - :call NERDComment(1, 'nested')<CR>
 vmap _ :call NERDComment(0, 'uncomment')<CR>
 
 " rails
