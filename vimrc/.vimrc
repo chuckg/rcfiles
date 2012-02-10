@@ -178,8 +178,9 @@ vmap p d"0P
 " in nmap mode (someday).
 imap <d-v> <c-o>:set paste<cr><c-r>*<c-o>:set nopaste<cr>
 
-" Toggle pasting with Control-P
-nmap <C-P> :set paste!<bar>set paste?<CR>
+" toggle paste mode, (though this shouldn't be needed (on macs) because of the
+" 'inoremap <d-v>' above).
+nmap <Leader>sp :set paste!<bar>set paste?<cr>
 
 " Middle mouse button turns on pasting.
 inoremap <MiddleMouse> <C-O>:set paste<cr><MiddleMouse><C-O>:set nopaste<CR>
