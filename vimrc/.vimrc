@@ -216,6 +216,12 @@ nmap <Leader>Q :qa<cr>
 nmap <Leader>w :w<cr>
 nmap <Leader>W :wa<cr>
 
+" Escape by jj, no more reaching out to never never land for the escape key.
+imap jj <esc>
+imap jJ <esc>
+imap Jj <esc>
+imap JJ <esc>
+
 " Because, when I don't use the mappings above, I fuck up all the time.
 cmap Wq wq
 cmap WQ wq
