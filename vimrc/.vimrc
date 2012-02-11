@@ -190,6 +190,12 @@ inoremap <MiddleMouse> <C-O>:set paste<cr><MiddleMouse><C-O>:set nopaste<CR>
 " mappings: window/buffer
 " -----------------------------------------------------------------------------
 
+" vim has a bug where it cannot distinguish CTRL-i from <tab>.  I want to use
+" CTRL-i and CTRL-o but also I want <tab> to match bracket pairs.  I can't do
+" both, so I remap CTRL-p to function as CTRL-i. 
+nnoremap <C-p> <C-i>
+xnoremap <C-p> <C-i>
+
 " Toggle wrapping
 nmap <C-H> :set wrap!<bar>set wrap?<CR>
 
