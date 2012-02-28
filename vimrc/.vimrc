@@ -418,12 +418,6 @@ let g:rails_ctags_arguments .= " --exclude=.git --exclude=log"
 "let g:rails_ctags_arguments .= " `bundle show rails`/../*"
 let g:rails_ctags_arguments .= " `ruby -rrubygems -e 'p Gem.path.collect {|p| [\"gems\", File.join(\"bundler\", \"gems\")].collect {|d| File.join(p, d)} }.join(\" \")' | sed 's/\"//g'`"
 
-" Rubytest.vim
-Bundle 'janx/vim-rubytest'
-nmap <leader>ra <Plug>RubyFileRun         " Run all tests for the current file.
-nmap <leader>rf <Plug>RubyTestRun         " Run focused test from cursor.
-nmap <leader>rl <Plug>RubyTestRunLast     " Run the last test from any buffer.
-
 " scratch
 Bundle 'scratch.vim'
 "nnoremap <leader>s :Sscratch<CR>
