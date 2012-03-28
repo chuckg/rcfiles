@@ -6,6 +6,11 @@ export EDITOR=vim
 export PATH=:~/.bin:/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/sbin:/usr/sbin:/usr/share:$PATH:
 export MANPATH=:$MANPATH
 
+# 
+# BASH settings
+#
+export HISTCONTROL=ignoredup
+
 # If you need to customize this, toss it in .bash_profile.
 if [ -z $HOME ]; then
     if [[ $OSTYPE == *darwin* ]]; then
