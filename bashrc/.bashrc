@@ -9,7 +9,7 @@ export MANPATH=:$MANPATH
 # 
 # BASH settings
 #
-export HISTCONTROL=ignoredup
+export HISTCONTROL=ignoredups
 
 # If you need to customize this, toss it in .bash_profile.
 if [ -z $HOME ]; then
