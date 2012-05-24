@@ -46,6 +46,8 @@ function prompt {
     else
         PS1="$p"
     fi;
+
+    PS1="\[\033[G\]$PS1"
     PS2='continue-> '
     PS4='$0.$LINENO+ '
 
