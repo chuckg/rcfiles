@@ -10,3 +10,6 @@ html=.haml
 
 --type-add
 ruby=.haml
+
+--type-add
+js=.coffee
