@@ -53,21 +53,26 @@ function prompt {
 }
 
 
-# Set PROMPT_SHOWUID in .bash_profile, it forces the prompt to include the
-# username. Especially useful for those "oh fuck I'm on production" scenarios.
-if [ "$PROMPT_SHOWUID" = true ]; then
-    prompt true
-elif [ "$UID" = 0 ]; then
-    prompt true
-else 
-    prompt false 
+
+#
+# modes
+#
+# interactive mode (ie: a shell is available)
+# more details: http://tldp.org/LDP/abs/html/intandnonint.html
+if [ ! -z "$PS1" ]; then
+    # vim input mode
+    source "$HOME/.bash_bindings"
+
+    # Set PROMPT_SHOWUID in .bash_profile, it forces the prompt to include the
+    # username. Especially useful for those "oh fuck I'm on production" scenarios.
+    if [ "$PROMPT_SHOWUID" = true ]; then
+        prompt true
+    elif [ "$UID" = 0 ]; then
+        prompt true
+    else 
+        prompt false 
+    fi;
 fi;
-
-
-#
-# Input mode
-#
-source ~/.bash_bindings
 
 #
 # Completion
