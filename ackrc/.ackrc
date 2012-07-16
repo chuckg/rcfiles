@@ -4,3 +4,12 @@ perl=.thor
 
 --type-add
 css=.scss
+
+--type-add
+html=.haml
+
+--type-add
+ruby=.haml
+
+--type-add
+js=.coffee

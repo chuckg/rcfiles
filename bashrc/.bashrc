@@ -9,7 +9,7 @@ export MANPATH=:$MANPATH
 # 
 # BASH settings
 #
-export HISTCONTROL=ignoredup
+export HISTCONTROL=ignoredups
 
 # If you need to customize this, toss it in .bash_profile.
 if [ -z $HOME ]; then
@@ -46,6 +46,8 @@ function prompt {
     else
         PS1="$p"
     fi;
+
+    PS1="\[\033[G\]$PS1"
     PS2='continue-> '
     PS4='$0.$LINENO+ '
 
