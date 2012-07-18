@@ -36,6 +36,9 @@ help:
 	@echo '    make screen           # Install screen config'
 	@echo '    make vim              # Install vim config'
 	@echo 
+	@echo 'Misc:'
+	@echo '    make rdebug           # Install ruby-debug config'
+	@echo
 	@echo 'Uninstall:'
 	@echo '    make uninstall        # Uninstall symlinks without clobbering custom configs.'
 
@@ -66,6 +69,10 @@ vim:
 	@echo 'Bundling vim plugins.'
 	@vim -c 'BundleInstall' -c 'qa'
 
+rdebug:
+	@$(call symlink,.rdebugrc,'misc/rdebug')
+	@echo
+
 	
 # ----------------------
 # Uninstallers
@@ -74,5 +81,6 @@ uninstall:
 	@$(call delink,.screenrc)
 	@$(foreach file,$(VIM_FILES),$(call delink,$(file)))
 	@$(foreach file,$(BASH_FILES),$(call delink,$(file)))
+	@$(call delink,.rdebugrc)
 	@echo
 	@echo 'Done uninstalling rcfiles ...'
