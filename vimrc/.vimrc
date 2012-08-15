@@ -439,6 +439,7 @@ function! CustomTabularPatterns()
         AddTabularPattern! symbol          /^[^:]*\zs:/l1r0
         AddTabularPattern! symbols         / :/l0
         AddTabularPattern! doublequote     /"/l5c1
+        AddTabularPattern! first_bracket   /^[^{]*\zs{/l1
     endif
 endfunction
 autocmd VimEnter * call CustomTabularPatterns()
