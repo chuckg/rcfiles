@@ -150,8 +150,8 @@ set autoread     " Auto reload files that have been changed outside of VIM when
 " -----------------------------------------------------------------------------
 
 set infercase                 " For insert completion
-set showfulltag               " Show full command when doing insert completion
-                              " (so you can see c function args)
+set noshowfulltag             " Do not show the full command (wonky with Ruby)
+                              " Turning on showfulltag shows c function args
 
 set	complete=.,w,b,u,t,i
 " <c-x><c-u> -- user defined completions
@@ -512,6 +512,11 @@ set tags=./tags,tags,tmp/tags
 
 Bundle "vim-ruby/vim-ruby"
 Bundle "tpope/vim-markdown"
+
+" http://www.vim.org/scripts/script.php?script_id=2075
+Bundle "indenthtml.vim"
+" Force the following tags to indent children as well
+let g:html_indent_inctags = 'head,body'
 
 " -----------------------------------------------------------------------------
 " functions
