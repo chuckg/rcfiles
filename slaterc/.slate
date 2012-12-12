@@ -1,0 +1,68 @@
+# home:       https://github.com/jigish/slate
+# example at: http://thume.ca/howto/2012/11/19/using-slate/
+
+# basics
+config defaultToCurrentScreen true
+config nudgePercentOf screenSize
+config resizePercentOf screenSize
+
+config checkDefaultsOnLoad true
+config windowHintsShowIcons true
+config windowHintsIgnoreHiddenWindows false
+config windowHintsDuration 5
+config windowHintsSpread true
+config windowHintsOrder persist
+
+# monitor aliases
+alias mon-laptop     0
+alias mon-samsung    1
+
+# Abstract positions:
+alias full          move screenOriginX;screenOriginY                  screenSizeX;screenSizeY
+alias mid           move screenOriginX+screenSizeX/8;screenOriginY+screenSizeY/10         screenSizeX/8*6;screenSizeY/10*8
+alias lefthalf      move screenOriginX;screenOriginY                  screenSizeX/2;screenSizeY
+alias leftmost      move screenOriginX;screenOriginY                  screenSizeX*0.6;screenSizeY
+alias leftless      move screenOriginX;screenOriginY  
+alias righthalf     move screenOriginX+screenSizeX/2;screenOriginY    screenSizeX/2;screenSizeY
+alias rightmost     move screenOriginX+screenSizeX*0.4;screenOriginY  screenSizeX*0.6;screenSizeY
+alias rightless     move screenOriginX+screenSizeX*0.6;screenOriginY  screenSizeX*0.4;screenSizeY
+alias righttop      move screenOriginX+screenSizeX/2;screenOriginY    screenSizeX/2;screenSizeY/2
+alias rightbottom   move screenOriginX+screenSizeX/2;screenOriginY+screenSizeY/2 screenSizeX/2;screenSizeY/2
+ 
+# Concrete positions
+alias 1-full        ${full}      ${mon-laptop}
+alias 1-mid         ${mid}       ${mon-laptop}
+alias 1-left        ${lefthalf}  ${mon-laptop}
+alias 1-right       ${righthalf} ${mon-laptop}
+alias 2-full        ${full}      ${mon-samsung}
+alias 2-mid         ${mid}       ${mon-samsung}
+alias 2-left        ${lefthalf}  ${mon-samsung}
+alias 2-right       ${righthalf} ${mon-samsung}
+
+# 2 Monitor layout
+layout 2monitors 'Terminal':REPEAT         ${1-full}
+layout 2monitors 'Google Chrome':REPEAT    ${1-full}
+layout 2monitors 'MacVim':REPEAT           ${1-full}
+layout 2monitors 'Skype':REPEAT            ${2-left}
+
+# 1 Monitor layout
+layout 1monitor 'Terminal':REPEAT          ${1-full}
+layout 1monitor 'Google Chrome':REPEAT     ${1-full}
+layout 1monitor 'MacVim':REPEAT            ${1-full}
+layout 1monitor 'Skype':REPEAT             ${1-left}
+ 
+# Default Layouts
+default 2monitors count:2
+default 1monitor  count:1
+
+# VIM bindings
+bind k:ctrl;alt;cmd  chain ${1-full} | ${2-full}
+bind j:ctrl;alt;cmd  chain ${1-mid} | ${2-mid}
+bind h:ctrl;alt;cmd  chain ${1-left} | ${2-left}
+bind l:ctrl;alt;cmd  chain ${1-right} | ${2-right}
+
+#bind n;ctrl;alt;cmd  layout 1monitor
+#bind m;ctrl;alt;cmd  layout 2monitors
+
+# Window Hints
+# bind esc:cmd hint

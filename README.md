@@ -5,6 +5,7 @@ Collection of configuration files for:
 * ack
 * bash
 * screen
+* slate (https://github.com/jigish/slate)
 * vim 7.2+
 
 --

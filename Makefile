@@ -34,6 +34,7 @@ help:
 	@echo '    make ack              # Install ack config'
 	@echo '    make bash             # Install bash config'
 	@echo '    make screen           # Install screen config'
+	@echo '    make slate            # Install slate config'
 	@echo '    make vim              # Install vim config'
 	@echo 
 	@echo 'Misc:'
@@ -44,7 +45,7 @@ help:
 
 # ----------------------
 # Installers
-install: ack bash screen vim 
+install: ack bash screen slate vim 
 
 ack:
 	@$(call symlink,.ackrc,'ackrc')
@@ -56,6 +57,10 @@ bash:
 
 screen:
 	@$(call symlink,.screenrc,'screenrc')
+	@echo 
+
+slate:
+	@$(call symlink,.slate,'slaterc')
 	@echo 
 
 vim: 
