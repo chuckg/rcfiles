@@ -512,6 +512,7 @@ set tags=./tags,tags,tmp/tags
 
 Bundle "vim-ruby/vim-ruby"
 Bundle "tpope/vim-markdown"
+Bundle "vim-coffee-script"
 
 " http://www.vim.org/scripts/script.php?script_id=2075
 Bundle "indenthtml.vim"
