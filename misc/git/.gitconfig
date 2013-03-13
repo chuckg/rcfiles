@@ -1,0 +1,26 @@
+[user]
+    name = Charles G.
+    email = charles@chuckg.org
+[color]
+    diff = auto
+    status = auto
+    branch = auto
+[diff]
+    tool = vimdiff
+[difftool]
+    prompt = false
+[merge]
+    tool = vimdiff
+[core]
+    excludesfile = /Users/chuckg/.gitignore
+    editor = vim
+[alias]
+    d = difftool
+    st = status
+    unstage = reset HEAD --
+    co = checkout
+    br = branch
+    ci = commit
+    last = log -1 HEAD -p
+    lol = log --graph --decorate --pretty=oneline --abbrev-commit
+    lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
