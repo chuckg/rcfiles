@@ -1,6 +1,9 @@
 [user]
     name = Charles G.
     email = charles@chuckg.org
+[push]
+    # Old default: matching
+	default = simple
 [color]
     diff = auto
     status = auto
