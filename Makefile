@@ -98,6 +98,7 @@ profile:
 
 git:
 	@$(foreach file,$(GIT_FILES),$(call install_config,$(file),'misc/git'))
+	@echo
 
 rdebug:
 	@$(call symlink,.rdebugrc,'misc/rdebug')
