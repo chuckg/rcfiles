@@ -39,19 +39,28 @@ alias 2-mid         ${mid}       ${mon-samsung}
 alias 2-left        ${lefthalf}  ${mon-samsung}
 alias 2-right       ${righthalf} ${mon-samsung}
 
-# 2 Monitor layout
+# Basic 2 monitor layout
 layout 2monitors 'Terminal':REPEAT         ${1-full}
 layout 2monitors 'Google Chrome':REPEAT    ${1-full}
 layout 2monitors 'MacVim':REPEAT           ${1-full}
 layout 2monitors 'Skype':REPEAT            ${2-left}
 
-# 1 Monitor layout
+# 1 monitor layout
 layout 1monitor 'Terminal':REPEAT          ${1-full}
 layout 1monitor 'Google Chrome':REPEAT     ${1-full}
 layout 1monitor 'MacVim':REPEAT            ${1-full}
-layout 1monitor 'Skype':REPEAT             ${1-left}
+layout 1monitor 'Skype':REPEAT             ${1-right}
+layout 1monitor 'Messages':REPEAT          ${1-left}
+
+# Work layout
+layout work 'Terminal':REPEAT          ${2-left}
+layout work 'Google Chrome':REPEAT     ${2-full}
+layout work 'MacVim':REPEAT            ${2-full}
+layout work 'Skype':REPEAT             ${1-right}
+layout work 'Messages':REPEAT          ${1-left}
  
 # Default Layouts
+default work      resolutions:2560x1440;1440x900
 default 2monitors count:2
 default 1monitor  count:1
 
@@ -65,4 +74,4 @@ bind l:ctrl;alt;cmd  chain ${1-right} | ${2-right}
 #bind m;ctrl;alt;cmd  layout 2monitors
 
 # Window Hints
-# bind esc:cmd hint
+#bind esc:cmd hint
