@@ -40,77 +40,77 @@ endef
 # ----------------------
 # Default to help.
 help: 
-    @echo 'Installation:'
-    @echo '    make install          # Install/symlink core configs'
-    @echo 
-    @echo 'Core:'
-    @echo '    make ack              # Symlink ack config'
-    @echo '    make bash             # Symlink bash config'
-    @echo '    make screen           # Symlink screen config'
-    @echo '    make slate            # Symlink slate config'
-    @echo '    make vim              # Symlink vim config'
-    @echo
-    @echo 'Misc:'
-    @echo '    make profile          # Install profile'
-    @echo '    make git              # Install git config'
-    @echo '    make rdebug           # Symlink ruby-debug config'
-    @echo
-    @echo 'Uninstall:'
-    @echo '    make uninstall        # Uninstalls symlinks, ignoring custom configs.'
-    @echo 
+	@echo 'Installation:'
+	@echo '    make install          # Install/symlink core configs'
+	@echo 
+	@echo 'Core:'
+	@echo '    make ack              # Symlink ack config'
+	@echo '    make bash             # Symlink bash config'
+	@echo '    make screen           # Symlink screen config'
+	@echo '    make slate            # Symlink slate config'
+	@echo '    make vim              # Symlink vim config'
+	@echo
+	@echo 'Misc:'
+	@echo '    make profile          # Install profile'
+	@echo '    make git              # Install git config'
+	@echo '    make rdebug           # Symlink ruby-debug config'
+	@echo
+	@echo 'Uninstall:'
+	@echo '    make uninstall        # Revmoes symlinks, ignoring custom configs.'
+	@echo 
 
 # ----------------------
 # Installers
 install: ack bash screen slate vim 
 
 ack:
-    @$(call symlink,.ackrc,'ackrc')
-    @echo 
+	@$(call symlink,.ackrc,'ackrc')
+	@echo 
 
 bash:
-    @$(foreach file,$(BASH_FILES),$(call symlink,$(file),'bashrc'))
-    @echo 
+	@$(foreach file,$(BASH_FILES),$(call symlink,$(file),'bashrc'))
+	@echo 
 
 screen:
-    @$(call symlink,.screenrc,'screenrc')
-    @echo 
+	@$(call symlink,.screenrc,'screenrc')
+	@echo 
 
 slate:
-    @$(call symlink,.slate,'slaterc')
-    @echo 
+	@$(call symlink,.slate,'slaterc')
+	@echo 
 
 vim: 
-    @$(foreach file,$(VIM_FILES),$(call symlink,$(file),'vimrc'))
-    @if [ -d ~/.vim/bundle ]; then rm -rf ~/.vim/bundle; fi;
-    @mkdir ~/.vim/bundle
-    @echo 
-    @echo 'Installing vundle for vim.'
-    git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
-    @echo 
-    @echo 'Bundling vim plugins.'
-    @vim -c 'BundleInstall' -c 'qa'
+	@$(foreach file,$(VIM_FILES),$(call symlink,$(file),'vimrc'))
+	@if [ -d ~/.vim/bundle ]; then rm -rf ~/.vim/bundle; fi;
+	@mkdir ~/.vim/bundle
+	@echo 
+	@echo 'Installing vundle for vim.'
+	git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
+	@echo 
+	@echo 'Bundling vim plugins.'
+	@vim -c 'BundleInstall' -c 'qa'
 
 # MISC
 
 profile:
-    @$(call install_config,.bash_profile,'bashrc')
-    @echo
+	@$(call install_config,.bash_profile,'bashrc')
+	@echo
 
 git:
-    @$(foreach file,$(GIT_FILES),$(call install_config,$(file),'misc/git'))
+	@$(foreach file,$(GIT_FILES),$(call install_config,$(file),'misc/git'))
 
 rdebug:
-    @$(call symlink,.rdebugrc,'misc/rdebug')
-    @echo
+	@$(call symlink,.rdebugrc,'misc/rdebug')
+	@echo
 
-    
+
 # ----------------------
 # Uninstallers
 uninstall:  
-    @$(call delink,.ackrc)
-    @$(call delink,.screenrc)
-    @$(foreach file,$(VIM_FILES),$(call delink,$(file)))
-    @$(foreach file,$(BASH_FILES),$(call delink,$(file)))
-    @$(call delink,.rdebugrc)
-    @echo
-    @echo 'Done uninstalling rcfiles ...'
+	@$(call delink,.ackrc)
+	@$(call delink,.screenrc)
+	@$(foreach file,$(VIM_FILES),$(call delink,$(file)))
+	@$(foreach file,$(BASH_FILES),$(call delink,$(file)))
+	@$(call delink,.rdebugrc)
+	@echo
+	@echo 'Done uninstalling rcfiles ...'
