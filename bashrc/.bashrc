@@ -11,9 +11,17 @@ export MANPATH=:$MANPATH
 #
 export HISTCONTROL=ignoredups
 
+function is_darwin {
+    if [[ $OSTYPE == *darwin* ]] ; then 
+        return 0
+    else 
+        return 1
+    fi;
+}
+
 # If you need to customize this, toss it in .bash_profile.
 if [ -z $HOME ]; then
-    if [[ $OSTYPE == *darwin* ]]; then
+    if is_darwin; then
         export HOME=/Users/$USER
     else
         export HOME=/home/$USER
@@ -33,10 +41,18 @@ function prompt {
     local CYAN="\033[36m"
     local END_COLOR="\033[m"
 
-    if [ $show_user = true ]; then
-        local p="\$(date +%H:%M)\[$CYAN\]\u \[$GREEN\]\H \[$RED\]\W\[$YELLOW\]$GIT_INFO\[$END_COLOR\]> "
+    # Hostname only for mac (ie: router spam otherwise)
+    if is_darwin; then
+        host="\h"
     else
-        local p="\$(date +%H:%M)\[$GREEN\]\H \[$RED\]\W\[$YELLOW\]$GIT_INFO\[$END_COLOR\]> "
+        # Fully qualified hostname otherwise
+        local host="\H"
+    fi;
+
+    if [ $show_user = true ]; then
+        local p="\$(date +%H:%M)\[$CYAN\]\u \[$GREEN\]$host \[$RED\]\W\[$YELLOW\]$GIT_INFO\[$END_COLOR\]> "
+    else
+        local p="\$(date +%H:%M)\[$GREEN\]$host \[$RED\]\W\[$YELLOW\]$GIT_INFO\[$END_COLOR\]> "
     fi;
 
     # If you want to set the term title, set the PROMPT_TITLE variable in your
