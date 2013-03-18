@@ -491,13 +491,7 @@ autocmd BufNewFile,BufRead *.json set ai filetype=javascript
 autocmd BufRead,BufNewFile *.{md,markdown,mdown,mkd,mkdn} set ft=markdown
 
 " Setup proper tabs per file type.
-autocmd FileType ruby       call RubyPrepare()
-
-function! RubyPrepare()
-    set shiftwidth=2
-    set tabstop=2
-    set softtabstop=2
-endfunction
+autocmd FileType ruby setl tabstop=2 shiftwidth=2 softtabstop=2
 
 " -----------------------------------------------------------------------------
 " tags
