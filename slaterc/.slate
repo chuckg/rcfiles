@@ -22,7 +22,8 @@ alias full          move screenOriginX;screenOriginY                  screenSize
 alias mid           move screenOriginX+screenSizeX/8;screenOriginY+screenSizeY/10         screenSizeX/8*6;screenSizeY/10*8
 alias lefthalf      move screenOriginX;screenOriginY                  screenSizeX/2;screenSizeY
 alias leftmost      move screenOriginX;screenOriginY                  screenSizeX*0.6;screenSizeY
-alias leftless      move screenOriginX;screenOriginY  
+alias leftless      move screenOriginX;screenOriginY                  screenSizeX*0.4;screenSizeY
+alias leftsliver    move screenOriginX;screenOriginY                  screenSizeX*0.25;screenSizeY
 alias righthalf     move screenOriginX+screenSizeX/2;screenOriginY    screenSizeX/2;screenSizeY
 alias rightmost     move screenOriginX+screenSizeX*0.4;screenOriginY  screenSizeX*0.6;screenSizeY
 alias rightless     move screenOriginX+screenSizeX*0.6;screenOriginY  screenSizeX*0.4;screenSizeY
@@ -46,18 +47,21 @@ layout 2monitors 'MacVim':REPEAT           ${1-full}
 layout 2monitors 'Skype':REPEAT            ${2-left}
 
 # 1 monitor layout
-layout 1monitor 'Terminal':REPEAT          ${1-full}
-layout 1monitor 'Google Chrome':REPEAT     ${1-full}
-layout 1monitor 'MacVim':REPEAT            ${1-full}
-layout 1monitor 'Skype':REPEAT             ${1-right}
-layout 1monitor 'Messages':REPEAT          ${1-left}
+layout 1monitor 'Terminal':REPEAT      ${1-full}
+layout 1monitor 'Google Chrome':REPEAT ${1-full}
+layout 1monitor 'MacVim':REPEAT        ${1-full}
+layout 1monitor 'Skype':REPEAT         ${1-right}
+layout 1monitor 'Messages':REPEAT_LAST ${1-left} | ${leftsliver} ${mon-laptop}
+layout 1monitor 'Evernote':REPEAT      ${1-full}
 
 # Work layout
-layout work 'Terminal':REPEAT          ${2-left}
+layout work 'Skype':REPEAT             ${1-right}
+layout work 'Messages':REPEAT_LAST     ${1-left} | ${leftsliver} ${mon-laptop}
+layout work 'Calendar':REPEAT          ${1-mid}
 layout work 'Google Chrome':REPEAT     ${2-full}
 layout work 'MacVim':REPEAT            ${2-full}
-layout work 'Skype':REPEAT             ${1-right}
-layout work 'Messages':REPEAT          ${1-left}
+layout work 'Terminal':REPEAT          ${2-left}
+layout work 'Evernote':REPEAT          ${2-right}
  
 # Default Layouts
 default work      resolutions:2560x1440;1440x900
@@ -74,4 +78,4 @@ bind l:ctrl;alt;cmd  chain ${1-right} | ${2-right}
 #bind m;ctrl;alt;cmd  layout 2monitors
 
 # Window Hints
-#bind esc:cmd hint
+# bind e:cmd hint
