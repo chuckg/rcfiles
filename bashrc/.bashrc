@@ -132,6 +132,7 @@ fi;
 
 alias vi=vim
 alias make='time make'
+alias less='less -R'
 alias lr='ls -Rha'
 alias ..="cd .."
 alias ...="cd ../.."
