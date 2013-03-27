@@ -16,10 +16,13 @@ config windowHintsOrder persist
 # monitor aliases
 alias mon-laptop     0
 alias mon-samsung    1
+alias mon-vertical   2
 
 # Abstract positions:
 alias full          move screenOriginX;screenOriginY                  screenSizeX;screenSizeY
 alias mid           move screenOriginX+screenSizeX/8;screenOriginY+screenSizeY/10         screenSizeX/8*6;screenSizeY/10*8
+alias tophalf       move screenOriginX;screenOriginY                  screenSizeX;screenSizeY/2
+alias bottomhalf    move screenOriginX;screenOriginY+screenSizeY/2    screenSizeX;screenSizeY/2
 alias lefthalf      move screenOriginX;screenOriginY                  screenSizeX/2;screenSizeY
 alias leftmost      move screenOriginX;screenOriginY                  screenSizeX*0.6;screenSizeY
 alias leftless      move screenOriginX;screenOriginY                  screenSizeX*0.4;screenSizeY
@@ -29,22 +32,31 @@ alias rightmost     move screenOriginX+screenSizeX*0.4;screenOriginY  screenSize
 alias rightless     move screenOriginX+screenSizeX*0.6;screenOriginY  screenSizeX*0.4;screenSizeY
 alias righttop      move screenOriginX+screenSizeX/2;screenOriginY    screenSizeX/2;screenSizeY/2
 alias rightbottom   move screenOriginX+screenSizeX/2;screenOriginY+screenSizeY/2 screenSizeX/2;screenSizeY/2
+
+# Abstract positions for vertical monitors
  
 # Concrete positions
-alias 1-full        ${full}      ${mon-laptop}
-alias 1-mid         ${mid}       ${mon-laptop}
-alias 1-left        ${lefthalf}  ${mon-laptop}
-alias 1-right       ${righthalf} ${mon-laptop}
-alias 2-full        ${full}      ${mon-samsung}
-alias 2-mid         ${mid}       ${mon-samsung}
-alias 2-left        ${lefthalf}  ${mon-samsung}
-alias 2-right       ${righthalf} ${mon-samsung}
+alias 1-full        ${full}       ${mon-laptop}
+alias 1-mid         ${mid}        ${mon-laptop}
+alias 1-left        ${lefthalf}   ${mon-laptop}
+alias 1-right       ${righthalf}  ${mon-laptop}
+alias 2-full        ${full}       ${mon-samsung}
+alias 2-mid         ${mid}        ${mon-samsung}
+alias 2-left        ${lefthalf}   ${mon-samsung}
+alias 2-right       ${righthalf}  ${mon-samsung}
+alias 3-full        ${full}       ${mon-vertical}
+alias 3-mid         ${mid}        ${mon-vertical}
+alias 3-left        ${tophalf}    ${mon-vertical}
+alias 3-right       ${bottomhalf} ${mon-vertical}
 
 # Basic 2 monitor layout
 layout 2monitors 'Terminal':REPEAT         ${1-full}
 layout 2monitors 'Google Chrome':REPEAT    ${1-full}
 layout 2monitors 'MacVim':REPEAT           ${1-full}
-layout 2monitors 'Skype':REPEAT            ${2-left}
+layout 2monitors 'Evernote':REPEAT         ${1-full}
+layout 2monitors '1Password':REPEAT        ${1-mid}
+layout 2monitors 'Skype':REPEAT            ${2-right}
+layout 2monitors 'Messages':REPEAT_LAST    ${2-left} | ${leftsliver} ${mon-laptop}
 
 # 1 monitor layout
 layout 1monitor 'Terminal':REPEAT      ${1-full}
@@ -60,19 +72,19 @@ layout work 'Messages':REPEAT_LAST     ${1-left} | ${leftsliver} ${mon-laptop}
 layout work 'Calendar':REPEAT          ${1-mid}
 layout work 'Google Chrome':REPEAT     ${2-full}
 layout work 'MacVim':REPEAT            ${2-full}
-layout work 'Terminal':REPEAT          ${2-left}
+layout work 'Terminal':REPEAT          ${3-full}
 layout work 'Evernote':REPEAT          ${2-right}
  
 # Default Layouts
-default work      resolutions:2560x1440;1440x900
+default work      resolutions:2560x1440;1440x900;1080x1920
 default 2monitors count:2
 default 1monitor  count:1
 
 # VIM bindings
-bind k:ctrl;alt;cmd  chain ${1-full} | ${2-full}
-bind j:ctrl;alt;cmd  chain ${1-mid} | ${2-mid}
-bind h:ctrl;alt;cmd  chain ${1-left} | ${2-left}
-bind l:ctrl;alt;cmd  chain ${1-right} | ${2-right}
+bind k:ctrl;alt;cmd  chain ${2-full}  | ${1-full}  | ${3-full}
+bind j:ctrl;alt;cmd  chain ${2-mid}   | ${1-mid}   | ${3-mid}
+bind h:ctrl;alt;cmd  chain ${2-left}  | ${1-left}  | ${3-left}
+bind l:ctrl;alt;cmd  chain ${2-right} | ${1-right} | ${3-right}
 
 #bind n;ctrl;alt;cmd  layout 1monitor
 #bind m;ctrl;alt;cmd  layout 2monitors
