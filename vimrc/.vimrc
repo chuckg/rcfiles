@@ -369,7 +369,7 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 
 " ack
-Bundle 'ack.vim'
+Bundle 'mileszs/ack.vim'
 nnoremap <leader>a :Ack<space>
 
 " file:line
