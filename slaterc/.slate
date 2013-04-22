@@ -86,19 +86,26 @@ default work      resolutions:2560x1440;1440x900;1080x1920
 default 2monitors count:2
 default 1monitor  count:1
 
+alias hyper ctrl;alt;cmd
+
 # VIM bindings
 # With 'defaultToCurrentMonitor' set to true, we intentionally try an invalid
 # monitor ID so that the movie is attempted on the current screen. Then we
 # rotate in the specified order.
-bind k:ctrl;alt;cmd   chain ${full} 5       | ${2-full}       | ${1-full}       | ${3-full}
-bind j:ctrl;alt;cmd   chain ${mid} 5        | ${2-mid}        | ${1-mid}        | ${3-mid}
+bind k:${hyper}   chain ${full} 5       | ${2-full}       | ${1-full}       | ${3-full}
+bind j:${hyper}   chain ${mid} 5        | ${2-mid}        | ${1-mid}        | ${3-mid}
 bind k:shift;alt;cmd  chain ${tophalf} 5    | ${2-tophalf}    | ${1-tophalf}    | ${3-tophalf}
 bind j:shift;alt;cmd  chain ${bottomhalf} 5 | ${2-bottomhalf} | ${1-bottomhalf} | ${3-bottomhalf}
-bind h:ctrl;alt;cmd   chain ${lefthalf} 5   | ${2-left}       | ${1-left}       | ${3-left}
-bind l:ctrl;alt;cmd   chain ${righthalf} 5  | ${2-right}      | ${1-right}      | ${3-right}
+bind h:${hyper}   chain ${lefthalf} 5   | ${2-left}       | ${1-left}       | ${3-left}
+bind l:${hyper}   chain ${righthalf} 5  | ${2-right}      | ${1-right}      | ${3-right}
 
 #bind n;ctrl;alt;cmd  layout 1monitor
 #bind m;ctrl;alt;cmd  layout 2monitors
 
 # Window Hints
-# bind e:cmd hint
+#bind ,:${hyper} hint
+
+# Focus
+bind u:${hyper} focus 'Terminal'
+bind i:${hyper} focus 'MacVim'
+bind o:${hyper} focus 'Google Chrome'
