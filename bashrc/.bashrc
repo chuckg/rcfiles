@@ -2,6 +2,7 @@
 # Variables
 #
 export PAGER=less
+export ACK_PAGER="less -R"
 export EDITOR=vim
 export PATH=:~/.bin:/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/sbin:/usr/sbin:/usr/share:$PATH:
 export MANPATH=:$MANPATH
