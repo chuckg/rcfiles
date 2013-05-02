@@ -1,0 +1,6 @@
+\pset null 'NULL'
+\set HISTCONTROL ignoredups
+\set HISTFILE ~/.psql_history- :DBNAME
+\set HISTSIZE 2000
+\timing
+\encoding UTF8

@@ -51,12 +51,13 @@ help:
 	@echo '    make vim              # Symlink vim config'
 	@echo
 	@echo 'Misc:'
-	@echo '    make profile          # Install profile'
 	@echo '    make git              # Install git config'
+	@echo '    make profile          # Install profile'
+	@echo '    make psql             # Symlink psql config'
 	@echo '    make rdebug           # Symlink ruby-debug config'
 	@echo
 	@echo 'Uninstall:'
-	@echo '    make uninstall        # Revmoes symlinks, ignoring custom configs.'
+	@echo '    make uninstall        # Removes symlinks, ignoring custom or installed configs'
 	@echo 
 
 # ----------------------
@@ -92,12 +93,16 @@ vim:
 
 # MISC
 
+git:
+	@$(foreach file,$(GIT_FILES),$(call install_config,$(file),'misc/git'))
+	@echo
+
 profile:
 	@$(call install_config,.bash_profile,'bashrc')
 	@echo
 
-git:
-	@$(foreach file,$(GIT_FILES),$(call install_config,$(file),'misc/git'))
+psql:
+	@$(call symlink,.psqlrc,'misc/psql')
 	@echo
 
 rdebug:
