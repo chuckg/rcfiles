@@ -309,8 +309,8 @@ iab Ydate <C-R>=strftime("%Y-%m-%d")<CR>
   " Example: 2010-01-01
 iab Ytime <C-R>=strftime("%H:%M")<CR>
   " Example: 14:28
-iab Ydt   <C-R>=strftime("%m/%d/%y %T")<CR>
-  " Example: 971027 12:00:00
+iab Ydt   <C-R>=strftime("%Y-%m-%d %T")<CR>
+  " Example: 2013-04-30 12:00:00
 iab Ystamp <C-R>=strftime("%a %b %d %T %Z %Y")<CR>
   " Example: Tue Dec 16 12:07:00 CET 1997
   "
