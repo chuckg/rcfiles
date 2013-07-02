@@ -375,6 +375,10 @@ Bundle 'gmarik/vundle'
 Bundle 'mileszs/ack.vim'
 nnoremap <leader>a :Ack<space>
 
+" evervim
+" Add let g:evervim_devtoken='value' to .vimrc_local
+Bundle 'kakkyz81/evervim'
+
 " file:line
 " Allows opening a file directly to a line in the following way: 
 " :e file/path.txt:12
