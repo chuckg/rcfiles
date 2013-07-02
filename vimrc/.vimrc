@@ -233,6 +233,9 @@ imap JJ <esc>
 cmap Wq wq
 cmap WQ wq
 
+" Allow saving of files as sudo when I forgot to start vim using sudo.
+cmap w!! %!sudo tee > /dev/null %
+
 " For when you want to make sure you're not over 80 columns of text.
 " toggle colored right border at textwidth +1
 nnoremap <Leader>s8 :call <SID>ToggleColorColumn()<cr>
