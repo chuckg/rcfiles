@@ -500,6 +500,10 @@ autocmd BufRead,BufNewFile *.{md,markdown,mdown,mkd,mkdn} set ft=markdown
 " Setup proper tabs per file type.
 autocmd FileType ruby setl tabstop=2 shiftwidth=2 softtabstop=2
 
+" Most db/seeds.rb files are so massive that the Ruby syntax highlighting lags
+" behind for several seconds if we leave the filetype set to ruby
+autocmd BufNewFile,BufRead seeds.rb set ft=text
+
 " -----------------------------------------------------------------------------
 " tags
 " -----------------------------------------------------------------------------
