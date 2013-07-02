@@ -85,11 +85,11 @@ vim:
 	@if [ -d ~/.vim/bundle ]; then rm -rf ~/.vim/bundle; fi;
 	@mkdir ~/.vim/bundle
 	@echo 
-	@echo 'Installing vundle for vim.'
-	git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
+	@echo 'Installing NeoBundle for vim.'
+	git clone git://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim
 	@echo 
 	@echo 'Bundling vim plugins.'
-	@vim -c 'BundleInstall' -c 'qa'
+	@vim -c 'NeoBundleInstall' -c 'qa'
 
 # MISC
 

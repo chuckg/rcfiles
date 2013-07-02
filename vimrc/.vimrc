@@ -363,37 +363,40 @@ amenu Misc.&Save\ Viminfo                           :set viminfo='7,n./viminfo<c
 " plugins
 " -----------------------------------------------------------------------------
 
-" filetype must be off to load vundle properly; it's re-enabled further down.
+" filetype must be off to load NeoBundle properly; it's re-enabled further down.
 filetype off
 
-" Load Vundle. Self sexify.
-set runtimepath+=$HOME/.vim/bundle/vundle/
-call vundle#rc()
-Bundle 'gmarik/vundle'
+" Load NeoBundle. Self sexify.
+if has('vim_starting')
+   set runtimepath+=~/.vim/bundle/neobundle.vim/
+ endif
+call neobundle#rc(expand('~/.vim/bundle/'))
+" Let NeoBundle manage NeoBundle
+NeoBundleFetch 'Shougo/neobundle.vim'
 
 " ack
-Bundle 'mileszs/ack.vim'
+NeoBundle 'mileszs/ack.vim'
 nnoremap <leader>a :Ack<space>
 
 " evervim
 " Add let g:evervim_devtoken='value' to .vimrc_local
-Bundle 'kakkyz81/evervim'
+NeoBundle 'kakkyz81/evervim'
 
 " file:line
 " Allows opening a file directly to a line in the following way: 
 " :e file/path.txt:12
-Bundle 'bogado/file-line'
+NeoBundle 'bogado/file-line'
 
 " fugitive: sexy git wrapper
-Bundle 'fugitive.vim'
+NeoBundle 'fugitive.vim'
 nnoremap <leader>gb :Gblame<CR>
 nnoremap <leader>gg :Ggrep
 nnoremap <leader>gs :Gstatus<CR>
 nnoremap <leader>gm :Gmove
 
 " fuzzyfinder
-Bundle 'L9'
-Bundle 'FuzzyFinder'
+NeoBundle 'L9'
+NeoBundle 'FuzzyFinder'
 let g:fuf_file_exclude         = '\v\~$|\.(o|exe|dll|bak|orig|sw[po])$|(^|[/\\])\.?(hg|git|bzr|vendor)($|[/\\])'
 let g:fuf_coveragefile_exclude = '\v\~$|\.(o|exe|dll|bak|orig|sw[po])$|(^|[/\\])\.?(hg|git|bzr|vendor)($|[/\\])'
 let g:fuf_dir_exclude          = '\v(^|[/\\])\.?(hg|git|bzr|vendor)($|[/\\])'
@@ -401,16 +404,16 @@ nnoremap <leader>t :FufFile **/<CR>
 nnoremap <leader>T :FufRenewCache<CR>
 
 " indent-guides
-Bundle 'nathanaelkane/vim-indent-guides'
+NeoBundle 'nathanaelkane/vim-indent-guides'
 let g:indent_guides_start_level = 2
 let g:indent_guides_guide_size  = 1
 nnoremap <leader>ig :IndentGuidesToggle<CR>
 
 " matchit
-Bundle 'edsono/vim-matchit'
+NeoBundle 'edsono/vim-matchit'
 
-"Bundle 'scrooloose/nerdcommenter'
-Bundle 'The-NERD-Commenter'
+"NeoBundle 'scrooloose/nerdcommenter'
+NeoBundle 'The-NERD-Commenter'
 " comment/uncomment: mappings to nerdcommenter
 nmap - :call NERDComment(0, 'nested')<CR>
 nmap _ :call NERDComment(0, 'uncomment')<CR>
@@ -418,7 +421,7 @@ vmap - :call NERDComment(1, 'nested')<CR>
 vmap _ :call NERDComment(0, 'uncomment')<CR>
 
 " rails
-Bundle 'tpope/vim-rails'
+NeoBundle 'tpope/vim-rails'
 let g:rails_ctags_arguments = "--languages=-javascript"
 let g:rails_ctags_arguments .= " --extra=+f"
 let g:rails_ctags_arguments .= " --exclude=.git --exclude=log"
@@ -426,15 +429,15 @@ let g:rails_ctags_arguments .= " --exclude=.git --exclude=log"
 let g:rails_ctags_arguments .= " `ruby -rrubygems -e 'p Gem.path.collect {|p| [\"gems\", File.join(\"bundler\", \"gems\")].collect {|d| File.join(p, d)} }.join(\" \")' | sed 's/\"//g'`"
 
 " scratch
-Bundle 'scratch.vim'
+NeoBundle 'scratch.vim'
 "nnoremap <leader>s :Sscratch<CR>
 "nnoremap <leader>S :Scratch<CR>
 
 " surround
-Bundle 'tpope/vim-surround'
+NeoBundle 'tpope/vim-surround'
 
 " Tabular
-Bundle 'godlygeek/tabular'
+NeoBundle 'godlygeek/tabular'
 function! CustomTabularPatterns()
     if exists('g:tabular_loaded')
         AddTabularPattern! assignment      / = /l0
@@ -463,14 +466,38 @@ map <leader>e" :Tabularize doublequote<CR>
 "   ar  - all ruby block
 "   ir  - inner ruby block
 " textobj-user is required by rubyblock
-Bundle 'textobj-user'
-Bundle 'textobj-rubyblock'
+NeoBundle 'textobj-user'
+NeoBundle 'textobj-rubyblock'
+
 
 " -----------------------------------------------------------------------------
 " colors
 " -----------------------------------------------------------------------------
 
-Bundle 'tpope/vim-vividchalk'
+NeoBundle 'tpope/vim-vividchalk'
+
+
+" -----------------------------------------------------------------------------
+" tags
+" -----------------------------------------------------------------------------
+
+" vim-rails creates tags in `tmp/tags` when you generate using :Rtags
+set tags=./tags,tags,tmp/tags
+
+
+" -----------------------------------------------------------------------------
+" syntax
+" -----------------------------------------------------------------------------
+
+NeoBundle 'vim-ruby/vim-ruby'
+NeoBundle 'tpope/vim-markdown'
+NeoBundle 'vim-coffee-script'
+
+" http://www.vim.org/scripts/script.php?script_id=2075
+NeoBundle 'indenthtml.vim'
+" Force the following tags to indent children as well
+let g:html_indent_inctags = 'head,body'
+
 
 " -----------------------------------------------------------------------------
 " filetype  (special things for special file types)
@@ -504,25 +531,6 @@ autocmd FileType ruby setl tabstop=2 shiftwidth=2 softtabstop=2
 " behind for several seconds if we leave the filetype set to ruby
 autocmd BufNewFile,BufRead seeds.rb set ft=text
 
-" -----------------------------------------------------------------------------
-" tags
-" -----------------------------------------------------------------------------
-
-" vim-rails creates tags in `tmp/tags` when you generate using :Rtags
-set tags=./tags,tags,tmp/tags
-
-" -----------------------------------------------------------------------------
-" syntax
-" -----------------------------------------------------------------------------
-
-Bundle "vim-ruby/vim-ruby"
-Bundle "tpope/vim-markdown"
-Bundle "vim-coffee-script"
-
-" http://www.vim.org/scripts/script.php?script_id=2075
-Bundle "indenthtml.vim"
-" Force the following tags to indent children as well
-let g:html_indent_inctags = 'head,body'
 
 " -----------------------------------------------------------------------------
 " functions
@@ -537,7 +545,6 @@ function! ETry(function, ...)
     endif
 endfunction
 
-
 " -----------------------------------------------------------------------------
 " Load local configuration options
 " -----------------------------------------------------------------------------
@@ -545,3 +552,6 @@ endfunction
 if filereadable(expand("~/.vimrc_local"))
     source ~/.vimrc_local
 endif
+
+" Installation check.
+NeoBundleCheck
