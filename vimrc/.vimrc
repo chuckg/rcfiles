@@ -374,9 +374,38 @@ call neobundle#rc(expand('~/.vim/bundle/'))
 " Let NeoBundle manage NeoBundle
 NeoBundleFetch 'Shougo/neobundle.vim'
 
+" vimproc
+NeoBundle 'Shougo/vimproc', {
+      \ 'build' : {
+      \     'windows' : 'make -f make_mingw32.mak',
+      \     'cygwin' : 'make -f make_cygwin.mak',
+      \     'mac' : 'make -f make_mac.mak',
+      \     'unix' : 'make -f make_unix.mak',
+      \    },
+      \ }
+
+" Unite.vim
+NeoBundle 'Shougo/unite.vim'
+let g:unite_enable_start_insert = 1   
+let g:unite_source_history_yank_enable = 1
+call unite#filters#matcher_default#use(['matcher_fuzzy'])  " Fuzzy matching
+" Ignore certain file types
+" call unite#custom#source('file_rec', 'ignore_pattern', '\.(o|exe|dll|bak|orig|sw[po]|eot|svg|png|jpg)$')
+nnoremap <leader>t :<C-u>Unite -buffer-name=files -start-insert file_rec/async:!<cr>
+nnoremap <leader>f :<C-u>Unite -buffer-name=files -start-insert file<cr>
+nnoremap <leader>y :<C-u>Unite -buffer-name=yank  history/yank<cr>
+nnoremap <leader>a :<C-u>Unite -buffer-name=ack   grep:.<cr>
+nnoremap <leader>A :<C-u>Unite -buffer-name=ack   grep<cr>
+
+if executable('ack')
+    let g:unite_source_grep_command = 'ack'
+    let g:unite_source_grep_default_opts = '--no-heading --no-color -H'
+    let g:unite_source_grep_recursive_opt = ''
+endif
+
 " ack
-NeoBundle 'mileszs/ack.vim'
-nnoremap <leader>a :Ack<space>
+"NeoBundle 'mileszs/ack.vim'
+"nnoremap <leader>a :Ack<space>
 
 " evervim
 " Add let g:evervim_devtoken='value' to .vimrc_local
@@ -393,15 +422,6 @@ nnoremap <leader>gb :Gblame<CR>
 nnoremap <leader>gg :Ggrep
 nnoremap <leader>gs :Gstatus<CR>
 nnoremap <leader>gm :Gmove
-
-" fuzzyfinder
-NeoBundle 'L9'
-NeoBundle 'FuzzyFinder'
-let g:fuf_file_exclude         = '\v\~$|\.(o|exe|dll|bak|orig|sw[po])$|(^|[/\\])\.?(hg|git|bzr|vendor)($|[/\\])'
-let g:fuf_coveragefile_exclude = '\v\~$|\.(o|exe|dll|bak|orig|sw[po])$|(^|[/\\])\.?(hg|git|bzr|vendor)($|[/\\])'
-let g:fuf_dir_exclude          = '\v(^|[/\\])\.?(hg|git|bzr|vendor)($|[/\\])'
-nnoremap <leader>t :FufFile **/<CR>
-nnoremap <leader>T :FufRenewCache<CR>
 
 " indent-guides
 NeoBundle 'nathanaelkane/vim-indent-guides'
