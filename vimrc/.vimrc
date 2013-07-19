@@ -512,6 +512,7 @@ set tags=./tags,tags,tmp/tags
 NeoBundle 'vim-ruby/vim-ruby'
 NeoBundle 'tpope/vim-markdown'
 NeoBundle 'vim-coffee-script'
+NeoBundle 'nono/vim-handlebars'
 
 " http://www.vim.org/scripts/script.php?script_id=2075
 NeoBundle 'indenthtml.vim'
@@ -530,7 +531,12 @@ let g:html_indent_inctags = 'head,body'
 filetype plugin indent on
 
 " For all text files set 'textwidth' to 78 characters.
-au FileType text setlocal tw=78
+autocmd FileType text setlocal tw=78
+
+" Tabs by filetye/syntax
+autocmd FileType ruby       setl tabstop=2 shiftwidth=2 softtabstop=2
+autocmd FileType javascript setl tabstop=2 shiftwidth=2 softtabstop=2
+autocmd Syntax   handlebars setl tabstop=2 shiftwidth=2 softtabstop=2
 
 " Perl Test::More file format.
 autocmd BufRead,BufNewFile *.t set ft=perl
@@ -539,17 +545,17 @@ autocmd BufRead,BufNewFile *.t set ft=perl
 autocmd BufRead,BufNewFile {Gemfile,Rakefile,Vagrantfile,Thorfile,config.ru} set ft=ruby
 
 " JSON is JS
-autocmd BufNewFile,BufRead *.json set ai filetype=javascript
+autocmd BufRead,BufNewFile *.json setl ft=javascript
 
 " md, markdown, and mk are markdown and define buffer-local preview
-autocmd BufRead,BufNewFile *.{md,markdown,mdown,mkd,mkdn} set ft=markdown
-
-" Setup proper tabs per file type.
-autocmd FileType ruby setl tabstop=2 shiftwidth=2 softtabstop=2
+autocmd BufRead,BufNewFile *.{md,markdown,mdown,mkd,mkdn} setl ft=markdown
+"
+" Setup handlebars
+autocmd BufRead,BufNewFile *.{handlebars,handlebars.erb,hbs,hbs.erb} setl ft=html syntax=handlebars
 
 " Most db/seeds.rb files are so massive that the Ruby syntax highlighting lags
 " behind for several seconds if we leave the filetype set to ruby
-autocmd BufNewFile,BufRead seeds.rb set ft=text
+autocmd BufRead,BufNewFile seeds.rb setl ft=text
 
 
 " -----------------------------------------------------------------------------
