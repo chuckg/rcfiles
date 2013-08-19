@@ -392,10 +392,11 @@ call unite#filters#matcher_default#use(['matcher_fuzzy'])  " Fuzzy matching
 " Ignore certain file types
 " call unite#custom#source('file_rec', 'ignore_pattern', '\.(o|exe|dll|bak|orig|sw[po]|eot|svg|png|jpg)$')
 nnoremap <leader>t :<C-u>Unite -buffer-name=files -start-insert file_rec/async:!<cr>
-nnoremap <leader>f :<C-u>Unite -buffer-name=files -start-insert file<cr>
-nnoremap <leader>y :<C-u>Unite -buffer-name=yank  history/yank<cr>
-nnoremap <leader>a :<C-u>Unite -buffer-name=ack   grep:.<cr>
-nnoremap <leader>A :<C-u>Unite -buffer-name=ack   grep<cr>
+nnoremap <leader>f :<C-u>Unite -buffer-name=files -start-insert buffer file<cr>
+nnoremap <leader>T :<C-u>Unite -buffer-name=tabs  -start-insert tab<cr>
+nnoremap <leader>y :<C-u>Unite -buffer-name=yank    history/yank<cr>
+nnoremap <leader>a :<C-u>Unite -buffer-name=ack     grep:.<cr>
+nnoremap <leader>A :<C-u>Unite -buffer-name=ack     grep<cr>
 
 if executable('ack')
     let g:unite_source_grep_command = 'ack'
