@@ -73,16 +73,17 @@ layout 1monitor 'Messages':REPEAT_LAST ${1-left} | ${leftsliver} ${mon-laptop}
 layout 1monitor 'Evernote':REPEAT      ${1-full}
 
 # Work layout
-layout work 'Skype':REPEAT             ${1-right}
-layout work 'Messages':REPEAT_LAST     ${1-left} | ${leftsliver} ${mon-laptop}
-layout work 'Calendar':REPEAT          ${1-mid}
-layout work 'Google Chrome':REPEAT     ${2-full}
-layout work 'MacVim':REPEAT            ${2-full}
-layout work 'Terminal':REPEAT          ${3-full}
-layout work 'Evernote':REPEAT          ${2-right}
+layout 3monitors 'Skype':REPEAT             ${1-right}
+layout 3monitors 'Messages':REPEAT_LAST     ${1-left} | ${leftsliver} ${mon-laptop}
+layout 3monitors 'HipChat':REPEAT           ${1-full}
+layout 3monitors 'Calendar':REPEAT          ${1-mid}
+layout 3monitors 'Google Chrome':REPEAT     ${2-full}
+layout 3monitors 'MacVim':REPEAT            ${2-full}
+layout 3monitors 'Terminal':REPEAT          ${3-full}
+layout 3monitors 'Evernote':REPEAT          ${3-full}
  
 # Default Layouts
-default work      resolutions:2560x1440;1440x900;1080x1920
+default 3monitors count:3
 default 2monitors count:2
 default 1monitor  count:1
 
@@ -92,12 +93,12 @@ alias hyper ctrl;alt;cmd
 # With 'defaultToCurrentMonitor' set to true, we intentionally try an invalid
 # monitor ID so that the movie is attempted on the current screen. Then we
 # rotate in the specified order.
-bind k:${hyper}   chain ${full} 5       | ${2-full}       | ${1-full}       | ${3-full}
-bind j:${hyper}   chain ${mid} 5        | ${2-mid}        | ${1-mid}        | ${3-mid}
-bind k:shift;alt;cmd  chain ${tophalf} 5    | ${2-tophalf}    | ${1-tophalf}    | ${3-tophalf}
-bind j:shift;alt;cmd  chain ${bottomhalf} 5 | ${2-bottomhalf} | ${1-bottomhalf} | ${3-bottomhalf}
 bind h:${hyper}   chain ${lefthalf} 5   | ${2-left}       | ${1-left}       | ${3-left}
+bind j:${hyper}   chain ${mid} 5        | ${2-mid}        | ${1-mid}        | ${3-mid}
+bind k:${hyper}   chain ${full} 5       | ${2-full}       | ${1-full}       | ${3-full}
 bind l:${hyper}   chain ${righthalf} 5  | ${2-right}      | ${1-right}      | ${3-right}
+bind j:shift;alt;cmd  chain ${bottomhalf} 5 | ${2-bottomhalf} | ${1-bottomhalf} | ${3-bottomhalf}
+bind k:shift;alt;cmd  chain ${tophalf} 5    | ${2-tophalf}    | ${1-tophalf}    | ${3-tophalf}
 
 #bind n;ctrl;alt;cmd  layout 1monitor
 #bind m;ctrl;alt;cmd  layout 2monitors
@@ -112,3 +113,4 @@ bind o:${hyper} focus 'Google Chrome'
 bind e:${hyper} focus 'Evernote'
 bind m:${hyper} focus 'Messages'
 bind s:${hyper} focus 'Skype'
+bind c:${hyper} focus 'HipChat'
