@@ -154,7 +154,7 @@ alias xB='xterm -bg blue -fg white -fn fixed -sb -sl 8000 &'
 
 
 alias s='source ~/.bash_profile'
-alias b='vim ~/.bashrc' 
+alias b='vim -O ~/.bashrc ~/.bash_profile' 
 alias v='vim ~/.vimrc' 
 
 alias j='jobs'
