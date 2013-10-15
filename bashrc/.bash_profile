@@ -15,3 +15,13 @@ fi
 # if [ -f $(brew --prefix)/etc/bash_completion ]; then
 #     . $(brew --prefix)/etc/bash_completion
 # fi
+
+# Homebrew packages
+# -----------------
+
+# Postgres
+# export PGDATA=/usr/local/var/postgres
+# alias pg_ctl="pg_ctl -m fast -l /usr/local/var/postgres/server.log"
+
+# Grep
+# alias grep='ggrep'
