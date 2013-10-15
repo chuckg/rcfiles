@@ -258,6 +258,10 @@ highlight ColorColumn ctermbg=52 guibg=DarkRed
 " mappings: text manipulation/navigation
 " -----------------------------------------------------------------------------
 
+" Repeat latest f,t,F,T in the opposite direction. Default is "," but we use
+" it for our leader.
+nnoremap \ ,
+
 " Treat wrapped lines like real lines.
 nmap <Up> gk
 nmap <Down> gj
