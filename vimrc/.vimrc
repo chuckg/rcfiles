@@ -402,9 +402,14 @@ nnoremap <leader>y :<C-u>Unite -buffer-name=yank    history/yank<cr>
 nnoremap <leader>a :<C-u>Unite -buffer-name=ack     grep:.<cr>
 nnoremap <leader>A :<C-u>Unite -buffer-name=ack     grep<cr>
 
-if executable('ack')
-    let g:unite_source_grep_command = 'ack'
-    let g:unite_source_grep_default_opts = '--no-heading --no-color -H'
+" Use ag/ack if available.
+if executable('ag')
+    let g:unite_source_grep_command = 'ag'
+    let g:unite_source_grep_default_opts = '--nogroup --nocolor --column -i --skip-vcs-ignores'
+    let g:unite_source_grep_recursive_opt = ''
+elseif executable('ack')
+    let g:unite_source_grep_command       = 'ack'
+    let g:unite_source_grep_default_opts  = '--no-group --no-heading --no-color -a -H'
     let g:unite_source_grep_recursive_opt = ''
 endif
 
