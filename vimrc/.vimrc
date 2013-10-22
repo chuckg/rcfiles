@@ -562,6 +562,11 @@ autocmd BufRead,BufNewFile *.{handlebars,handlebars.erb,hbs,hbs.erb} setl ft=htm
 " behind for several seconds if we leave the filetype set to ruby
 autocmd BufRead,BufNewFile seeds.rb setl ft=text
 
+" Omnicomplete
+autocmd FileType python set omnifunc=pythoncomplete#Complete
+autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
+autocmd FileType css set omnifunc=csscomplete#CompleteCSS
 
 " -----------------------------------------------------------------------------
 " functions
