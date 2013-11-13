@@ -63,6 +63,7 @@ layout 2monitors 'Evernote':REPEAT         ${1-full}
 layout 2monitors '1Password':REPEAT        ${1-mid}
 layout 2monitors 'Skype':REPEAT            ${2-right}
 layout 2monitors 'Messages':REPEAT_LAST    ${2-left} | ${leftsliver} ${mon-laptop}
+layout 2monitors 'HipChat':REPEAT          ${2-full}
 
 # 1 monitor layout
 layout 1monitor 'Terminal':REPEAT      ${1-full}
@@ -71,6 +72,7 @@ layout 1monitor 'MacVim':REPEAT        ${1-full}
 layout 1monitor 'Skype':REPEAT         ${1-right}
 layout 1monitor 'Messages':REPEAT_LAST ${1-left} | ${leftsliver} ${mon-laptop}
 layout 1monitor 'Evernote':REPEAT      ${1-full}
+layout 2monitors 'HipChat':REPEAT      ${1-full}
 
 # Work layout
 layout 3monitors 'Skype':REPEAT             ${1-right}
