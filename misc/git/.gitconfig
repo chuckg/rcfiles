@@ -22,6 +22,7 @@
     ds      = diff --staged
     dt      = difftool
     st      = status
+    undo    = reset --soft "HEAD^"
     unstage = reset HEAD --
     co      = checkout
     br      = branch
