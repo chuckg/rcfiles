@@ -11,7 +11,9 @@ config windowHintsShowIcons true
 config windowHintsIgnoreHiddenWindows false
 config windowHintsDuration 5
 config windowHintsSpread true
-config windowHintsOrder persist
+# Broken! Causes hint to only function once until restart/reload.
+# See: https://github.com/jigish/slate/issues/342
+# config windowHintsOrder persist
 
 # monitor aliases
 alias mon-laptop     0
@@ -89,9 +91,30 @@ default 3monitors count:3
 default 2monitors count:2
 default 1monitor  count:1
 
-alias hyper ctrl;alt;cmd
+
+# Bindings
+# ==========================================
+
+# Basic keyboard hyper binding
+# alias hyper ctrl;alt;cmd
+
+# Kinesis friendly hyper binding
+alias hyper w,alt
+
+# Reload slate
+bind r:${hyper} relaunch
 
 # VIM bindings
+# ------------
+# Window movement bindings built around default VIM motions:
+#
+#   h - left half screen
+#   j - downsize mid
+#   k - full screen 
+#   l - right half screen 
+# 
+# Repeated motions will cycle the window through all available monitors.
+#
 # With 'defaultToCurrentMonitor' set to true, we intentionally try an invalid
 # monitor ID so that the movie is attempted on the current screen. Then we
 # rotate in the specified order.
@@ -99,16 +122,18 @@ bind h:${hyper}   chain ${lefthalf} 5   | ${2-left}       | ${1-left}       | ${
 bind j:${hyper}   chain ${mid} 5        | ${2-mid}        | ${1-mid}        | ${3-mid}
 bind k:${hyper}   chain ${full} 5       | ${2-full}       | ${1-full}       | ${3-full}
 bind l:${hyper}   chain ${righthalf} 5  | ${2-right}      | ${1-right}      | ${3-right}
-bind j:shift;alt;cmd  chain ${bottomhalf} 5 | ${2-bottomhalf} | ${1-bottomhalf} | ${3-bottomhalf}
-bind k:shift;alt;cmd  chain ${tophalf} 5    | ${2-tophalf}    | ${1-tophalf}    | ${3-tophalf}
+#bind j:shift;alt;cmd  chain ${bottomhalf} 5 | ${2-bottomhalf} | ${1-bottomhalf} | ${3-bottomhalf}
+#bind k:shift;alt;cmd  chain ${tophalf} 5    | ${2-tophalf}    | ${1-tophalf}    | ${3-tophalf}
 
-#bind n;ctrl;alt;cmd  layout 1monitor
-#bind m;ctrl;alt;cmd  layout 2monitors
+# Bindings to throw windows around different monitors
+bind 1:${hyper} throw 0 resize
+bind 2:${hyper} throw 1 resize
+bind 3:${hyper} throw 2 resize
 
 # Window Hints
-#bind ,:${hyper} hint
+bind tab:alt;cmd hint
 
-# Focus
+# Window Focus
 bind u:${hyper} focus 'Terminal'
 bind i:${hyper} focus 'MacVim'
 bind o:${hyper} focus 'Google Chrome'
