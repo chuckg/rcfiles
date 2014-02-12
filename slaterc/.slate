@@ -11,6 +11,7 @@ config windowHintsShowIcons true
 config windowHintsIgnoreHiddenWindows false
 config windowHintsDuration 5
 config windowHintsSpread true
+config windowHintsFontColor "0;0;0;0.85"
 # Broken! Causes hint to only function once until restart/reload.
 # See: https://github.com/jigish/slate/issues/342
 # config windowHintsOrder persist
@@ -22,7 +23,8 @@ alias mon-vertical   2
 
 # Abstract positions:
 alias full          move screenOriginX;screenOriginY                  screenSizeX;screenSizeY
-alias mid           move screenOriginX+screenSizeX/8;screenOriginY+screenSizeY/10         screenSizeX/8*6;screenSizeY/10*8
+#alias mid           move screenOriginX+screenSizeX/8;screenOriginY+screenSizeY/10         screenSizeX/8*6;screenSizeY/10*8
+alias mid           move screenOriginX+screenSizeX/12;screenOriginY   screenSizeX/12*10;screenSizeY
 alias tophalf       move screenOriginX;screenOriginY                  screenSizeX;screenSizeY/2
 alias bottomhalf    move screenOriginX;screenOriginY+screenSizeY/2    screenSizeX;screenSizeY/2
 alias lefthalf      move screenOriginX;screenOriginY                  screenSizeX/2;screenSizeY
@@ -54,18 +56,8 @@ alias 3-full        ${full}       ${mon-vertical}
 alias 3-mid         ${mid}        ${mon-vertical}
 alias 3-tophalf     ${tophalf}    ${mon-laptop}
 alias 3-bottomhalf  ${bottomhalf} ${mon-laptop}
-alias 3-left        ${tophalf}    ${mon-vertical}
-alias 3-right       ${bottomhalf} ${mon-vertical}
-
-# Basic 2 monitor layout
-layout 2monitors 'Terminal':REPEAT         ${1-full}
-layout 2monitors 'Google Chrome':REPEAT    ${1-full}
-layout 2monitors 'MacVim':REPEAT           ${1-full}
-layout 2monitors 'Evernote':REPEAT         ${1-full}
-layout 2monitors '1Password':REPEAT        ${1-mid}
-layout 2monitors 'Skype':REPEAT            ${2-right}
-layout 2monitors 'Messages':REPEAT_LAST    ${2-left} | ${leftsliver} ${mon-laptop}
-layout 2monitors 'HipChat':REPEAT          ${2-full}
+alias 3-left        ${lefthalf}   ${mon-vertical}
+alias 3-right       ${righthalf}  ${mon-vertical}
 
 # 1 monitor layout
 layout 1monitor 'Terminal':REPEAT      ${1-full}
@@ -74,17 +66,32 @@ layout 1monitor 'MacVim':REPEAT        ${1-full}
 layout 1monitor 'Skype':REPEAT         ${1-right}
 layout 1monitor 'Messages':REPEAT_LAST ${1-left} | ${leftsliver} ${mon-laptop}
 layout 1monitor 'Evernote':REPEAT      ${1-full}
-layout 2monitors 'HipChat':REPEAT      ${1-full}
+layout 1monitor 'Airmail':REPEAT       ${1-mid}
+layout 1monitor 'HipChat':REPEAT       ${1-full}
+
+# Basic 2 monitor layout
+layout 2monitors 'Airmail':REPEAT          ${1-full}
+layout 2monitors 'Terminal':REPEAT         ${1-full}
+layout 2monitors 'Google Chrome':REPEAT    ${1-full}
+layout 2monitors 'MacVim':REPEAT           ${1-full}
+layout 2monitors 'Evernote':REPEAT         ${1-full}
+layout 2monitors '1Password 4':REPEAT      ${1-mid}
+layout 2monitors 'Skype':REPEAT            ${2-right}
+layout 2monitors 'Messages':REPEAT_LAST    ${2-left} | ${leftsliver} ${mon-laptop}
+layout 2monitors 'HipChat':REPEAT          ${2-full}
 
 # Work layout
-layout 3monitors 'Skype':REPEAT             ${1-right}
-layout 3monitors 'Messages':REPEAT_LAST     ${1-left} | ${leftsliver} ${mon-laptop}
-layout 3monitors 'HipChat':REPEAT           ${1-full}
-layout 3monitors 'Calendar':REPEAT          ${1-mid}
+layout 3monitors 'Skype':REPEAT             ${3-right}
+layout 3monitors 'Messages':REPEAT_LAST     ${3-left}
+layout 3monitors 'HipChat':REPEAT           ${3-full}
+layout 3monitors 'LimeChat':REPEAT          ${3-full}
+layout 3monitors 'Calendar':REPEAT          ${3-mid}
 layout 3monitors 'Google Chrome':REPEAT     ${2-full}
 layout 3monitors 'MacVim':REPEAT            ${2-full}
-layout 3monitors 'Terminal':REPEAT          ${3-full}
-layout 3monitors 'Evernote':REPEAT          ${3-full}
+layout 3monitors 'Airmail':REPEAT           ${2-mid}
+layout 3monitors '1Password 4':REPEAT       ${2-mid}
+layout 3monitors 'Terminal':REPEAT          ${1-full}
+layout 3monitors 'Evernote':REPEAT          ${1-full}
  
 # Default Layouts
 default 3monitors count:3
@@ -99,7 +106,8 @@ default 1monitor  count:1
 # alias hyper ctrl;alt;cmd
 
 # Kinesis friendly hyper binding
-alias hyper w,alt
+alias hyper f19
+#config modalEscapeKey f19
 
 # Reload slate
 bind r:${hyper} relaunch
@@ -142,3 +150,4 @@ bind m:${hyper} focus 'Messages'
 bind s:${hyper} focus 'Skype'
 bind c:${hyper} focus 'HipChat'
 bind p:${hyper} focus '1Password 4'
+bind a:${hyper} focus 'Airmail'
