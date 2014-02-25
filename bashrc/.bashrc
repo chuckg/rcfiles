@@ -51,7 +51,6 @@ function prompt {
     fi;
 
     if [ -z "$RPROMPT" ]; then
-        echo "hi"
         local rprompt=""
     else
         local rprompt="\[$CYAN\]$RPROMPT "
