@@ -44,16 +44,23 @@ function prompt {
 
     # Hostname only for mac (ie: router spam otherwise)
     if is_darwin; then
-        host="\h"
+        local host="\h"
     else
         # Fully qualified hostname otherwise
         local host="\H"
     fi;
 
-    if [ $show_user = true ]; then
-        local p="\$(date +%H:%M)\[$CYAN\]\u \[$GREEN\]$host \[$RED\]\W\[$YELLOW\]$GIT_INFO\[$END_COLOR\]> "
+    if [ -z "$RPROMPT" ]; then
+        echo "hi"
+        local rprompt=""
     else
-        local p="\$(date +%H:%M)\[$GREEN\]$host \[$RED\]\W\[$YELLOW\]$GIT_INFO\[$END_COLOR\]> "
+        local rprompt="\[$CYAN\]$RPROMPT "
+    fi;
+
+    if [ $show_user = true ]; then
+        local p="$rprompt\$(date +%H:%M)\[$CYAN\]\u \[$GREEN\]$host \[$RED\]\W\[$YELLOW\]$GIT_INFO\[$END_COLOR\]> "
+    else
+        local p="$rprompt\$(date +%H:%M)\[$GREEN\]$host \[$RED\]\W\[$YELLOW\]$GIT_INFO\[$END_COLOR\]> "
     fi;
 
     # If you want to set the term title, set the PROMPT_TITLE variable in your
