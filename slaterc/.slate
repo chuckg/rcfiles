@@ -60,7 +60,7 @@ alias 3-left        ${lefthalf}   ${mon-vertical}
 alias 3-right       ${righthalf}  ${mon-vertical}
 
 # 1 monitor layout
-layout 1monitor 'Terminal':REPEAT      ${1-full}
+layout 1monitor 'iTerm':REPEAT         ${1-full}
 layout 1monitor 'Google Chrome':REPEAT ${1-full}
 layout 1monitor 'MacVim':REPEAT        ${1-full}
 layout 1monitor 'Skype':REPEAT         ${1-right}
@@ -71,7 +71,7 @@ layout 1monitor 'HipChat':REPEAT       ${1-full}
 
 # Basic 2 monitor layout
 layout 2monitors 'Airmail':REPEAT          ${1-full}
-layout 2monitors 'Terminal':REPEAT         ${1-full}
+layout 2monitors 'iTerm':REPEAT            ${1-full}
 layout 2monitors 'Google Chrome':REPEAT    ${1-full}
 layout 2monitors 'MacVim':REPEAT           ${1-full}
 layout 2monitors 'Evernote':REPEAT         ${1-full}
@@ -90,7 +90,7 @@ layout 3monitors 'Google Chrome':REPEAT     ${2-full}
 layout 3monitors 'MacVim':REPEAT            ${2-full}
 layout 3monitors 'Airmail':REPEAT           ${2-mid}
 layout 3monitors '1Password 4':REPEAT       ${2-mid}
-layout 3monitors 'Terminal':REPEAT          ${1-full}
+layout 3monitors 'iTerm':REPEAT             ${1-full}
 layout 3monitors 'Evernote':REPEAT          ${1-full}
  
 # Default Layouts
@@ -142,7 +142,7 @@ bind 3:${hyper} throw 2 resize
 bind tab:alt;cmd hint
 
 # Window Focus
-bind u:${hyper} focus 'Terminal'
+bind u:${hyper} focus 'iTerm'
 bind i:${hyper} focus 'MacVim'
 bind o:${hyper} focus 'Google Chrome'
 bind e:${hyper} focus 'Evernote'
