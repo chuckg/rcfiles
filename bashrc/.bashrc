@@ -40,6 +40,7 @@ function prompt {
     local RED="\033[31m"
     local YELLOW="\033[33m"
     local CYAN="\033[36m"
+    local WHITE="\033[37m"
     local END_COLOR="\033[m"
 
     # Hostname only for mac (ie: router spam otherwise)
@@ -57,9 +58,9 @@ function prompt {
     fi;
 
     if [ $show_user = true ]; then
-        local p="$rprompt\$(date +%H:%M)\[$CYAN\]\u \[$GREEN\]$host \[$RED\]\W\[$YELLOW\]$GIT_INFO\[$END_COLOR\]> "
+        local p="$rprompt\[$WHITE\]\$(date +%H:%M)\[$CYAN\]\u \[$GREEN\]$host \[$RED\]\W\[$YELLOW\]$GIT_INFO\[$END_COLOR\]> "
     else
-        local p="$rprompt\$(date +%H:%M)\[$GREEN\]$host \[$RED\]\W\[$YELLOW\]$GIT_INFO\[$END_COLOR\]> "
+        local p="$rprompt\[$WHITE\]\$(date +%H:%M)\[$GREEN\]$host \[$RED\]\W\[$YELLOW\]$GIT_INFO\[$END_COLOR\]> "
     fi;
 
     # If you want to set the term title, set the PROMPT_TITLE variable in your
