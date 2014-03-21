@@ -546,6 +546,7 @@ autocmd FileType text setlocal tw=78
 
 " Tabs by filetye/syntax
 autocmd FileType ruby       setl tabstop=2 shiftwidth=2 softtabstop=2
+autocmd FileType eruby      setl tabstop=2 shiftwidth=2 softtabstop=2
 autocmd FileType javascript setl tabstop=2 shiftwidth=2 softtabstop=2
 autocmd Syntax   handlebars setl tabstop=2 shiftwidth=2 softtabstop=2
 
@@ -577,6 +578,10 @@ autocmd FileType css set omnifunc=csscomplete#CompleteCSS
 " Surround
 autocmd FileType markdown let g:surround_{char2nr("b")} = "**\r**"
 autocmd FileType markdown let g:surround_{char2nr("i")} = "_\r_"
+
+autocmd FileType eruby let g:surround_{char2nr("=")} = "<%= \r %>"
+autocmd FileType eruby let g:surround_{char2nr("-")} = "<% \r %>"
+autocmd FileType eruby let g:surround_{char2nr("_")} = "<% \r -%>"
 
 " -----------------------------------------------------------------------------
 " functions
