@@ -37,27 +37,39 @@ alias rightless     move screenOriginX+screenSizeX*0.6;screenOriginY  screenSize
 alias righttop      move screenOriginX+screenSizeX/2;screenOriginY    screenSizeX/2;screenSizeY/2
 alias rightbottom   move screenOriginX+screenSizeX/2;screenOriginY+screenSizeY/2 screenSizeX/2;screenSizeY/2
 
-# Abstract positions for vertical monitors
- 
 # Concrete positions
 alias 1-full        ${full}       ${mon-laptop}
 alias 1-mid         ${mid}        ${mon-laptop}
 alias 1-tophalf     ${tophalf}    ${mon-laptop}
 alias 1-bottomhalf  ${bottomhalf} ${mon-laptop}
 alias 1-left        ${lefthalf}   ${mon-laptop}
+alias 1-leftmost    ${leftmost}   ${mon-laptop}
+alias 1-leftless    ${leftless}   ${mon-laptop}
 alias 1-right       ${righthalf}  ${mon-laptop}
+alias 1-rightmost   ${rightmost}  ${mon-laptop}
+alias 1-rightless   ${rightmost}  ${mon-laptop}
+
 alias 2-full        ${full}       ${mon-samsung}
 alias 2-mid         ${mid}        ${mon-samsung}
-alias 2-tophalf     ${tophalf}    ${mon-laptop}
-alias 2-bottomhalf  ${bottomhalf} ${mon-laptop}
+alias 2-tophalf     ${tophalf}    ${mon-samsung}
+alias 2-bottomhalf  ${bottomhalf} ${mon-samsung}
 alias 2-left        ${lefthalf}   ${mon-samsung}
+alias 2-leftmost    ${leftmost}   ${mon-samsung}
+alias 2-leftless    ${leftless}   ${mon-samsung}
 alias 2-right       ${righthalf}  ${mon-samsung}
+alias 2-rightmost   ${rightmost}  ${mon-samsung}
+alias 2-rightless   ${rightmost}  ${mon-samsung}
+
 alias 3-full        ${full}       ${mon-vertical}
 alias 3-mid         ${mid}        ${mon-vertical}
-alias 3-tophalf     ${tophalf}    ${mon-laptop}
-alias 3-bottomhalf  ${bottomhalf} ${mon-laptop}
+alias 3-tophalf     ${tophalf}    ${mon-vertical}
+alias 3-bottomhalf  ${bottomhalf} ${mon-vertical}
 alias 3-left        ${lefthalf}   ${mon-vertical}
+alias 3-leftmost    ${leftmost}   ${mon-vertical}
+alias 3-leftless    ${leftless}   ${mon-vertical}
 alias 3-right       ${righthalf}  ${mon-vertical}
+alias 3-rightmost   ${rightmost}  ${mon-vertical}
+alias 3-rightless   ${rightmost}  ${mon-vertical}
 
 # 1 monitor layout
 layout 1monitor 'iTerm':REPEAT         ${1-full}
@@ -116,10 +128,21 @@ bind r:${hyper} relaunch
 # ------------
 # Window movement bindings built around default VIM motions:
 #
+#   hyper only
+#   -----------------------
 #   h - left half screen
 #   j - downsize mid
 #   k - full screen 
 #   l - right half screen 
+#
+#   shift + hyper
+#   -----------------------
+#   y - left small
+#   h - left large
+#   j - bottom half
+#   k - top half
+#   l - right large
+#   p - right small
 # 
 # Repeated motions will cycle the window through all available monitors.
 #
@@ -130,8 +153,13 @@ bind h:${hyper}   chain ${lefthalf} 5   | ${2-left}       | ${1-left}       | ${
 bind j:${hyper}   chain ${mid} 5        | ${2-mid}        | ${1-mid}        | ${3-mid}
 bind k:${hyper}   chain ${full} 5       | ${2-full}       | ${1-full}       | ${3-full}
 bind l:${hyper}   chain ${righthalf} 5  | ${2-right}      | ${1-right}      | ${3-right}
-#bind j:shift;alt;cmd  chain ${bottomhalf} 5 | ${2-bottomhalf} | ${1-bottomhalf} | ${3-bottomhalf}
-#bind k:shift;alt;cmd  chain ${tophalf} 5    | ${2-tophalf}    | ${1-tophalf}    | ${3-tophalf}
+
+bind y:shift;${hyper}  chain ${leftless} 5   | ${2-leftless}   | ${1-leftless}   | ${3-leftless}
+bind h:shift;${hyper}  chain ${leftmost} 5   | ${2-leftmost}   | ${1-leftmost}   | ${3-leftmost}
+bind j:shift;${hyper}  chain ${bottomhalf} 5 | ${2-bottomhalf} | ${1-bottomhalf} | ${3-bottomhalf}
+bind k:shift;${hyper}  chain ${tophalf} 5    | ${2-tophalf}    | ${1-tophalf}    | ${3-tophalf}
+bind l:shift;${hyper}  chain ${rightmost} 5  | ${2-rightmost}  | ${1-rightmost}  | ${3-rightmost}
+bind p:shift;${hyper}  chain ${rightless} 5  | ${2-rightless}  | ${1-rightless}  | ${3-rightless}
 
 # Bindings to throw windows around different monitors
 bind 1:${hyper} throw 0 resize
