@@ -551,6 +551,7 @@ autocmd FileType text setlocal tw=78
 " Tabs by filetye/syntax
 autocmd FileType ruby       setl tabstop=2 shiftwidth=2 softtabstop=2
 autocmd FileType eruby      setl tabstop=2 shiftwidth=2 softtabstop=2
+autocmd FileType yaml       setl tabstop=2 shiftwidth=2 softtabstop=2
 autocmd FileType javascript setl tabstop=2 shiftwidth=2 softtabstop=2
 autocmd Syntax   handlebars setl tabstop=2 shiftwidth=2 softtabstop=2
 
