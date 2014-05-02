@@ -404,10 +404,14 @@ nnoremap <leader>A :<C-u>Unite -buffer-name=ack     grep<cr>
 
 " Use ag/ack if available.
 if executable('ag')
+    " Set ag as the grep and file_rec command
     let g:unite_source_grep_command = 'ag'
     "let g:unite_source_grep_default_opts = '--nogroup --nocolor --column -i --skip-vcs-ignores'
     let g:unite_source_grep_default_opts = '--nogroup --nocolor --column -i'
     let g:unite_source_grep_recursive_opt = ''
+
+    " Remove vcs-ignores from the list of file_rec candidates
+    let g:unite_source_rec_async_command = 'ag --nocolor --nogroup --hidden -g ""'
 elseif executable('ack')
     let g:unite_source_grep_command       = 'ack'
     let g:unite_source_grep_default_opts  = '--no-group --no-heading --no-color -a -H'
