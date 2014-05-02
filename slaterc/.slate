@@ -106,7 +106,7 @@ layout 3monitors 'iTerm':REPEAT             ${1-full}
 layout 3monitors 'Evernote':REPEAT          ${1-full}
  
 # Default Layouts
-default 3monitors count:3
+# default 3monitors count:3
 default 2monitors count:2
 default 1monitor  count:1
 
@@ -161,6 +161,10 @@ bind k:shift;${hyper}  chain ${tophalf} 5    | ${2-tophalf}    | ${1-tophalf}   
 bind l:shift;${hyper}  chain ${rightmost} 5  | ${2-rightmost}  | ${1-rightmost}  | ${3-rightmost}
 bind p:shift;${hyper}  chain ${rightless} 5  | ${2-rightless}  | ${1-rightless}  | ${3-rightless}
 
+# Layout management
+bind s:shift;${hyper} snapshot snapstack save-to-disk
+bind a:shift;${hyper} activate-snapshot snapstack
+
 # Bindings to throw windows around different monitors
 bind 1:${hyper} throw 0 resize
 bind 2:${hyper} throw 1 resize
@@ -176,6 +180,6 @@ bind o:${hyper} focus 'Google Chrome'
 bind e:${hyper} focus 'Evernote'
 bind m:${hyper} focus 'Messages'
 bind s:${hyper} focus 'Skype'
-bind c:${hyper} focus 'HipChat'
+bind c:${hyper} focus 'Slack'
 bind p:${hyper} focus '1Password 4'
 bind a:${hyper} focus 'Airmail'
