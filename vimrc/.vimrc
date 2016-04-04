@@ -370,29 +370,20 @@ amenu Misc.&Save\ Viminfo                           :set viminfo='7,n./viminfo<c
 " filetype must be off to load NeoBundle properly; it's re-enabled further down.
 filetype off
 
-" Load NeoBundle. Self sexify.
-if has('vim_starting')
-   set runtimepath+=~/.vim/bundle/neobundle.vim/
- endif
-call neobundle#rc(expand('~/.vim/bundle/'))
-" Let NeoBundle manage NeoBundle
-NeoBundleFetch 'Shougo/neobundle.vim'
+" Load dein. Self sexify.
+set runtimepath^=~/.vim/bundle/dein.vim/repos/github.com/Shougo/dein.vim
+call dein#begin(expand('~/.vim/bundle/dein.vim'))
+
+" Let dein manage dein
+call dein#add('Shougo/dein.vim')
 
 " vimproc
-NeoBundle 'Shougo/vimproc', {
-      \ 'build' : {
-      \     'windows' : 'make -f make_mingw32.mak',
-      \     'cygwin' : 'make -f make_cygwin.mak',
-      \     'mac' : 'make -f make_mac.mak',
-      \     'unix' : 'make -f make_unix.mak',
-      \    },
-      \ }
+call dein#add('Shougo/vimproc.vim', {'build': 'make'})
 
 " Unite.vim
-NeoBundle 'Shougo/unite.vim'
+call dein#add('Shougo/unite.vim')
 let g:unite_enable_start_insert = 1   
 let g:unite_source_history_yank_enable = 1
-call unite#filters#matcher_default#use(['matcher_fuzzy'])  " Fuzzy matching
 " Ignore certain file types
 " call unite#custom#source('file_rec', 'ignore_pattern', '\.(o|exe|dll|bak|orig|sw[po]|eot|svg|png|jpg)$')
 nnoremap <leader>t :<C-u>Unite -buffer-name=files -start-insert file_rec/async:!<cr>
@@ -419,36 +410,32 @@ elseif executable('ack')
 endif
 
 " ack
-"NeoBundle 'mileszs/ack.vim'
+"call dein#add('mileszs/ack.vim')
 "nnoremap <leader>a :Ack<space>
-
-" evervim
-" Add let g:evervim_devtoken='value' to .vimrc_local
-NeoBundle 'kakkyz81/evervim'
 
 " file:line
 " Allows opening a file directly to a line in the following way: 
 " :e file/path.txt:12
-NeoBundle 'bogado/file-line'
+call dein#add('bogado/file-line')
 
 " fugitive: sexy git wrapper
-NeoBundle 'fugitive.vim'
+call dein#add('fugitive.vim')
 nnoremap <leader>gb :Gblame<CR>
 nnoremap <leader>gg :Ggrep
 nnoremap <leader>gs :Gstatus<CR>
 nnoremap <leader>gm :Gmove
 
 " indent-guides
-NeoBundle 'nathanaelkane/vim-indent-guides'
+call dein#add('nathanaelkane/vim-indent-guides')
 let g:indent_guides_start_level = 2
 let g:indent_guides_guide_size  = 1
 nnoremap <leader>ig :IndentGuidesToggle<CR>
 
 " matchit
-NeoBundle 'edsono/vim-matchit'
+call dein#add('edsono/vim-matchit')
 
-"NeoBundle 'scrooloose/nerdcommenter'
-NeoBundle 'The-NERD-Commenter'
+" Nerdcommenter
+call dein#add('The-NERD-Commenter')
 " comment/uncomment: mappings to nerdcommenter
 nmap - :call NERDComment(0, 'nested')<CR>
 nmap _ :call NERDComment(0, 'uncomment')<CR>
@@ -456,7 +443,7 @@ vmap - :call NERDComment(1, 'nested')<CR>
 vmap _ :call NERDComment(0, 'uncomment')<CR>
 
 " rails
-NeoBundle 'tpope/vim-rails'
+call dein#add('tpope/vim-rails')
 let g:rails_ctags_arguments = "--languages=-javascript"
 let g:rails_ctags_arguments .= " --extra=+f"
 let g:rails_ctags_arguments .= " --exclude=.git --exclude=log"
@@ -464,15 +451,15 @@ let g:rails_ctags_arguments .= " --exclude=.git --exclude=log"
 let g:rails_ctags_arguments .= " `ruby -rrubygems -e 'p Gem.path.collect {|p| [\"gems\", File.join(\"bundler\", \"gems\")].collect {|d| File.join(p, d)} }.join(\" \")' | sed 's/\"//g'`"
 
 " scratch
-NeoBundle 'scratch.vim'
+call dein#add('scratch.vim')
 "nnoremap <leader>s :Sscratch<CR>
 "nnoremap <leader>S :Scratch<CR>
 
 " surround
-NeoBundle 'tpope/vim-surround'
+call dein#add('tpope/vim-surround')
 
 " Tabular
-NeoBundle 'godlygeek/tabular'
+call dein#add('godlygeek/tabular')
 function! CustomTabularPatterns()
     if exists('g:tabular_loaded')
         AddTabularPattern! assignment      / = /l0
@@ -501,15 +488,15 @@ map <leader>e" :Tabularize doublequote<CR>
 "   ar  - all ruby block
 "   ir  - inner ruby block
 " textobj-user is required by rubyblock
-NeoBundle 'textobj-user'
-NeoBundle 'textobj-rubyblock'
+call dein#add('textobj-user')
+call dein#add('textobj-rubyblock')
 
 
 " -----------------------------------------------------------------------------
 " colors
 " -----------------------------------------------------------------------------
 
-NeoBundle 'tpope/vim-vividchalk'
+call dein#add('tpope/vim-vividchalk')
 
 
 " -----------------------------------------------------------------------------
@@ -524,15 +511,24 @@ set tags=./tags,tags,tmp/tags
 " syntax
 " -----------------------------------------------------------------------------
 
-NeoBundle 'vim-ruby/vim-ruby'
-NeoBundle 'tpope/vim-markdown'
-NeoBundle 'vim-coffee-script'
-NeoBundle 'nono/vim-handlebars'
+call dein#add('vim-ruby/vim-ruby')
+call dein#add('tpope/vim-markdown')
+call dein#add('vim-coffee-script')
+call dein#add('nono/vim-handlebars')
 
 " http://www.vim.org/scripts/script.php?script_id=2075
-NeoBundle 'indenthtml.vim'
+call dein#add('indenthtml.vim')
 " Force the following tags to indent children as well
 let g:html_indent_inctags = 'head,body'
+
+" End dein plugin additions before turning on plugin indent
+call dein#end()
+
+" -----------------------------------------------------------------------------
+" end plugin management. "call xxx#function()" can now be made again.
+
+" Unite.vim; call must be after dein#end()
+call unite#filters#matcher_default#use(['matcher_fuzzy'])  " Fuzzy matching
 
 
 " -----------------------------------------------------------------------------
@@ -610,4 +606,6 @@ if filereadable(expand("~/.vimrc_local"))
 endif
 
 " Installation check.
-NeoBundleCheck
+if dein#check_install()
+    call dein#install()
+endif
