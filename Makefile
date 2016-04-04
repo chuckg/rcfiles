@@ -82,14 +82,15 @@ slate:
 
 vim: 
 	@$(foreach file,$(VIM_FILES),$(call symlink,$(file),'vimrc'))
+	@echo 'Creating vim bundle directory...'
 	@if [ -d ~/.vim/bundle ]; then rm -rf ~/.vim/bundle; fi;
 	@mkdir ~/.vim/bundle
 	@echo 
-	@echo 'Installing NeoBundle for vim.'
-	git clone git://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim
+	@echo 'Installing dein plugin manager for vim...'
+	@./vimrc/dein_install.sh ~/.vim/bundle/dein.vim > /dev/null
 	@echo 
-	@echo 'Bundling vim plugins.'
-	@vim -c 'NeoBundleInstall' -c 'qa'
+	@echo 'Installing vim plugins...'
+	@vim -c 'dein#install' -c 'qa'
 
 # MISC
 
