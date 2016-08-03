@@ -1,49 +1,73 @@
--- colors
+-- Variables. Modify me to your hearts content.
+
+local hyperKey = 'F19'
+-- info/debug/warning/etc.
+local logLevel = 'debug'
+
+
+-- ***************************************************************************
+-- Constants 
+
 local black = hs.drawing.color.asRGB(hs.drawing.color.colorsFor("Apple")["Black"])
 local red = hs.drawing.color.asRGB(hs.drawing.color.colorsFor("Apple")["Red"])
 local green = hs.drawing.color.asRGB(hs.drawing.color.colorsFor("Apple")["Green"])
 
--- Setup modal hotkey, ie: hyper
-local hyper = hs.hotkey.modal.new(nil, 'F19')
---local log = hs.logger.new('godmode','debug')
-
--- Menu setup
-local menu = hs.menubar.new()
-local hyperOffTextAttributes = { 
+local textMenuOffAttributes = { 
     color = red,
     strokeWidth = 3.0 
 } 
-local hyperOnTextAttributes = { 
+local textMenuOnAttributes = { 
     color = green,
     strokeWidth = -3.0,
     strokeColor = black,
 }
-local hyperMenuText = hs.styledtext.new('G', hyperOffTextAttributes)
--- Setup default menu title.
-menu:setTitle(hyperMenuText)
+local textMenu = hs.styledtext.new('G', textMenuOffAttributes)
+
+-- ***************************************************************************
+-- Initialize
+
+local hyper = hs.hotkey.modal.new(nil, hyperKey)
+local menu = hs.menubar.new()
+local log = hs.logger.new('godmode',logLevel)
+
+-- ***************************************************************************
+-- Menu
+
+menu:setTitle(textMenu)
 menu:setTooltip("Godmode indicator")
 
+-- ***************************************************************************
 -- Window hints
+
 hs.hints.style = 'vimperator'
 hs.hotkey.bind({'cmd', 'alt'}, 'tab', function()
     hs.hints.windowHints()
 end)
 
--- Enter godmode
+-- ***************************************************************************
+-- Godmode
+
+-- Godmode: Callbacks
 function hyper:entered()
     hs.alert('Godmode', 30)
-    menu:setTitle(hyperMenuText:setStyle(hyperOnTextAttributes))
+    menu:setTitle(textMenu:setStyle(textMenuOnAttributes))
 end 
 
 function hyper:exited()
-    menu:setTitle(hyperMenuText)
+    menu:setTitle(textMenu)
     hs.alert.closeAll()
 end 
 
--- Escape godmode
+-- Godmode: Window hints
+hyper:bind('', 'tab', function()
+    hs.hints.windowHints()
+    hyper:exit()
+end)
+
+-- Godmode: Bind exit keys
 local escapeBindings = {
     'escape',
-    'F19'
+    hyperKey
 }
 for i,bindKey in pairs(escapeBindings) do
     hyper:bind('', bindKey, function()
@@ -59,6 +83,65 @@ hyper:bind('', 'r', function()
     hs.notify.new({title="Hammerspoon", informativeText="Reloading configuration"}):send()
     hs.reload()
 end)
+
+-- Godmode: Dimensions
+local windowDimension = {
+    left = function(window)
+        local max = window:screen():frame()
+        return hs.geometry.rect(
+            max.x,
+            max.y,
+            max.w / 2,
+            max.h
+        )
+    end,
+    mid = function(window)
+        local max = window:screen():frame()
+        return hs.geometry.rect(
+            max.x + (max.w / 12),
+            max.y,
+            max.w / 12 * 10,
+            max.h
+        )
+    end,
+    full = function(window)
+        return window:screen():frame()
+    end,
+    right = function(window)
+        local max = window:screen():frame()
+        return hs.geometry.rect(
+            max.x + (max.w / 2),
+            max.y,
+            max.w / 2,
+            max.h
+        )
+    end
+}
+
+-- Godmode: VIM window management bindings
+local vimBindings = {
+    ['h'] = windowDimension.left,
+    ['j'] = windowDimension.mid,
+    ['k'] = windowDimension.full,
+    ['l'] = windowDimension.right
+}
+for bindKey, location in pairs(vimBindings) do
+    hyper:bind('', bindKey, function()
+        local win = hs.window.focusedWindow()
+        win:setFrame(location(win), 0)
+        hyper:exit()
+    end)
+end
+
+-- Godmode: Window throw to monitor bindings by screen number
+for screenId, screen in pairs(hs.screen.allScreens()) do
+    log.d('Bound ' .. screenId .. ': ' .. screen:name())
+    hyper:bind('', string.format("%i", screenId), function()
+        local win = hs.window.focusedWindow()
+        win:moveToScreen(screen, false, true, 0)
+        hyper:exit()
+    end)
+end
 
 -- Godmode: Bind application window focus
 local focusBindings = {
@@ -84,3 +167,4 @@ for appName, bindKey in pairs(focusBindings) do
         hyper:exit()
     end)
 end
+
