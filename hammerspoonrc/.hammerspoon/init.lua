@@ -58,10 +58,27 @@ function hyper:exited()
     hs.alert.closeAll()
 end 
 
--- Godmode: Window hints
-hyper:bind('', 'tab', function()
-    hs.hints.windowHints()
+-- Godmode: Bind console
+hyper:bind('', '`', function()
+    local win = hs.appfinder.windowFromWindowTitle("Hammerspoon Console")
+    if not win then
+        log.d('Console is not open, opening and focusing.')
+        hs.openConsole(true)
+    elseif win:application():isFrontmost() then
+        log.d('Console is visible, closing.')
+        win:close()
+    else
+        log.d('Console is not visible, focusing.')
+        win:focus()
+    end
     hyper:exit()
+end)
+
+-- Godmode: Bind reload
+hyper:bind('', 'r', function()
+    hyper:exit()
+    hs.notify.new({title="Godmode", informativeText="Reloading configuration"}):send()
+    hs.reload()
 end)
 
 -- Godmode: Bind exit keys
@@ -76,13 +93,12 @@ for i,bindKey in pairs(escapeBindings) do
     end)
 end
 
--- Godmode: Bind reload
-hyper:bind('', 'r', function()
+-- Godmode: Window hints
+hyper:bind('', 'tab', function()
+    hs.hints.windowHints()
     hyper:exit()
-    hs.alert.closeAll()
-    hs.notify.new({title="Hammerspoon", informativeText="Reloading configuration"}):send()
-    hs.reload()
 end)
+
 
 -- Godmode: Dimensions
 local windowDimension = {
@@ -167,4 +183,3 @@ for appName, bindKey in pairs(focusBindings) do
         hyper:exit()
     end)
 end
-
