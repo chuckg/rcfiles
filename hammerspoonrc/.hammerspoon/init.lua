@@ -161,7 +161,7 @@ end
 
 -- Godmode: Bind application window focus
 local focusBindings = {
-    ['iTerm']         = 'u',
+    ['iTerm2']        = 'u',
     ['MacVim']        = 'i',
     ['Google Chrome'] = 'o',
     ['Evernote']      = 'e',
