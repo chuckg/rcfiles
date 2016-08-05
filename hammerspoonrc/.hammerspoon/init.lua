@@ -27,14 +27,17 @@ local textMenu = hs.styledtext.new('G', textMenuOffAttributes)
 -- Initialize
 
 local hyper = hs.hotkey.modal.new(nil, hyperKey)
-local menu = hs.menubar.new()
+--local menu = hs.menubar.new()
 local log = hs.logger.new('godmode',logLevel)
 
 -- ***************************************************************************
 -- Menu
 
-menu:setTitle(textMenu)
-menu:setTooltip("Godmode indicator")
+--local imageIconOff = hs.image.imageFromPath('chakra.png'):setSize({h=18, w=16})
+--local imageIcon = hs.image.imageFromPath('chakra.pdf'):setSize({h=18, w=16})
+
+--menu:setTooltip("Godmode indicator")
+--menu:setIcon(imageIcon)
 
 -- ***************************************************************************
 -- Window hints
@@ -50,11 +53,13 @@ end)
 -- Godmode: Callbacks
 function hyper:entered()
     hs.alert('Godmode', 30)
-    menu:setTitle(textMenu:setStyle(textMenuOnAttributes))
+    --menu:setIcon(imageIconOn)
+    --menu:setTitle(textMenu:setStyle(textMenuOnAttributes))
 end 
 
 function hyper:exited()
-    menu:setTitle(textMenu)
+    --menu:setTitle(textMenu)
+    --menu:setIcon(imageIconOff)
     hs.alert.closeAll()
 end 
 
@@ -156,6 +161,7 @@ for screenId, screen in pairs(hs.screen.allScreens()) do
         local win = hs.window.focusedWindow()
         win:moveToScreen(screen, false, true, 0)
         hyper:exit()
+
     end)
 end
 
