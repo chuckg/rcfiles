@@ -2,8 +2,11 @@
 
 local hyperKey = 'F19'
 -- info/debug/warning/etc.
-local logLevel = 'debug'
+hs.logger.defaultLogLevel = 'debug'
 
+--local hyper = require 'hyper'
+--hyper:setKey('End')
+--hyper:start()
 
 -- ***************************************************************************
 -- Constants 
@@ -28,7 +31,7 @@ local textMenu = hs.styledtext.new('G', textMenuOffAttributes)
 
 local hyper = hs.hotkey.modal.new(nil, hyperKey)
 --local menu = hs.menubar.new()
-local log = hs.logger.new('godmode',logLevel)
+local log = hs.logger.new('godmode')
 
 -- ***************************************************************************
 -- Menu
