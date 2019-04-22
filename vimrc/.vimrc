@@ -363,153 +363,171 @@ amenu Misc.Remove\ &trailing\ white-space<Tab>F10   :%s/\s\+$//<cr>:let @/=''<cr
 amenu Misc.Toggle\ highlight\ search\ results       :set hlsearch!<cr>:set hlsearch?<cr>
 amenu Misc.&Save\ Viminfo                           :set viminfo='7,n./viminfo<cr>:wv<cr>:set viminfo=<cr>
 
+" filetype must be off to load NeoBundle properly; it's re-enabled further down.
+" filetype off
+
 " -----------------------------------------------------------------------------
 " plugins
 " -----------------------------------------------------------------------------
 
-" filetype must be off to load NeoBundle properly; it's re-enabled further down.
-filetype off
-
-" Load NeoBundle. Self sexify.
+" Load dein.vim into the runtime path. Self sexify.
 if has('vim_starting')
-   set runtimepath+=~/.vim/bundle/neobundle.vim/
- endif
-call neobundle#rc(expand('~/.vim/bundle/'))
-" Let NeoBundle manage NeoBundle
-NeoBundleFetch 'Shougo/neobundle.vim'
-
-" vimproc
-NeoBundle 'Shougo/vimproc', {
-      \ 'build' : {
-      \     'windows' : 'make -f make_mingw32.mak',
-      \     'cygwin' : 'make -f make_cygwin.mak',
-      \     'mac' : 'make -f make_mac.mak',
-      \     'unix' : 'make -f make_unix.mak',
-      \    },
-      \ }
-
-" Unite.vim
-NeoBundle 'Shougo/unite.vim'
-let g:unite_enable_start_insert = 1   
-let g:unite_source_history_yank_enable = 1
-call unite#filters#matcher_default#use(['matcher_fuzzy'])  " Fuzzy matching
-" Ignore certain file types
-" call unite#custom#source('file_rec', 'ignore_pattern', '\.(o|exe|dll|bak|orig|sw[po]|eot|svg|png|jpg)$')
-nnoremap <leader>t :<C-u>Unite -buffer-name=files -start-insert file_rec/async:!<cr>
-nnoremap <leader>f :<C-u>Unite -buffer-name=files -start-insert buffer file<cr>
-nnoremap <leader>T :<C-u>Unite -buffer-name=tabs  -start-insert tab<cr>
-nnoremap <leader>y :<C-u>Unite -buffer-name=yank    history/yank<cr>
-nnoremap <leader>a :<C-u>Unite -buffer-name=ack     grep:.<cr>
-nnoremap <leader>A :<C-u>Unite -buffer-name=ack     grep<cr>
-
-" Use ag/ack if available.
-if executable('ag')
-    " Set ag as the grep and file_rec command
-    let g:unite_source_grep_command = 'ag'
-    "let g:unite_source_grep_default_opts = '--nogroup --nocolor --column -i --skip-vcs-ignores'
-    let g:unite_source_grep_default_opts = '--nogroup --nocolor --column -i'
-    let g:unite_source_grep_recursive_opt = ''
-
-    " Remove vcs-ignores from the list of file_rec candidates
-    let g:unite_source_rec_async_command = 'ag --nocolor --nogroup --hidden -g ""'
-elseif executable('ack')
-    let g:unite_source_grep_command       = 'ack'
-    let g:unite_source_grep_default_opts  = '--no-group --no-heading --no-color -a -H'
-    let g:unite_source_grep_recursive_opt = ''
+   set runtimepath+=~/.vim/bundle/dein.vim/
 endif
 
-" ack
-"NeoBundle 'mileszs/ack.vim'
-"nnoremap <leader>a :Ack<space>
+if dein#load_state('~/.vim/bundle/dein.vim/')
+    call dein#begin('~/.vim/bundle/dein.vim/')
+    call dein#add('~/.vim/bundle/dein.vim/')
 
-" evervim
-" Add let g:evervim_devtoken='value' to .vimrc_local
-NeoBundle 'kakkyz81/evervim'
+    " denite.vim (file recommendations, buffer recommendations, search)
+    call dein#add('Shougo/denite.nvim')
+    " Create Denite mappings only if its installed
+    try 
+        nnoremap <leader>t :Denite file/rec buffer<cr>
+        nnoremap <leader>a :Denite grep<cr>
+        call denite#custom#map(
+              \ 'insert',
+              \ '<C-j>',
+              \ '<denite:move_to_next_line>',
+              \ 'noremap'
+              \)
+        call denite#custom#map(
+              \ 'insert',
+              \ '<C-k>',
+              \ '<denite:move_to_previous_line>',
+              \ 'noremap'
+              \)
 
-" file:line
-" Allows opening a file directly to a line in the following way: 
-" :e file/path.txt:12
-NeoBundle 'bogado/file-line'
+        " Use ag/ack if available.
+         if executable('ag')
+             " Uses ag as the file/recommendation engine
+             " --hidden includes dot files but honors ignore
+             call denite#custom#var('file/rec', 'command',
+                         \ ['ag', '--follow', '--nocolor', '--nogroup', '--hidden', '-g', ''])
 
-" fugitive: sexy git wrapper
-NeoBundle 'fugitive.vim'
-nnoremap <leader>gb :Gblame<CR>
-nnoremap <leader>gg :Ggrep
-nnoremap <leader>gs :Gstatus<CR>
-nnoremap <leader>gm :Gmove
+            call denite#custom#var('grep', 'command', ['ag'])
+            call denite#custom#var('grep', 'default_opts',
+                    \ ['-i', '--vimgrep', '--hidden'])
+            call denite#custom#var('grep', 'recursive_opts', [])
+            call denite#custom#var('grep', 'pattern_opt', [])
+            call denite#custom#var('grep', 'separator', ['--'])
+            call denite#custom#var('grep', 'final_opts', [])
 
-" indent-guides
-NeoBundle 'nathanaelkane/vim-indent-guides'
-let g:indent_guides_start_level = 2
-let g:indent_guides_guide_size  = 1
-nnoremap <leader>ig :IndentGuidesToggle<CR>
+        elseif executable('ack')
+            " Ack command on grep source
+            call denite#custom#var('grep', 'command', ['ack'])
+            call denite#custom#var('grep', 'default_opts',
+                        \ ['--ackrc', $HOME.'/.ackrc', '-H',
+                        \  '--nopager', '--nocolor', '--nogroup', '--column'])
+            call denite#custom#var('grep', 'recursive_opts', [])
+            call denite#custom#var('grep', 'pattern_opt', ['--match'])
+            call denite#custom#var('grep', 'separator', ['--'])
+            call denite#custom#var('grep', 'final_opts', [])
+        endif
+    catch
+    endtry
+    
+    " file:line
+    " Allows opening a file directly to a line in the following way: 
+    " :e file/path.txt:12
+    call dein#add('bogado/file-line')
+    
+    " fugitive: sexy git wrapper
+    call dein#add('tpope/vim-fugitive')
+    nnoremap <leader>gb :Gblame<CR>
+    nnoremap <leader>gg :Ggrep
+    nnoremap <leader>gs :Gstatus<CR>
+    nnoremap <leader>gm :Gmove
 
-" matchit
-NeoBundle 'edsono/vim-matchit'
+    " indent-guides
+    call dein#add('nathanaelkane/vim-indent-guides')
+    let g:indent_guides_start_level = 2
+    let g:indent_guides_guide_size  = 1
+    nnoremap <leader>ig :IndentGuidesToggle<CR>
+    
+    " matchit
+    call dein#add('vim-scripts/matchit.zip')
+    
+    " NERDCommenter
+    call dein#add('scrooloose/nerdcommenter')
+    " comment/uncomment: mappings to nerdcommenter
+    nmap - :call NERDComment('n', 'nested')<CR>
+    nmap _ :call NERDComment('n', 'uncomment')<CR>
+    vmap - :call NERDComment('x', 'nested')<CR>
+    vmap _ :call NERDComment('x', 'uncomment')<CR>
 
-"NeoBundle 'scrooloose/nerdcommenter'
-NeoBundle 'The-NERD-Commenter'
-" comment/uncomment: mappings to nerdcommenter
-nmap - :call NERDComment(0, 'nested')<CR>
-nmap _ :call NERDComment(0, 'uncomment')<CR>
-vmap - :call NERDComment(1, 'nested')<CR>
-vmap _ :call NERDComment(0, 'uncomment')<CR>
+    " rails
+    call dein#add('tpope/vim-rails')
+    let g:rails_ctags_arguments = "--languages=-javascript"
+    let g:rails_ctags_arguments .= " --extra=+f"
+    let g:rails_ctags_arguments .= " --exclude=.git --exclude=log"
+    "let g:rails_ctags_arguments .= " `bundle show rails`/../*"
+    let g:rails_ctags_arguments .= " `ruby -rrubygems -e 'p Gem.path.collect {|p| [\"gems\", File.join(\"bundler\", \"gems\")].collect {|d| File.join(p, d)} }.join(\" \")' | sed 's/\"//g'`"
 
-" rails
-NeoBundle 'tpope/vim-rails'
-let g:rails_ctags_arguments = "--languages=-javascript"
-let g:rails_ctags_arguments .= " --extra=+f"
-let g:rails_ctags_arguments .= " --exclude=.git --exclude=log"
-"let g:rails_ctags_arguments .= " `bundle show rails`/../*"
-let g:rails_ctags_arguments .= " `ruby -rrubygems -e 'p Gem.path.collect {|p| [\"gems\", File.join(\"bundler\", \"gems\")].collect {|d| File.join(p, d)} }.join(\" \")' | sed 's/\"//g'`"
+    " scratch
+    call dein#add('vim-scripts/scratch.vim')
+    "nnoremap <leader>s :Sscratch<CR>
+    "nnoremap <leader>S :Scratch<CR>
 
-" scratch
-NeoBundle 'scratch.vim'
-"nnoremap <leader>s :Sscratch<CR>
-"nnoremap <leader>S :Scratch<CR>
+    " surround
+    call dein#add('tpope/vim-surround')
 
-" surround
-NeoBundle 'tpope/vim-surround'
+    " Tabular
+    call dein#add('godlygeek/tabular')
+    function! CustomTabularPatterns()
+        if exists('g:tabular_loaded')
+            AddTabularPattern! assignment      / = /l0
+            AddTabularPattern! chunks          / \S\+/l0
+            AddTabularPattern! colon           /:\zs /l0
+            AddTabularPattern! comma           /^[^,]*,/l1
+            AddTabularPattern! hash            /^[^>]*\zs=>/
+            AddTabularPattern! options_hashes  /:\w\+ =>/
+            AddTabularPattern! symbol          /^[^:]*\zs:/l1r0
+            AddTabularPattern! symbols         / :/l0
+            AddTabularPattern! doublequote     /"/l5c1
+            AddTabularPattern! first_bracket   /^[^{]*\zs{/l1
+        endif
+    endfunction
+    autocmd VimEnter * call CustomTabularPatterns()
+    map <leader>e= :Tabularize assignment<CR>
+    map <leader>e: :Tabularize colon<CR>
+    map <leader>e, :Tabularize comma<CR>
+    map <leader>e> :Tabularize hash<CR>
+    map <leader>e" :Tabularize doublequote<CR>
 
-" Tabular
-NeoBundle 'godlygeek/tabular'
-function! CustomTabularPatterns()
-    if exists('g:tabular_loaded')
-        AddTabularPattern! assignment      / = /l0
-        AddTabularPattern! chunks          / \S\+/l0
-        AddTabularPattern! colon           /:\zs /l0
-        AddTabularPattern! comma           /^[^,]*,/l1
-        AddTabularPattern! hash            /^[^>]*\zs=>/
-        AddTabularPattern! options_hashes  /:\w\+ =>/
-        AddTabularPattern! symbol          /^[^:]*\zs:/l1r0
-        AddTabularPattern! symbols         / :/l0
-        AddTabularPattern! doublequote     /"/l5c1
-        AddTabularPattern! first_bracket   /^[^{]*\zs{/l1
-    endif
-endfunction
-autocmd VimEnter * call CustomTabularPatterns()
-map <leader>e= :Tabularize assignment<CR>
-map <leader>e: :Tabularize colon<CR>
-map <leader>e, :Tabularize comma<CR>
-map <leader>e> :Tabularize hash<CR>
-map <leader>e" :Tabularize doublequote<CR>
-
-" textobj-rubyblock
-" http://vimcasts.org/blog/2010/12/a-text-object-for-ruby-blocks/
-"   var - visual all ruby block
-"   vir - visual inner ruby block
-"   ar  - all ruby block
-"   ir  - inner ruby block
-" textobj-user is required by rubyblock
-NeoBundle 'textobj-user'
-NeoBundle 'textobj-rubyblock'
+    " textobj-rubyblock
+    " http://vimcasts.org/blog/2010/12/a-text-object-for-ruby-blocks/
+    "   var - visual all ruby block
+    "   vir - visual inner ruby block
+    "   ar  - all ruby block
+    "   ir  - inner ruby block
+    " textobj-user is required by rubyblock
+    call dein#add('vim-scripts/textobj-user')
+    call dein#add('vim-scripts/textobj-rubyblock')
 
 
-" -----------------------------------------------------------------------------
-" colors
-" -----------------------------------------------------------------------------
+    " -----------------------------------------------------------------------------
+    " colors
+    " -----------------------------------------------------------------------------
 
-NeoBundle 'tpope/vim-vividchalk'
+    call dein#add('tpope/vim-vividchalk')
+
+
+    " -----------------------------------------------------------------------------
+    " syntax
+    " -----------------------------------------------------------------------------
+
+    call dein#add('vim-ruby/vim-ruby')
+    call dein#add('tpope/vim-markdown')
+
+    " http://www.vim.org/scripts/script.php?script_id=2075
+    call dein#add('vim-scripts/indenthtml.vim')
+    " Force the following tags to indent children as well
+    let g:html_indent_inctags = 'head,body'
+
+    call dein#end()
+    call dein#save_state()
+endif
 
 
 " -----------------------------------------------------------------------------
@@ -519,20 +537,6 @@ NeoBundle 'tpope/vim-vividchalk'
 " vim-rails creates tags in `tmp/tags` when you generate using :Rtags
 set tags=./tags,tags,tmp/tags
 
-
-" -----------------------------------------------------------------------------
-" syntax
-" -----------------------------------------------------------------------------
-
-NeoBundle 'vim-ruby/vim-ruby'
-NeoBundle 'tpope/vim-markdown'
-NeoBundle 'vim-coffee-script'
-NeoBundle 'nono/vim-handlebars'
-
-" http://www.vim.org/scripts/script.php?script_id=2075
-NeoBundle 'indenthtml.vim'
-" Force the following tags to indent children as well
-let g:html_indent_inctags = 'head,body'
 
 
 " -----------------------------------------------------------------------------
@@ -608,6 +612,3 @@ endfunction
 if filereadable(expand("~/.vimrc_local"))
     source ~/.vimrc_local
 endif
-
-" Installation check.
-NeoBundleCheck

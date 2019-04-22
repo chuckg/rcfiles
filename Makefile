@@ -85,11 +85,11 @@ vim:
 	@if [ -d ~/.vim/bundle ]; then rm -rf ~/.vim/bundle; fi;
 	@mkdir ~/.vim/bundle
 	@echo 
-	@echo 'Installing NeoBundle for vim.'
-	git clone git://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim
+	@echo 'Installing dein for vim.'
+	git clone https://github.com/Shougo/dein.vim ~/.vim/bundle/dein.vim
 	@echo 
 	@echo 'Bundling vim plugins.'
-	@vim -c 'NeoBundleInstall' -c 'qa'
+	@vim -c 'call dein#install()' -c 'qa'
 
 # MISC
 
