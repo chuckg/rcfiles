@@ -222,36 +222,54 @@ for _, windowBind in pairs(vimBindings) do
     end)
 end
 
+
+-- 2019-11-06 15:42:28: *** ERROR: /Users/chuckg/.hammerspoon/init.lua:227: attempt to concatenate a nil value
+-- stack traceback:
+-- 	/Users/chuckg/.hammerspoon/init.lua:227: in main chunk
+-- 	[C]: in function 'xpcall'
+-- 	...app/Contents/Resources/extensions/hs/_coresetup/init.lua:630: in function 'hs._coresetup.setup'
+-- 	(...tail calls...)
+
 -- Hypermode: Window throw to monitor bindings by screen number
-for screenId, screen in pairs(hs.screen.allScreens()) do
-    log.d('Bound ' .. screenId .. ': ' .. screen:name())
-    hyper:bind('', string.format("%i", screenId), function()
-        local win = hs.window.focusedWindow()
-        win:moveToScreen(screen, false, true, 0)
-        hyper:exit()
-    end)
-end
+-- local screens = hs.screen.allScreens()
+-- if screens == nil then
+--     log.d('No screens detected, skipping hyperbind for monitors on 1-9')
+--     hs.alert('No screens detected, skpping 1-9 hyperbinds', 3)
+-- else 
+--     log.d('Screens detected, binding..')
+--     for screenId, screen in airs(screens) do
+--         log.d('Bound ' .. screenId .. ': ' .. screen:name())
+--         hyper:bind('', string.format("%i", screenId), function()
+--             local win = hs.window.focusedWindow()
+--             win:moveToScreen(screen, false, true, 0)
+--             hyper:exit()
+--         end)
+--     end
+-- end
 
 -- Hypermode: Bind application window focus
 local focusBindings = {
     ['Mail']          = 'a',
     ['Messages']      = 'm',
     ['Slack']         = 'c',
-
+ 
     ['Google Chrome'] = 'o',
     ['Safari']        = 's',
-    ['Evernote']      = 'e',
     ['Notes']         = 'n',
     ['1Password 6']   = 'p',
+    ['Quip']          = 'q',
 
     ['MacVim']        = 'i',
     ['GoLand']        = 'g',
-    ['PyCharm']       = 'y',
+    ['RubyMine']      = 'e',
+    ['CLion']         = 'y',
+    ['PyCharm']       = 'p',
     ['IntelliJ IDEA'] = 'd',
     ['Sourcetree']    = 't',
     ['iTerm2']        = 'u',
+    ['OmniGraffle']   = 'f',
 
-    ['Radar']         = 'r'
+    ['Reminders']     = 'r'
 }
 
 for appName, bindKey in pairs(focusBindings) do
