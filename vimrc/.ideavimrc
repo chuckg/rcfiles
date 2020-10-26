@@ -1,0 +1,38 @@
+# Use the rank register for my clipboard
+# source: https://stackoverflow.com/questions/27898407/intellij-idea-with-ideavim-cannot-copy-text-from-another-source 
+set clipboard+=unnamed
+
+# Add vim-surround emulation
+set surround 
+
+imap jj <Esc>
+set timeoutlen=1000
+
+# Generic
+map ,e :action GotoNextError<CR>
+map ,E :action GotoPreviousError<CR>
+map ,R :action Refactorings.QuickListPopupAction<CR>
+map ,r :action RenameElement<CR>
+nmap ,t :action SearchEverywhere<CR>
+
+# Comment, then go back up to the original line.
+nmap - :action CommentByLineComment<CR>
+vmap - :action CommentByLineComment<CR>
+
+# Code completion: enter normal mode, complete, re-enter insert mode
+imap <C-n> <ESC>:action HippieCompletion<CR>a
+imap <C-p> <ESC>:action HippieBackwardCompletion<CR>a
+
+# WrapToColumn settings
+map gqj :action com.andrewbrookins.idea.wrap.WrapAction<CR>
+map gqk :action com.andrewbrookins.idea.wrap.WrapAction<CR>
+map gqap :action com.andrewbrookins.idea.wrap.WrapParagraphAction<CR>
+
+# Golang
+map ,gf :action GoFmtFileAction<CR>
+map ,gi :action GoImportsFileAction<CR>
+map ,gl :action GotoImplementation<CR>
+map ,gt :action GotoTest<CR>
+
+# Tabs
+nmap ,ua :action UnsplitAll<CR>

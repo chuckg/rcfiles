@@ -1,7 +1,7 @@
 SHELL := /bin/bash
 
 BASH_FILES  = .bashrc .bash_bindings
-VIM_FILES   = .vimrc .vim .gvimrc
+VIM_FILES   = .vimrc .vim .gvimrc .ideavimrc
 GIT_FILES   = .gitconfig .gitignore
 
 # symlink(file,dir)
