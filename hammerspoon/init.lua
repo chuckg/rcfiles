@@ -4,11 +4,6 @@ local hyperKey = 'F19'
 -- info/debug/warning/etc.
 hs.logger.defaultLogLevel = 'info'
 
-
---local hyper = require 'hyper'
---hyper:setKey('End')
---hyper:start()
-
 -- ***************************************************************************
 -- Constants 
 local black = hs.drawing.color.asRGB(hs.drawing.color.colorsFor("Apple")["Black"])
@@ -29,7 +24,12 @@ local textMenu = hs.styledtext.new('G', textMenuOffAttributes)
 -- ***************************************************************************
 -- Initialize
 
-local hyper = hs.hotkey.modal.new(nil, hyperKey)
+-- If experiencing issues w/ the single letter modal keys not firing, its because
+-- there's a secure input active somewhere. Close things till it works again.
+-- More info:
+--  * https://github.com/Hammerspoon/hammerspoon/issues/2897
+--  * https://smile.helpscoutdocs.com/article/402-textexpander-and-secure-input
+local hyper = hs.hotkey.modal.new({}, hyperKey)
 --local menu = hs.menubar.new()
 local log = hs.logger.new('hypermode')
 
@@ -273,11 +273,11 @@ local focusBindings = {
 }
 
 for appName, bindKey in pairs(focusBindings) do
-    hyper:bind('', bindKey, function()
+    hyper:bind({}, bindKey, nil, function()
         local app = hs.appfinder.appFromName(appName)
         if app then
             app:activate()
         end
         hyper:exit()
-    end)
+    end, nil, nil)
 end
