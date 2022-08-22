@@ -85,11 +85,11 @@ vim:
 	@if [ -d ~/.vim/bundle ]; then rm -rf ~/.vim/bundle; fi;
 	@mkdir ~/.vim/bundle
 	@echo 
-	@echo 'Installing dein for vim.'
-	git clone https://github.com/Shougo/dein.vim ~/.vim/bundle/dein.vim
+	@echo 'Installing Vundle for vim.'
+	git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 	@echo 
 	@echo 'Bundling vim plugins.'
-	@vim -c 'call dein#install()' -c 'qa'
+	@vim -c ':PluginInstall' -c 'qa'
 
 # MISC
 

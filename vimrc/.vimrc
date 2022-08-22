@@ -192,7 +192,7 @@ inoremap <MiddleMouse> <C-O>:set paste<cr><MiddleMouse><C-O>:set nopaste<CR>
 
 " vim has a bug where it cannot distinguish CTRL-i from <tab>.  I want to use
 " CTRL-i and CTRL-o but also I want <tab> to match bracket pairs.  I can't do
-" both, so I remap CTRL-p to function as CTRL-i. 
+" both, so I remap CTRL-p to function as CTRL-i.
 nnoremap <C-p> <C-i>
 xnoremap <C-p> <C-i>
 
@@ -363,26 +363,23 @@ amenu Misc.Remove\ &trailing\ white-space<Tab>F10   :%s/\s\+$//<cr>:let @/=''<cr
 amenu Misc.Toggle\ highlight\ search\ results       :set hlsearch!<cr>:set hlsearch?<cr>
 amenu Misc.&Save\ Viminfo                           :set viminfo='7,n./viminfo<cr>:wv<cr>:set viminfo=<cr>
 
-" filetype must be off to load NeoBundle properly; it's re-enabled further down.
-" filetype off
+" filetype must be off to load Vundle properly; it's re-enabled further down.
+filetype off
 
 " -----------------------------------------------------------------------------
 " plugins
 " -----------------------------------------------------------------------------
 
-" Load dein.vim into the runtime path. Self sexify.
+" Load bundler into the runtime path. Self sexify.
 if has('vim_starting')
-   set runtimepath+=~/.vim/bundle/dein.vim/
+   set runtimepath+=~/.vim/bundle/Vundle.vim
 endif
 
-if dein#load_state('~/.vim/bundle/dein.vim/')
-    call dein#begin('~/.vim/bundle/dein.vim/')
-    call dein#add('~/.vim/bundle/dein.vim/')
-
+call vundle#begin()
     " denite.vim (file recommendations, buffer recommendations, search)
-    call dein#add('Shougo/denite.nvim')
+    Plugin 'Shougo/denite.nvim'
     " Create Denite mappings only if its installed
-    try 
+    try
         nnoremap <leader>t :Denite file/rec buffer<cr>
         nnoremap <leader>a :Denite grep<cr>
         call denite#custom#map(
@@ -426,30 +423,30 @@ if dein#load_state('~/.vim/bundle/dein.vim/')
         endif
     catch
     endtry
-    
+
     " file:line
-    " Allows opening a file directly to a line in the following way: 
+    " Allows opening a file directly to a line in the following way:
     " :e file/path.txt:12
-    call dein#add('bogado/file-line')
-    
+    Plugin 'bogado/file-line'
+
     " fugitive: sexy git wrapper
-    call dein#add('tpope/vim-fugitive')
+    Plugin 'tpope/vim-fugitive'
     nnoremap <leader>gb :Gblame<CR>
     nnoremap <leader>gg :Ggrep
     nnoremap <leader>gs :Gstatus<CR>
     nnoremap <leader>gm :Gmove
 
     " indent-guides
-    call dein#add('nathanaelkane/vim-indent-guides')
+    Plugin 'nathanaelkane/vim-indent-guides'
     let g:indent_guides_start_level = 2
     let g:indent_guides_guide_size  = 1
     nnoremap <leader>ig :IndentGuidesToggle<CR>
-    
+
     " matchit
-    call dein#add('vim-scripts/matchit.zip')
-    
+    Plugin 'vim-scripts/matchit.zip'
+
     " NERDCommenter
-    call dein#add('scrooloose/nerdcommenter')
+    Plugin 'scrooloose/nerdcommenter'
     " comment/uncomment: mappings to nerdcommenter
     nmap - :call NERDComment('n', 'nested')<CR>
     nmap _ :call NERDComment('n', 'uncomment')<CR>
@@ -457,7 +454,7 @@ if dein#load_state('~/.vim/bundle/dein.vim/')
     vmap _ :call NERDComment('x', 'uncomment')<CR>
 
     " rails
-    call dein#add('tpope/vim-rails')
+    Plugin 'tpope/vim-rails'
     let g:rails_ctags_arguments = "--languages=-javascript"
     let g:rails_ctags_arguments .= " --extra=+f"
     let g:rails_ctags_arguments .= " --exclude=.git --exclude=log"
@@ -465,15 +462,15 @@ if dein#load_state('~/.vim/bundle/dein.vim/')
     let g:rails_ctags_arguments .= " `ruby -rrubygems -e 'p Gem.path.collect {|p| [\"gems\", File.join(\"bundler\", \"gems\")].collect {|d| File.join(p, d)} }.join(\" \")' | sed 's/\"//g'`"
 
     " scratch
-    call dein#add('vim-scripts/scratch.vim')
+    Plugin 'vim-scripts/scratch.vim'
     "nnoremap <leader>s :Sscratch<CR>
     "nnoremap <leader>S :Scratch<CR>
 
     " surround
-    call dein#add('tpope/vim-surround')
+    Plugin 'tpope/vim-surround'
 
     " Tabular
-    call dein#add('godlygeek/tabular')
+    Plugin 'godlygeek/tabular'
     function! CustomTabularPatterns()
         if exists('g:tabular_loaded')
             AddTabularPattern! assignment      / = /l0
@@ -502,33 +499,30 @@ if dein#load_state('~/.vim/bundle/dein.vim/')
     "   ar  - all ruby block
     "   ir  - inner ruby block
     " textobj-user is required by rubyblock
-    call dein#add('vim-scripts/textobj-user')
-    call dein#add('vim-scripts/textobj-rubyblock')
+    Plugin 'vim-scripts/textobj-user'
+    Plugin 'vim-scripts/textobj-rubyblock'
 
 
     " -----------------------------------------------------------------------------
     " colors
     " -----------------------------------------------------------------------------
 
-    call dein#add('tpope/vim-vividchalk')
+    Plugin 'tpope/vim-vividchalk'
 
 
     " -----------------------------------------------------------------------------
     " syntax
     " -----------------------------------------------------------------------------
 
-    call dein#add('vim-ruby/vim-ruby')
-    call dein#add('tpope/vim-markdown')
+    Plugin 'vim-ruby/vim-ruby'
+    Plugin 'tpope/vim-markdown'
 
     " http://www.vim.org/scripts/script.php?script_id=2075
-    call dein#add('vim-scripts/indenthtml.vim')
+    Plugin 'vim-scripts/indenthtml.vim'
     " Force the following tags to indent children as well
     let g:html_indent_inctags = 'head,body'
 
-    call dein#end()
-    call dein#save_state()
-endif
-
+call vundle#end()
 
 " -----------------------------------------------------------------------------
 " tags
